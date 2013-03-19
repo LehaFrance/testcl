@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="name-of-project" default="build">
+ <target name="build"
+   depends="phpunit"/>
+
+<target name="phpunit" description="Run unit tests with PHPUnit">
+  <exec executable="phpunit" failonerror="true">
+	<arg value="-c"/>
+	<arg value="app/"/>
+	<arg value="--log-junit"/>
+	<arg value="build/phpunit.xml"/>
+</exec>
+ </target>
+</project>
