@@ -8,7 +8,7 @@
   </target>
 
  <target name="build"
-   depends="phpunit"/>
+   depends="composer,phpunit"/>
 
 
 
