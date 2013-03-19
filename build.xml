@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="name-of-project" default="build">
+  <target name="composer">
+    <exec executable="composer" failonerror="true">
+      <arg value="install" />
+    </exec>
+  </target>
+
  <target name="build"
    depends="phpunit"/>
+
+
 
 <target name="phpunit" description="Run unit tests with PHPUnit">
   <exec executable="phpunit" failonerror="true">
