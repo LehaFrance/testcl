@@ -1,0 +1,4 @@
+leha_user:
+    resource: "@LehaUserBundle/Resources/config/routing.xml"
+    prefix:   /
+
