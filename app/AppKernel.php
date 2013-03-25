@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Leha\UserBundle\LehaUserBundle(),
+            new Leha\ResultatBundle\LehaResultatBundle(),
+            new Leha\EchantillonBundle\LehaEchantillonBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

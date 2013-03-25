@@ -1,4 +1,11 @@
+leha_echantillon:
+    resource: "@LehaEchantillonBundle/Resources/config/routing.xml"
+    prefix:   /
+
+leha_resultat:
+    resource: "@LehaResultatBundle/Resources/config/routing.yml"
+    prefix:   /
+
 leha_user:
     resource: "@LehaUserBundle/Resources/config/routing.xml"
     prefix:   /
-

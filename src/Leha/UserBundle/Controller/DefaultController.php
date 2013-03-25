@@ -6,8 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
+
+        $this->get('leha_user.envoi')->aa();
+
         $user = 'toto';
         if ($user == 'toto') {
             $user = 'tata';
@@ -47,6 +50,6 @@ class DefaultController extends Controller
 
 
 
-        return $this->render('LehaUserBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('LehaUserBundle:Default:index.html.twig', array('name' => 'dd'));
     }
 }
