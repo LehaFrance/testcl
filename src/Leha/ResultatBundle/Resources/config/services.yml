@@ -1,7 +1,0 @@
-parameters:
-#    leha_resultat.example.class: Leha\ResultatBundle\Example
-
-services:
-#    leha_resultat.example:
-#        class: %leha_resultat.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

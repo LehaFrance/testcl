@@ -1,3 +1,0 @@
-leha_resultat_homepage:
-    pattern:  /resultats
-    defaults: { _controller: LehaResultatBundle:Default:index }

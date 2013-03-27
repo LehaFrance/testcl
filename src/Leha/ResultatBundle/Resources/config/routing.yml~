@@ -1,3 +1,0 @@
-leha_resultat_homepage:
-    pattern:  /ahello/{name}
-    defaults: { _controller: LehaResultatBundle:Default:index }
