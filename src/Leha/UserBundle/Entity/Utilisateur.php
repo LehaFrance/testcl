@@ -37,17 +37,27 @@ class Utilisateur implements UserInterface
 
     /**
      * @var
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="username", type="string", length=50)
      * @Assert\NotBlank()
      */
-    protected $login;
+    protected $username;
 
     /**
      * @var
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="password", type="string", length=50)
      * @Assert\NotBlank()
      */
     protected $password;
+	
+	/**
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    protected $salt;
+	
+	/**
+     * @ORM\Column(name="roles", type="array")
+     */
+    protected $roles;
 
     /**
      * Get id
@@ -106,29 +116,6 @@ class Utilisateur implements UserInterface
     }
 
     /**
-     * Set login
-     *
-     * @param string $login
-     * @return Utilisateur
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
-    
-        return $this;
-    }
-
-    /**
-     * Get login
-     *
-     * @return string 
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    /**
      * Set password
      *
      * @param string $password
@@ -156,7 +143,7 @@ class Utilisateur implements UserInterface
      */
     public function getUsername()
     {
-        return $this->prenom & ' ' & $this->nom;
+        return $this->username;
     }
 
     /**
@@ -180,5 +167,44 @@ class Utilisateur implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Utilisateur
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    
+        return $this;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return Utilisateur
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    
+        return $this;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return Utilisateur
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    
+        return $this;
     }
 }

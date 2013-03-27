@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Leha\UserBundle\LehaUserBundle(),
             new Leha\HistoriqueBundle\LehaHistoriqueBundle(),
             new Leha\DashboardBundle\LehaDashboardBundle(),

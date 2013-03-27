@@ -22,9 +22,11 @@
                             <li><a href="{{ path('leha_user_homepage') }}">Utilisateur</a></li>
                         </ul>
                     </li>
+					<li>{{ app.user.prenom ~ ' ' ~ app.user.nom }}</li>
+					
                 </ul>
             </div>
-        </div>
+        </div><a href="{{ path('logout') }}">logout</a>
         <div class="row-fluid">
 
             <div class="span8">

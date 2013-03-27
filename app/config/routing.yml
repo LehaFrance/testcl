@@ -9,3 +9,13 @@ leha_historique:
 leha_user:
     resource: "@LehaUserBundle/Resources/config/routing.xml"
     prefix:   /
+
+login:
+    pattern:  /login
+    defaults: { _controller:LehaUserBundle:Security:login }
+
+login_check:
+    pattern:  /login_check
+
+logout:
+    pattern:  /logout
