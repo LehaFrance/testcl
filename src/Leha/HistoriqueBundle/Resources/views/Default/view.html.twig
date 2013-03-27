@@ -1,0 +1,43 @@
+{% extends 'LehaHistoriqueBundle::layout.html.twig' %}
+
+{% block content %}
+<div id="modalSaveQuery" class="modal hide">
+    <form action="{{ path('leha_historique_view', {id : requete.id}) }}" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3>Enregistrement tableau</h3>
+    </div>
+    <div class="modal-body">
+        {{ form_widget(form) }}
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+    </form>
+</div>
+    {{ requete.libelle }}
+<div class="btn-group">
+    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog icon-white"></i>&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="#modalSaveQuery" data-toggle="modal">Enregistrer sous</a></li>
+        <li><a href="#" id="linkDelete">Supprimer</a></li>
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#linkDelete').click(function() {
+                if (confirm("Etes vous sûr de vouloir supprimer cette requête ?")) {
+                    window.location = "{{ path('leha_historique_remove', {id : requete.id}) }}";
+                }
+
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

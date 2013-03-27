@@ -1,0 +1,3 @@
+leha_dashboard_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: LehaDashboardBundle:Default:index }

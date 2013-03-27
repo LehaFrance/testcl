@@ -1,0 +1,50 @@
+<?php
+namespace Leha\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Class Utilisateur
+ * @package Leha\UserBundle\Entity
+ * @ORM\Entity(repositoryClass="Leha\UserBundle\Entity\UtilisateurRepository")
+ * @ORM\Table(name="t_utilisateurs")
+ */
+class Utilisateur
+{
+    /**
+     * @var
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $nom;
+
+    /**
+     * @var
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $prenom;
+
+    /**
+     * @var
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $login;
+
+    /**
+     * @var
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $password;
+}

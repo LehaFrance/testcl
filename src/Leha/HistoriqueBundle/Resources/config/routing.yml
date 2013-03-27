@@ -1,0 +1,15 @@
+leha_historique:
+    pattern:  /historique
+    defaults: { _controller: LehaHistoriqueBundle:Default:index}
+
+leha_historique_add:
+    pattern:  /historique/add
+    defaults: {_controller: LehaHistoriqueBundle:Default:add}
+
+leha_historique_view:
+    pattern:  /historique/view/{id}
+    defaults: {_controller: LehaHistoriqueBundle:Default:view}
+
+leha_historique_remove:
+    pattern: /historique/remove/{id}
+    defaults: {_controller: LehaHistoriqueBundle:Default:remove}

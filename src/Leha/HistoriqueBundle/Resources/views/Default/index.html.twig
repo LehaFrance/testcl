@@ -1,0 +1,13 @@
+{% extends 'LehaHistoriqueBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <a href="{{ path('leha_historique_add') }}">add</a>
+
+    {%  for requete in requetes %}
+        <a href="{{ path('leha_historique_view', { 'id': requete.id}) }}">{{ requete.libelle }}</a>
+    {% else %}
+        Vous n'avez aucune requête de configuré
+    {% endfor %}
+
+{% endblock %}

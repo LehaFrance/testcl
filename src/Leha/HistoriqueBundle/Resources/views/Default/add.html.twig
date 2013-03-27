@@ -1,0 +1,27 @@
+{% extends 'LehaHistoriqueBundle::layout.html.twig' %}
+
+{% block content %}
+<div id="modalSaveQuery" class="modal hide">
+    <form action="{{ path('leha_historique_add') }}" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3>Enregistrement tableau</h3>
+    </div>
+    <div class="modal-body">
+        {{ form_widget(form) }}
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+    </form>
+</div>
+
+<div class="btn-group">
+    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog icon-white"></i>&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="#modalSaveQuery" data-toggle="modal">Enregistrer sous</a></li>
+    </ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+parameters:
+#    leha_dashboard.example.class: Leha\DashboardBundle\Example
+
+services:
+#    leha_dashboard.example:
+#        class: %leha_dashboard.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
