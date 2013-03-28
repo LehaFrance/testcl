@@ -1,6 +1,11 @@
 {% extends 'LehaHistoriqueBundle::layout.html.twig' %}
 
 {% block content %}
+<style type="text/css">
+#modalChoixAnalyses {
+    width:800px;
+}
+</style>
 <div id="modalSaveQuery" class="modal hide">
     <form action="{{ path('leha_historique_view', {id : requete.id}) }}" method="post">
     <div class="modal-header">
@@ -16,19 +21,20 @@
     </div>
     </form>
 </div>
-<div id="modalChoixCriteres" class="modal hide">
-    <form action="{{ path('leha_historique_view', {id : requete.id}) }}" method="post">
+<div id="modalChoixAnalyses" class="modal hide">
+    <form id="formChoixAnalyses" action="{{ path('leha_historique_save_analyses', {id : requete.id}) }}" method="post">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h3>Choix critères</h3>
+            <h3>Choix analyses</h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="containerChoixAnalyses">
             {{ form_widget(form) }}
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
             <button type="submit" class="btn btn-primary">Enregistrer</button>
         </div>
+        <input type="hidden" id="analyses_selectionnees" name="analyses_selectionnees" />
     </form>
 </div>
 
@@ -36,11 +42,15 @@
 <div class="btn-group">
     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog icon-white"></i>&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;<span class="caret"></span></a>
     <ul class="dropdown-menu">
-        <li><a id="linkChoixCriteres" data-toggle="modal">Définir mes critères de recherche</a></li>
+        <li><a id="linkChoixAnalyses" data-toggle="modal">Définir mes analyses de recherche</a></li>
         <li><a href="#modalSaveQuery" data-toggle="modal">Enregistrer sous</a></li>
         <li><a href="#" id="linkDelete">Supprimer</a></li>
     </ul>
 </div>
+
+{% for analyse in requete.analyses %}
+    {{ analyse.libelle }}<br />
+{% endfor %}
 
 {% endblock %}
 
@@ -48,12 +58,25 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#linkChoixCriteres').click(function() {
-                $.get('{{ path('leha_criteres_choix') }}', function(data) {
-                    alert('ok');
+            $('#formChoixAnalyses').on('submit', function() {
+                var lst_element = '';
+                $('#listeDroite > div').each(function() {
+                    lst_element += $(this).attr('element_id') + '|';
+                });
+                if (lst_element != '') {
+                    lst_element = lst_element.substr(0, lst_element.length - 1);
+                }
+
+                $('#analyses_selectionnees').val(lst_element);
+
+                return true;
+            });
+            $('#linkChoixAnalyses').click(function() {
+                $.get('{{ path('leha_analyse_crossselect', { id : requete.id}) }}', function(data) {
+                    $('#containerChoixAnalyses').html(data);
                 });
 
-                $('#modalChoixCriteres').modal();
+                $('#modalChoixAnalyses').modal();
             });
 
             $('#linkDelete').click(function() {

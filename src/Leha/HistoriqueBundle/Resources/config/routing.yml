@@ -13,3 +13,7 @@ leha_historique_view:
 leha_historique_remove:
     pattern: /historique/remove/{id}
     defaults: {_controller: LehaHistoriqueBundle:Default:remove}
+
+leha_historique_save_analyses:
+    pattern: /historique/save_analyses/{id}
+    defaults: {_controller: LehaHistoriqueBundle:Default:save_analyses}

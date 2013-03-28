@@ -12,10 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class RequeteRepository extends EntityRepository
 {
-    public function getRequeteByUser()
-    {
-        return $this->getEntityManager()
-            ->createQuery('select r from LehaHistoriqueBundle:Requete r order by r.libelle asc')
-            ->getResult();
-    }
+
 }

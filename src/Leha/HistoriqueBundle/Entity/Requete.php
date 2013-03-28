@@ -34,6 +34,12 @@ class Requete
     protected $utilisateur;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Leha\AnalyseBundle\Entity\Analyse")
+     * @ORM\JoinTable(name="t_analyses_requetes")
+     */
+    protected $analyses;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -87,5 +93,45 @@ class Requete
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->analyses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add analyses
+     *
+     * @param \Leha\AnalyseBundle\Entity\Analyse $analyses
+     * @return Requete
+     */
+    public function addAnalyse(\Leha\AnalyseBundle\Entity\Analyse $analyses)
+    {
+        $this->analyses[] = $analyses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove analyses
+     *
+     * @param \Leha\AnalyseBundle\Entity\Analyse $analyses
+     */
+    public function removeAnalyse(\Leha\AnalyseBundle\Entity\Analyse $analyses)
+    {
+        $this->analyses->removeElement($analyses);
+    }
+
+    /**
+     * Get analyses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnalyses()
+    {
+        return $this->analyses;
     }
 }

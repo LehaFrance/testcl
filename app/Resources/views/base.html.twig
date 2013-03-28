@@ -21,9 +21,8 @@
                         <ul class="dropdown-menu">
                             {% for requete in app.user.requetes %}
                                 <li><a href="{{ path('leha_historique_view', {id : requete.id}) }}">{{ requete.libelle }}</a></li>
-                            {% else %}
-                                <li><a href="{{ path('leha_historique_add') }}">Nouvelle requête</a></li>
                             {% endfor %}
+                            <li><a href="{{ path('leha_historique_add') }}">Nouvelle requête</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
