@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Requete
  * @package Leha\HistoriqueBundle\Entity
  * @ORM\Entity(repositoryClass="Leha\HistoriqueBundle\Entity\RequeteRepository")
- * @ORM\Table(name="t_requete")
+ * @ORM\Table(name="t_requetes")
  */
 class Requete
 {
@@ -26,6 +26,12 @@ class Requete
      * @Assert\NotBlank()
      */
     protected $libelle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Leha\UserBundle\Entity\Utilisateur", inversedBy="requetes")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
+     */
+    protected $utilisateur;
 
     /**
      * Get id
@@ -58,5 +64,28 @@ class Requete
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \Leha\UserBundle\Entity\Utilisateur $utilisateur
+     * @return Requete
+     */
+    public function setUtilisateur(\Leha\UserBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+    
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \Leha\UserBundle\Entity\Utilisateur 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }

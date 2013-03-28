@@ -60,6 +60,11 @@ class Utilisateur implements UserInterface
     protected $roles;
 
     /**
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
+     */
+    protected $requetes;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -206,5 +211,43 @@ class Utilisateur implements UserInterface
         $this->roles = $roles;
     
         return $this;
+    }
+
+    public function __construct()
+    {
+        $this->requetes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\Requete $requetes
+     * @return Utilisateur
+     */
+    public function addRequete(\Leha\HistoriqueBundle\Entity\Requete $requetes)
+    {
+        $this->requetes[] = $requetes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\Requete $requetes
+     */
+    public function removeRequete(\Leha\HistoriqueBundle\Entity\Requete $requetes)
+    {
+        $this->requetes->removeElement($requetes);
+    }
+
+    /**
+     * Get requetes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRequetes()
+    {
+        return $this->requetes;
     }
 }

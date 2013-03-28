@@ -1,3 +1,7 @@
+leha_analyse:
+    resource: "@LehaAnalyseBundle/Resources/config/routing.yml"
+    prefix:   /
+
 leha_dashboard:
     resource: "@LehaDashboardBundle/Resources/config/routing.yml"
     prefix:   /

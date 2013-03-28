@@ -16,10 +16,27 @@
     </div>
     </form>
 </div>
-    {{ requete.libelle }}
+<div id="modalChoixCriteres" class="modal hide">
+    <form action="{{ path('leha_historique_view', {id : requete.id}) }}" method="post">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h3>Choix critères</h3>
+        </div>
+        <div class="modal-body">
+            {{ form_widget(form) }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>
+</div>
+
+<h3>{{ requete.libelle }}</h3>
 <div class="btn-group">
     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog icon-white"></i>&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;<span class="caret"></span></a>
     <ul class="dropdown-menu">
+        <li><a id="linkChoixCriteres" data-toggle="modal">Définir mes critères de recherche</a></li>
         <li><a href="#modalSaveQuery" data-toggle="modal">Enregistrer sous</a></li>
         <li><a href="#" id="linkDelete">Supprimer</a></li>
     </ul>
@@ -31,6 +48,14 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
+            $('#linkChoixCriteres').click(function() {
+                $.get('{{ path('leha_criteres_choix') }}', function(data) {
+                    alert('ok');
+                });
+
+                $('#modalChoixCriteres').modal();
+            });
+
             $('#linkDelete').click(function() {
                 if (confirm("Etes vous sûr de vouloir supprimer cette requête ?")) {
                     window.location = "{{ path('leha_historique_remove', {id : requete.id}) }}";

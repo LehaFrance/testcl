@@ -60,6 +60,11 @@ class Utilisateur implements UserInterface
     protected $roles;
 
     /**
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
+     */
+    protected $requetes;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -167,5 +172,49 @@ class Utilisateur implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Utilisateur
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    
+        return $this;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return Utilisateur
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    
+        return $this;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return Utilisateur
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    
+        return $this;
+    }
+
+    public function __construct()
+    {
+        $this->requetes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

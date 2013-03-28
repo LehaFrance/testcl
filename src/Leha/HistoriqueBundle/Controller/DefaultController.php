@@ -30,6 +30,8 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
+            $requete->setUtilisateur($this->getUser());
+
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($requete);
