@@ -1,0 +1,7 @@
+leha_analyse_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: LehaAnalyseBundle:Default:index }
+
+leha_analyse_crossselect:
+    pattern:  /analyse/crossselect/{id}
+    defaults: { _controller: LehaAnalyseBundle:Default:crossselect }

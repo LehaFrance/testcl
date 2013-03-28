@@ -1,0 +1,7 @@
+parameters:
+#    leha_analyse.example.class: Leha\AnalyseBundle\Example
+
+services:
+#    leha_analyse.example:
+#        class: %leha_analyse.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
