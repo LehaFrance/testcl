@@ -1,6 +1,6 @@
 <?php
 
-namespace Leha\AnalyseBundle\Tests\Controller;
+namespace Leha\EchantillonBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

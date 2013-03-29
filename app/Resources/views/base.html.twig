@@ -19,10 +19,11 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ path('leha_historique') }}">Liste</a></li>
                             {% for requete in app.user.requetes %}
-                                <li><a href="{{ path('leha_historique_view', {id : requete.id}) }}">{{ requete.libelle }}</a></li>
+                                <li><a href="{{ path('leha_historique_search', {id : requete.id}) }}">{{ requete.libelle }}</a></li>
                             {% endfor %}
-                            <li><a href="{{ path('leha_historique_add') }}">Nouvelle requête</a></li>
+
                         </ul>
                     </li>
                     <li class="dropdown">

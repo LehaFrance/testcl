@@ -34,10 +34,10 @@ class Requete
     protected $utilisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Leha\AnalyseBundle\Entity\Analyse")
-     * @ORM\JoinTable(name="t_analyses_requetes")
+     * @ORM\ManyToMany(targetEntity="Leha\HistoriqueBundle\Entity\Critere")
+     * @ORM\JoinTable(name="t_criteres_requetes")
      */
-    protected $analyses;
+    protected $criteres;
 
     /**
      * Get id
@@ -99,39 +99,39 @@ class Requete
      */
     public function __construct()
     {
-        $this->analyses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criteres = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
-     * Add analyses
+     * Add criteres
      *
-     * @param \Leha\AnalyseBundle\Entity\Analyse $analyses
+     * @param \Leha\HistoriqueBundle\Entity\Critere $critere
      * @return Requete
      */
-    public function addAnalyse(\Leha\AnalyseBundle\Entity\Analyse $analyses)
+    public function addCritere(\Leha\HistoriqueBundle\Entity\Critere $critere)
     {
-        $this->analyses[] = $analyses;
+        $this->criteres[] = $critere;
     
         return $this;
     }
 
     /**
-     * Remove analyses
+     * Remove criteres
      *
-     * @param \Leha\AnalyseBundle\Entity\Analyse $analyses
+     * @param \Leha\HistoriqueeBundle\Entity\Critere $critere
      */
-    public function removeAnalyse(\Leha\AnalyseBundle\Entity\Analyse $analyses)
+    public function removeCritere(\Leha\HistoriqueBundle\Entity\Critere $critere)
     {
-        $this->analyses->removeElement($analyses);
+        $this->criteres->removeElement($critere);
     }
 
     /**
-     * Get analyses
+     * Get criteres
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAnalyses()
+    public function getCriteres()
     {
-        return $this->analyses;
+        return $this->criteres;
     }
 }

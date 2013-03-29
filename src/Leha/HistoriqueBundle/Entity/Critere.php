@@ -1,16 +1,16 @@
 <?php
 
-namespace Leha\AnalyseBundle\Entity;
+namespace Leha\HistoriqueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Analyse
+ * Critere
  *
- * @ORM\Table(name="t_analyses")
- * @ORM\Entity(repositoryClass="Leha\AnalyseBundle\Entity\AnalyseRepository")
+ * @ORM\Table(name="t_criteres")
+ * @ORM\Entity
  */
-class Analyse
+class Critere
 {
     /**
      * @var integer
@@ -28,6 +28,13 @@ class Analyse
      */
     private $libelle;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=20)
+     */
+    private $type;
+
 
     /**
      * Get id
@@ -43,7 +50,7 @@ class Analyse
      * Set libelle
      *
      * @param string $libelle
-     * @return Analyse
+     * @return Critere
      */
     public function setLibelle($libelle)
     {
@@ -60,5 +67,28 @@ class Analyse
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Critere
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

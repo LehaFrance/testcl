@@ -36,7 +36,9 @@ class DefaultController extends Controller
                 $em->persist($requete);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('leha_historique'));
+                return $this->redirect($this->generateUrl('leha_historique_search', array(
+                    'id' => $requete->getId()
+                )));
             }
         }
 
@@ -45,7 +47,7 @@ class DefaultController extends Controller
         ));
     }
 
-    public function viewAction(Request $request, Requete $requete)
+    public function editAction(Request $request, Requete $requete)
     {
         $form = $this->createFormBuilder($requete)
             ->add('libelle', 'text')
@@ -54,18 +56,49 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
+            $requete->setUtilisateur($this->getUser());
+
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($requete);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('leha_historique'));
+                return $this->redirect($this->generateUrl('leha_historique_search', array(
+                    'id' => $requete->getId()
+                )));
             }
         }
 
-        return $this->render('LehaHistoriqueBundle:Default:view.html.twig', array(
+        return $this->render('LehaHistoriqueBundle:Default:edit.html.twig', array(
             'form' => $form->createView(),
             'requete' => $requete
+        ));
+    }
+
+    public function searchAction(Request $request, Requete $requete)
+    {
+        $echantillons = null;
+        if ($request->isMethod('POST')) {
+            foreach ($requete->getCriteres() as $critere) {
+
+            }
+
+            $repo = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
+            $echantillons = $repo->findAll();
+        }
+
+
+        $form_builder = $this->createFormBuilder();
+
+        foreach ($requete->getCriteres() as $critere) {
+            $form_builder->add($critere->getId(), $critere->getType(), array('label' => $critere->getLibelle()));
+        }
+        $form = $form_builder->getForm();
+
+        return $this->render('LehaHistoriqueBundle:Default:search.html.twig', array(
+            'requete' => $requete,
+            'form' => $form->createView(),
+            'echantillons' => $echantillons
         ));
     }
 
@@ -78,23 +111,47 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('leha_historique'));
     }
 
-    public function save_analysesAction(Request $request, Requete $requete)
+    public function choix_criteresAction(Request $request, Requete $requete)
     {
-        $analyses_id = $request->request->get('analyses_selectionnees');
-        if ($analyses_id != '') {
-            $repo = $this->getDoctrine()->getRepository('LehaAnalyseBundle:Analyse');
+        if ($request->isMethod('POST')) {
+            $criteres_id = $request->request->get('criteres_selectionnes');
 
-            $aAnalysesId = explode('|', $analyses_id);
-            foreach ($aAnalysesId as $analyse_id) {
-                $analyse = $repo->find($analyse_id);
-                $requete->addAnalyse($analyse);
+            $repo = $this->getDoctrine()->getRepository('LehaHistoriqueBundle:Critere');
+
+            $aCriteresId = ($criteres_id == '') ? array() : explode('|', $criteres_id);
+
+            $criteres = $requete->getCriteres();
+            $criteres_a_conserver = array();
+            foreach ($criteres as $critere) {
+                if (in_array($critere->getId(), $aCriteresId)) {
+                    $criteres_a_conserver[] = $critere->getId();
+                } else {
+                    $requete->removeCritere($critere);
+                }
+            }
+
+            $criteres_to_add = array_diff($aCriteresId, $criteres_a_conserver);
+
+            foreach ($criteres_to_add as $critere_id) {
+                $critere = $repo->find($critere_id);
+                $requete->addCritere($critere);
+                echo 'ok';
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($requete);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('leha_historique_search', array('id' => $requete->getId())));
         }
-        exit;
-        return $this->redirect($this->generateUrl('leha_historique_view', array('id' => $requete->getId())));
+
+        $em = $this->getDoctrine()->getManager();
+        $criteres_disponibles = $em->getRepository('LehaHistoriqueBundle:Requete')->getCriteresDisponibles($requete);
+
+
+        return $this->render('LehaHistoriqueBundle:Default:choix_criteres.html.twig', array(
+            'requete' => $requete,
+            'criteres_disponibles' => $criteres_disponibles
+        ));
     }
 }

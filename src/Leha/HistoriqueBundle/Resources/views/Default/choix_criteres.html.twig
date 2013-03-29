@@ -1,0 +1,65 @@
+<style type="text/css">
+    #listeGauche, #listeDroite {
+        float:left;
+        border:1px solid #000000;
+        height:200px;
+        width:300px;
+        margin:5px;
+        padding:5px;
+    }
+
+    #listeGauche > div, #listeDroite > div {
+        margin:5px;
+        padding:5px;
+        border:1px solid #999999;
+    }
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#listeGauche').on('dblclick', 'div', function(e) {
+        $(this).appendTo('#listeDroite');
+    });
+    $('#listeDroite').on('dblclick', 'div', function(e) {
+        $(this).appendTo('#listeGauche');
+    });
+
+    $('#formChoixCriteres').on('submit', function() {
+        var lst_element = '';
+        $('#listeDroite > div').each(function() {
+            lst_element += $(this).attr('element_id') + '|';
+        });
+        if (lst_element != '') {
+            lst_element = lst_element.substr(0, lst_element.length - 1);
+        }
+
+        $('#criteres_selectionnes').val(lst_element);
+
+        return true;
+    });
+});
+</script>
+<form id="formChoixCriteres" action="{{ path('leha_historique_choix_criteres', {id : requete.id}) }}" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3>Choix critères</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div id="listeGauche">
+                {% for critere in criteres_disponibles %}
+                    <div element_id="{{ critere.id }}">{{ critere.libelle }}</div>
+                {% endfor %}
+            </div>
+            <div id="listeDroite">
+                {% for critere in requete.criteres %}
+                    <div element_id="{{ critere.id }}">{{ critere.libelle }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+    <input type="hidden" id="criteres_selectionnes" name="criteres_selectionnes" />
+</form>
