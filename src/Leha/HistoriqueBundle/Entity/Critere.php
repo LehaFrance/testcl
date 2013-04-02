@@ -34,7 +34,11 @@ class Critere
      * @ORM\Column(name="type", type="string", length=20)
      */
     private $type;
-
+	
+	/**
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\CritereRequete", mappedBy="critere")
+     */
+    protected $criteres_requete;
 
     /**
      * Get id
@@ -90,5 +94,45 @@ class Critere
     public function getType()
     {
         return $this->type;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->criteres_requete = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add criteres_requete
+     *
+     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
+     * @return Critere
+     */
+    public function addCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
+    {
+        $this->criteres_requete[] = $criteresRequete;
+    
+        return $this;
+    }
+
+    /**
+     * Remove criteres_requete
+     *
+     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
+     */
+    public function removeCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
+    {
+        $this->criteres_requete->removeElement($criteresRequete);
+    }
+
+    /**
+     * Get criteres_requete
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCriteresRequete()
+    {
+        return $this->criteres_requete;
     }
 }

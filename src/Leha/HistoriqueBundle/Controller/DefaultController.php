@@ -4,7 +4,7 @@ namespace Leha\HistoriqueBundle\Controller;
 
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
-use Leha\AnalyseBundle\Entity\Analyse;
+use Leha\HistoriqueBundle\Entity\CritereRequete;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -79,18 +79,19 @@ class DefaultController extends Controller
     {
         $echantillons = null;
         if ($request->isMethod('POST')) {
-            foreach ($requete->getCriteres() as $critere) {
+            /*
+			TODO
+			foreach ($requete->getCriteres() as $critere) {
 
-            }
+            }*/
 
             $repo = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
             $echantillons = $repo->findAll();
         }
-
-
+		
         $form_builder = $this->createFormBuilder();
-
-        foreach ($requete->getCriteres() as $critere) {
+        foreach ($requete->getCriteresRequete() as $critere_requete) {
+			$critere = $critere_requete->getCritere();
             $form_builder->add($critere->getId(), $critere->getType(), array('label' => $critere->getLibelle()));
         }
         $form = $form_builder->getForm();
@@ -113,6 +114,8 @@ class DefaultController extends Controller
 
     public function choix_criteresAction(Request $request, Requete $requete)
     {
+		$em = $this->getDoctrine()->getManager();
+		
         if ($request->isMethod('POST')) {
             $criteres_id = $request->request->get('criteres_selectionnes');
 
@@ -120,32 +123,37 @@ class DefaultController extends Controller
 
             $aCriteresId = ($criteres_id == '') ? array() : explode('|', $criteres_id);
 
-            $criteres = $requete->getCriteres();
+            $criteres_requete = $requete->getCriteresRequete();
             $criteres_a_conserver = array();
-            foreach ($criteres as $critere) {
-                if (in_array($critere->getId(), $aCriteresId)) {
-                    $criteres_a_conserver[] = $critere->getId();
+            foreach ($criteres_requete as $critere_requete) {
+				if (($key_critere_id = array_search($critere_requete->getCritereId(), $aCriteresId)) !== false) {
+                //if (in_array($critere_requete->getCritereId(), $aCriteresId)) {
+                    $criteres_a_conserver[] = $critere_requete->getCritereId();
+					$critere_requete->setOrdre($key_critere_id);
+					$em->persist($critere_requete);
                 } else {
-                    $requete->removeCritere($critere);
+                    $em->remove($critere_requete);
                 }
             }
-
+			
             $criteres_to_add = array_diff($aCriteresId, $criteres_a_conserver);
 
-            foreach ($criteres_to_add as $critere_id) {
-                $critere = $repo->find($critere_id);
-                $requete->addCritere($critere);
-                echo 'ok';
+            foreach ($criteres_to_add as $indice => $critere_id) {
+				$critere = $repo->find($critere_id);
+                $critere_requete = new CritereRequete();
+				
+				$critere_requete->setRequete($requete);
+				$critere_requete->setCritere($critere);
+				$critere_requete->setOrdre($indice);
+				$em->persist($critere_requete);
             }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($requete);
+			
             $em->flush();
 
             return $this->redirect($this->generateUrl('leha_historique_search', array('id' => $requete->getId())));
         }
 
-        $em = $this->getDoctrine()->getManager();
+        
         $criteres_disponibles = $em->getRepository('LehaHistoriqueBundle:Requete')->getCriteresDisponibles($requete);
 
 

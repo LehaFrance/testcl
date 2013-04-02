@@ -34,10 +34,9 @@ class Requete
     protected $utilisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Leha\AnalyseBundle\Entity\Analyse")
-     * @ORM\JoinTable(name="t_analyses_requetes")
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\CritereRequete", mappedBy="requete")
      */
-    protected $analyses;
+    protected $criteres_requete;
 
     /**
      * Get id
@@ -99,39 +98,39 @@ class Requete
      */
     public function __construct()
     {
-        $this->analyses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criteres_requete = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+   
     /**
-     * Add analyses
+     * Add criteres_requete
      *
-     * @param \Leha\AnalyseBundle\Entity\Analyse $analyses
+     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
      * @return Requete
      */
-    public function addAnalyse(\Leha\AnalyseBundle\Entity\Analyse $analyses)
+    public function addCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
     {
-        $this->analyses[] = $analyses;
+        $this->criteres_requete[] = $criteresRequete;
     
         return $this;
     }
 
     /**
-     * Remove analyses
+     * Remove criteres_requete
      *
-     * @param \Leha\AnalyseBundle\Entity\Analyse $analyses
+     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
      */
-    public function removeAnalyse(\Leha\AnalyseBundle\Entity\Analyse $analyses)
+    public function removeCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
     {
-        $this->analyses->removeElement($analyses);
+        $this->criteres_requete->removeElement($criteresRequete);
     }
 
     /**
-     * Get analyses
+     * Get criteres_requete
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAnalyses()
+    public function getCriteresRequete()
     {
-        return $this->analyses;
+        return $this->criteres_requete;
     }
 }

@@ -34,10 +34,10 @@ class Requete
     protected $utilisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Leha\HistoriqueBundle\Entity\Critere")
-     * @ORM\JoinTable(name="t_criteres_requetes")
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\CritereRequete", mappedBy="requete")
+	 * @ORM\OrderBy({"ordre" = "ASC"})
      */
-    protected $criteres;
+    protected $criteres_requete;
 
     /**
      * Get id
@@ -99,39 +99,39 @@ class Requete
      */
     public function __construct()
     {
-        $this->criteres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criteres_requete = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+   
     /**
-     * Add criteres
+     * Add criteres_requete
      *
-     * @param \Leha\HistoriqueBundle\Entity\Critere $critere
+     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
      * @return Requete
      */
-    public function addCritere(\Leha\HistoriqueBundle\Entity\Critere $critere)
+    public function addCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
     {
-        $this->criteres[] = $critere;
+        $this->criteres_requete[] = $criteresRequete;
     
         return $this;
     }
 
     /**
-     * Remove criteres
+     * Remove criteres_requete
      *
-     * @param \Leha\HistoriqueeBundle\Entity\Critere $critere
+     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
      */
-    public function removeCritere(\Leha\HistoriqueBundle\Entity\Critere $critere)
+    public function removeCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
     {
-        $this->criteres->removeElement($critere);
+        $this->criteres_requete->removeElement($criteresRequete);
     }
 
     /**
-     * Get criteres
+     * Get criteres_requete
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCriteres()
+    public function getCriteresRequete()
     {
-        return $this->criteres;
+        return $this->criteres_requete;
     }
 }

@@ -250,4 +250,9 @@ class Utilisateur implements UserInterface
     {
         return $this->requetes;
     }
+	
+	public function __sleep()
+    {
+        return array('id');
+    }
 }

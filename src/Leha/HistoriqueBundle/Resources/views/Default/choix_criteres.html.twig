@@ -15,6 +15,7 @@
     }
 </style>
 <script type="text/javascript">
+$.event.props.push('dataTransfer');
 $(document).ready(function() {
     $('#listeGauche').on('dblclick', 'div', function(e) {
         $(this).appendTo('#listeDroite');
@@ -22,6 +23,24 @@ $(document).ready(function() {
     $('#listeDroite').on('dblclick', 'div', function(e) {
         $(this).appendTo('#listeGauche');
     });
+	
+	$('#listeDroite > div').on({
+		dragstart: function(e) {
+			console.log('dragstart');
+			e.dataTransfer.setData("Text", "coucou");
+		},
+		dragenter: function(e) {
+			console.log('dessus');
+			$(this).animate({marginTop:'20px'}, 'fast')
+		},
+		dragleave: function() {
+			console.log('leave');
+			$(this).animate({marginTop:'2px'}, 'fast')
+		},
+		drop: function(e) {
+			console.log('drop');
+		}
+	});
 
     $('#formChoixCriteres').on('submit', function() {
         var lst_element = '';
@@ -47,12 +66,12 @@ $(document).ready(function() {
         <div>
             <div id="listeGauche">
                 {% for critere in criteres_disponibles %}
-                    <div element_id="{{ critere.id }}">{{ critere.libelle }}</div>
+                    <div element_id="{{ critere.id }}" draggable="true">{{ critere.libelle }}</div>
                 {% endfor %}
             </div>
             <div id="listeDroite">
-                {% for critere in requete.criteres %}
-                    <div element_id="{{ critere.id }}">{{ critere.libelle }}</div>
+                {% for critere_requete in requete.criteresRequete %}
+                    <div element_id="{{ critere_requete.critere.id }}" draggable="true">{{ critere_requete.critere.libelle }}</div>
                 {% endfor %}
             </div>
         </div>
