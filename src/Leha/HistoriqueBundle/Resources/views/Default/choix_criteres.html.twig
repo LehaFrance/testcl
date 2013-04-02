@@ -8,43 +8,28 @@
         padding:5px;
     }
 
-    #listeGauche > div, #listeDroite > div {
+    #listeGauche > li, #listeDroite > li {
         margin:5px;
         padding:5px;
         border:1px solid #999999;
+		list-style-type: none;
     }
 </style>
 <script type="text/javascript">
 $.event.props.push('dataTransfer');
 $(document).ready(function() {
-    $('#listeGauche').on('dblclick', 'div', function(e) {
+    $('#listeGauche').on('dblclick', 'li', function(e) {
         $(this).appendTo('#listeDroite');
     });
-    $('#listeDroite').on('dblclick', 'div', function(e) {
+    $('#listeDroite').on('dblclick', 'li', function(e) {
         $(this).appendTo('#listeGauche');
     });
-	
-	$('#listeDroite > div').on({
-		dragstart: function(e) {
-			console.log('dragstart');
-			e.dataTransfer.setData("Text", "coucou");
-		},
-		dragenter: function(e) {
-			console.log('dessus');
-			$(this).animate({marginTop:'20px'}, 'fast')
-		},
-		dragleave: function() {
-			console.log('leave');
-			$(this).animate({marginTop:'2px'}, 'fast')
-		},
-		drop: function(e) {
-			console.log('drop');
-		}
-	});
+
+	 $( "#listeDroite" ).sortable();
 
     $('#formChoixCriteres').on('submit', function() {
         var lst_element = '';
-        $('#listeDroite > div').each(function() {
+        $('#listeDroite > li').each(function() {
             lst_element += $(this).attr('element_id') + '|';
         });
         if (lst_element != '') {
@@ -64,16 +49,16 @@ $(document).ready(function() {
     </div>
     <div class="modal-body">
         <div>
-            <div id="listeGauche">
+            <ul id="listeGauche">
                 {% for critere in criteres_disponibles %}
-                    <div element_id="{{ critere.id }}" draggable="true">{{ critere.libelle }}</div>
+                    <li element_id="{{ critere.id }}">{{ critere.libelle }}</li>
                 {% endfor %}
-            </div>
-            <div id="listeDroite">
+            </ul>
+            <ul id="listeDroite">
                 {% for critere_requete in requete.criteresRequete %}
-                    <div element_id="{{ critere_requete.critere.id }}" draggable="true">{{ critere_requete.critere.libelle }}</div>
+                    <li element_id="{{ critere_requete.critere.id }}">{{ critere_requete.critere.libelle }}</li>
                 {% endfor %}
-            </div>
+            </ul>
         </div>
     </div>
     <div class="modal-footer">
