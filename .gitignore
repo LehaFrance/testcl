@@ -7,4 +7,4 @@
 /vendor/
 /bin/
 /composer.phar
-
+*~

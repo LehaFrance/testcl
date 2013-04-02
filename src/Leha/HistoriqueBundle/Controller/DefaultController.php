@@ -77,24 +77,61 @@ class DefaultController extends Controller
 
     public function searchAction(Request $request, Requete $requete)
     {
-        $echantillons = null;
-        if ($request->isMethod('POST')) {
-            /*
-			TODO
-			foreach ($requete->getCriteres() as $critere) {
-
-            }*/
-
-            $repo = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
-            $echantillons = $repo->findAll();
-        }
-		
         $form_builder = $this->createFormBuilder();
         foreach ($requete->getCriteresRequete() as $critere_requete) {
-			$critere = $critere_requete->getCritere();
-            $form_builder->add($critere->getId(), $critere->getType(), array('label' => $critere->getLibelle()));
+            $critere = $critere_requete->getCritere();
+
+            $form_builder->add($critere->getFieldId(), $critere->getTypeCritere(), $critere->getFieldOptions());
         }
         $form = $form_builder->getForm();
+
+        $echantillons = null;
+        if ($request->isMethod('POST')) {
+            $repo = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
+
+            $post_data = $form->bindRequest($request)->getData();
+
+            $filter = '';
+            $post_use_data = array();
+			foreach ($requete->getCriteresRequete() as $critere_requete) {
+                $critere = $critere_requete->getCritere();
+                if (isset($post_data[$critere->getFieldId()]) && $post_data[$critere->getFieldId()] != '') {
+                    if ($critere->getPerimetreRecherche() == 'ECHANT') {
+                        $filter .= 'e.etatReception = :'.$critere->getFieldName();
+                        $post_use_data[$critere->getFieldName()] = $post_data[$critere->getFieldId()];
+                    }
+                }
+            }
+            $queryBuilder = $repo->createQueryBuilder('e')
+                ->where($filter);
+
+            foreach ($post_use_data as $key => $value) {
+                $queryBuilder->setParameter(':'.$key, $value);
+            }
+
+            $queryBuilder->setMaxResults(10000);
+
+            $echantillons = $queryBuilder->getQuery()->getResult();
+            $echantillons_id = array();
+            foreach ($echantillons as $echantillon) {
+                $echantillons_id[] = $echantillon->getId();
+            }
+
+            //echo count($echantillons_id);
+/*
+            foreach ($requete->getCriteresRequete() as $critere_requete) {
+                $critere = $critere_requete->getCritere();
+                if (isset($post_data[$critere->getFieldId()]) && $post_data[$critere->getFieldId()] != '') {
+                    if ($critere->getPerimetreRecherche() == 'PROP') {
+                        echo 'ok';
+                    }
+                }
+            }
+*/
+            $echantillons = null;
+        }
+		
+
 
         return $this->render('LehaHistoriqueBundle:Default:search.html.twig', array(
             'requete' => $requete,

@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="t_criteres")
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type_critere", type="string")
+ * @ORM\DiscriminatorMap({"choice" = "CritereChoixMultiple", "text" = "CritereString", "date" = "CritereDate"})
  */
 class Critere
 {
@@ -31,11 +34,23 @@ class Critere
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=20)
+     * @ORM\Column(name="field_name", type="string", length=50)
      */
-    private $type;
+    protected $field_name;
+    
+    /**
+     * @var type 
+     * @ORM\Column(name="perimetre_recherche", type="string", length=20)
+     */
+    protected $perimetre_recherche;
+    
+    /**
+     * @var type 
+     * @ORM\Column(name="options", type="string", length=255)
+     */
+    protected $options;
 	
-	/**
+    /**
      * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\CritereRequete", mappedBy="critere")
      */
     protected $criteres_requete;
@@ -73,28 +88,6 @@ class Critere
         return $this->libelle;
     }
 
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Critere
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
     /**
      * Constructor
      */
@@ -134,5 +127,86 @@ class Critere
     public function getCriteresRequete()
     {
         return $this->criteres_requete;
+    }
+
+    /**
+     * Set perimetre_recherche
+     *
+     * @param string $perimetreRecherche
+     * @return Critere
+     */
+    public function setPerimetreRecherche($perimetreRecherche)
+    {
+        $this->perimetre_recherche = $perimetreRecherche;
+    
+        return $this;
+    }
+
+    /**
+     * Get perimetre_recherche
+     *
+     * @return string 
+     */
+    public function getPerimetreRecherche()
+    {
+        return $this->perimetre_recherche;
+    }
+
+    /**
+     * Set options
+     *
+     * @param string $options
+     * @return Critere
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    
+        return $this;
+    }
+
+    /**
+     * Get options
+     *
+     * @return string 
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+    
+    public function getFieldOptions()
+    {
+        return array(
+            'label' => $this->getLibelle()
+        );
+    }
+
+    public function getFieldId()
+    {
+        return 'CRIT_'.$this->getId();
+    }
+
+    /**
+     * Set field_name
+     *
+     * @param string $fieldName
+     * @return Critere
+     */
+    public function setFieldName($fieldName)
+    {
+        $this->field_name = $fieldName;
+    
+        return $this;
+    }
+
+    /**
+     * Get field_name
+     *
+     * @return string 
+     */
+    public function getFieldName()
+    {
+        return $this->field_name;
     }
 }
