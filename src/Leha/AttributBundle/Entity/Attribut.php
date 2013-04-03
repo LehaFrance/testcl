@@ -1,0 +1,247 @@
+<?php
+
+namespace Leha\AttributBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Class Attribut
+ * @package Leha\AttributBundle\Entity
+ * @ORM\Table(name="t_attributs")
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"choice" = "AttributChoice", "string" = "AttributString"})
+ */
+class Attribut
+{
+    Const SCOPE_ECHANTILLON = 'echantillon';
+    Const SCOPE_ATTRIBUT = 'attribut';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="libelle", type="string", length=100)
+     */
+    private $libelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=500)
+     */
+    private $description;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="options", type="array")
+     */
+    private $options;
+
+    /**
+     * @var string
+     * @ORM\Column(name="scope", columnDefinition="ENUM('echantillon', 'attribut')")
+     */
+    private $scope;
+
+    /**
+     * @var string
+     * @ORM\Column(name="reference_solution", type="string", length=200)
+     */
+    private $reference_solution;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="attribut")
+     */
+    private $attribut_requetes;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->attribut_requetes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->options = array();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set libelle
+     *
+     * @param string $libelle
+     * @return Attribut
+     */
+    public function setLibelle($libelle)
+    {
+        $this->libelle = $libelle;
+    
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string 
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Attribut
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Add attribut_requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
+     * @return Attribut
+     */
+    public function addAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
+    {
+        $this->attribut_requetes[] = $attributRequetes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove attribut_requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
+     */
+    public function removeAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
+    {
+        $this->attribut_requetes->removeElement($attributRequetes);
+    }
+
+    /**
+     * Get attribut_requetes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttributRequetes()
+    {
+        return $this->attribut_requetes;
+    }
+
+    public function getFieldId()
+    {
+        return 'ATTR_'.$this->getId();
+    }
+
+    /**
+     * Set options
+     *
+     * @param string $options
+     * @return Attribut
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    
+        return $this;
+    }
+
+    /**
+     * Get options
+     *
+     * @return string 
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function getFieldOptions()
+    {
+        return array(
+            'label' => $this->getLibelle()
+        );
+    }
+
+    /**
+     * Set scope
+     *
+     * @param string $scope
+     * @return Attribut
+     */
+    public function setScope($scope)
+    {
+        $this->scope = $scope;
+    
+        return $this;
+    }
+
+    /**
+     * Get scope
+     *
+     * @return string 
+     */
+    public function getScope()
+    {
+        return $this->scope;
+    }
+
+    /**
+     * Set reference_solution
+     *
+     * @param string $referenceSolution
+     * @return Attribut
+     */
+    public function setReferenceSolution($referenceSolution)
+    {
+        $this->reference_solution = $referenceSolution;
+    
+        return $this;
+    }
+
+    /**
+     * Get reference_solution
+     *
+     * @return string 
+     */
+    public function getReferenceSolution()
+    {
+        return $this->reference_solution;
+    }
+}

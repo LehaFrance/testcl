@@ -5,37 +5,37 @@ namespace Leha\HistoriqueBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CritereRequete
+ * AttributRequete
  *
- * @ORM\Table(name="t_criteres_requetes")
- * @ORM\Entity(repositoryClass="Leha\HistoriqueBundle\Entity\CritereRequeteRepository")
+ * @ORM\Table(name="t_attributs_requetes")
+ * @ORM\Entity(repositoryClass="Leha\HistoriqueBundle\Entity\AttributRequeteRepository")
  */
-class CritereRequete
+class AttributRequete
 {
     /**
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Leha\HistoriqueBundle\Entity\Critere", inversedBy="criteres_requete")
-	 * @ORM\JoinColumn(name="critere_id", referencedColumnName="id")
+	 * @ORM\ManyToOne(targetEntity="Leha\EchantillonBundle\Entity\Attribut", inversedBy="attribut_requetes")
+	 * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
 	 */
-    protected $critere;
+    protected $attribut;
 
     /**
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Leha\HistoriqueBundle\Entity\Requete", inversedBy="criteres_requete")
+	 * @ORM\ManyToOne(targetEntity="Leha\HistoriqueBundle\Entity\Requete", inversedBy="requete_attributs")
 	 * @ORM\JoinColumn(name="requete_id", referencedColumnName="id")
 	 */
     protected $requete;
-	
+
 	/**
-	 * @ORM\Column(name="critere_id", type="integer")
+	 * @ORM\Column(name="attribut_id", type="integer")
 	 */
-	protected $critere_id;
+	protected $attribut_id;
 
 	/**
 	 * @ORM\Column(name="requete_id", type="integer")
 	 */
 	protected $requete_id;
-	
+
     /**
      * @var integer
      *
@@ -47,19 +47,19 @@ class CritereRequete
      * Set ordre
      *
      * @param integer $ordre
-     * @return CritereRequete
+     * @return AttributRequete
      */
     public function setOrdre($ordre)
     {
         $this->ordre = $ordre;
-    
+
         return $this;
     }
 
     /**
      * Get ordre
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdre()
     {
@@ -67,45 +67,45 @@ class CritereRequete
     }
 
     /**
-     * Set critere
+     * Set attribut
      *
-     * @param \Leha\HistoriqueBundle\Entity\Critere $critere
-     * @return CritereRequete
+     * @param \Leha\EchantillonBundle\Entity\Attribut $attribut
+     * @return AttributRequete
      */
-    public function setCritere(\Leha\HistoriqueBundle\Entity\Critere $critere)
+    public function setAttribut(\Leha\HistoriqueBundle\Entity\Attribut $attribut)
     {
-        $this->critere = $critere;
-    
+        $this->attribut = $attribut;
+
         return $this;
     }
 
     /**
-     * Get critere
+     * Get attribut
      *
-     * @return \Leha\HistoriqueBundle\Entity\Critere 
+     * @return \Leha\EchantillonBundle\Entity\Attribut
      */
-    public function getCritere()
+    public function getAttribut()
     {
-        return $this->critere;
+        return $this->attribut;
     }
 
     /**
      * Set requete
      *
      * @param \Leha\HistoriqueBundle\Entity\Requete $requete
-     * @return CritereRequete
+     * @return AttributRequete
      */
     public function setRequete(\Leha\HistoriqueBundle\Entity\Requete $requete)
     {
         $this->requete = $requete;
-    
+
         return $this;
     }
 
     /**
      * Get requete
      *
-     * @return \Leha\HistoriqueBundle\Entity\Requete 
+     * @return \Leha\HistoriqueBundle\Entity\Requete
      */
     public function getRequete()
     {
@@ -113,33 +113,33 @@ class CritereRequete
     }
 
     /**
-     * Set critere_id
+     * Set attribut_id
      *
-     * @param integer $critereId
-     * @return CritereRequete
+     * @param integer $attributId
+     * @return AttributRequete
      */
-    public function setCritereId($critereId)
+    public function setAttributId($attributId)
     {
-        $this->critere_id = $critereId;
-    
+        $this->attribut_id = $attributId;
+
         return $this;
     }
 
     /**
-     * Get critere_id
+     * Get attribut_id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getCritereId()
+    public function getAttributId()
     {
-        return $this->critere_id;
+        return $this->attribut_id;
     }
 
     /**
      * Set requete_id
      *
      * @param integer $requeteId
-     * @return CritereRequete
+     * @return AttributRequete
      */
     public function setRequeteId($requeteId)
     {
