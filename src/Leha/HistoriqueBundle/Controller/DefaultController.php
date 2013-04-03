@@ -4,7 +4,9 @@ namespace Leha\HistoriqueBundle\Controller;
 
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
-use Leha\HistoriqueBundle\Entity\CritereRequete;
+use Leha\HistoriqueBundle\Entity\AttributRequete;
+use Leha\EchantillonBundle\Entity\EchantillonAttribut;
+use Leha\AttributBundle\Entity\Attribut;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -77,61 +79,93 @@ class DefaultController extends Controller
 
     public function searchAction(Request $request, Requete $requete)
     {
-        $form_builder = $this->createFormBuilder();
-        foreach ($requete->getCriteresRequete() as $critere_requete) {
-            $critere = $critere_requete->getCritere();
+        $em = $this->getDoctrine()->getManager();
 
-            $form_builder->add($critere->getFieldId(), $critere->getTypeCritere(), $critere->getFieldOptions());
+        $form_builder = $this->createFormBuilder();
+
+        $attributs_requete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+        foreach ($attributs_requete as $attribut_requete) {
+            $attribut = $attribut_requete->getAttribut();
+            $form_builder->add($attribut->getFieldId(), $attribut->getType(), $attribut->getFieldOptions());
         }
+/*
+         $attributs = $em->getRepository('LehaAttributBundle:Attribut')->getFormAttributsByRequeteId($requete->getId());
+         foreach ($attributs as $attribut) {
+            $form_builder->add($attribut->getFieldId(), $attribut->getType(), $attribut->getFieldOptions());
+        }
+*/
         $form = $form_builder->getForm();
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
-            $repo = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
+            $repo_echantillon = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
 
-            $post_data = $form->bindRequest($request)->getData();
+            $post_data = $form->bind($request)->getData();
 
             $filter = '';
             $post_use_data = array();
-			foreach ($requete->getCriteresRequete() as $critere_requete) {
-                $critere = $critere_requete->getCritere();
-                if (isset($post_data[$critere->getFieldId()]) && $post_data[$critere->getFieldId()] != '') {
-                    if ($critere->getPerimetreRecherche() == 'ECHANT') {
-                        $filter .= 'e.etatReception = :'.$critere->getFieldName();
-                        $post_use_data[$critere->getFieldName()] = $post_data[$critere->getFieldId()];
+			foreach ($attributs_requete as $attribut_requete) {
+                $attribut = $attribut_requete->getAttribut();
+                if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
+                    if ($attribut->getScope() == Attribut::SCOPE_ECHANTILLON) {
+                        $options = $attribut->getOptions();
+                        $filter .= 'e.'.$options['attributName'].' = :'.$attribut->getFieldId();
+                        $post_use_data[$attribut->getFieldId()] = $post_data[$attribut->getFieldId()];
                     }
                 }
             }
-            $queryBuilder = $repo->createQueryBuilder('e')
-                ->where($filter);
 
-            foreach ($post_use_data as $key => $value) {
-                $queryBuilder->setParameter(':'.$key, $value);
+
+            $queryBuilder = $repo_echantillon->createQueryBuilder('e');
+            if (strlen($filter) > 0) {
+                $queryBuilder->where($filter);
+                foreach ($post_use_data as $key => $value) {
+                    $queryBuilder->setParameter(':'.$key, $value);
+                }
             }
-
-            $queryBuilder->setMaxResults(10000);
+            $queryBuilder->setFirstResult(11400);
+            $queryBuilder->setMaxResults(1000);
 
             $echantillons = $queryBuilder->getQuery()->getResult();
+
             $echantillons_id = array();
             foreach ($echantillons as $echantillon) {
                 $echantillons_id[] = $echantillon->getId();
             }
 
-            //echo count($echantillons_id);
-/*
-            foreach ($requete->getCriteresRequete() as $critere_requete) {
-                $critere = $critere_requete->getCritere();
-                if (isset($post_data[$critere->getFieldId()]) && $post_data[$critere->getFieldId()] != '') {
-                    if ($critere->getPerimetreRecherche() == 'PROP') {
-                        echo 'ok';
+            if (sizeof($echantillons_id) > 0) {
+                foreach ($attributs_requete as $attribut_requete) {
+                    $attribut = $attribut_requete->getAttribut();
+                    if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
+                        if ($attribut->getScope() == Attribut::SCOPE_ATTRIBUT) {
+                            $echantillons_attribut = $em->createQuery('select e from LehaEchantillonBundle:AttributEchantillon e where e.attribut_id = :attribut_id and e.echantillon_id in (:echantillons_id) and e.value like :valeur')
+                                ->setParameter('attribut_id', $attribut->getId())
+                                ->setParameter('echantillons_id', $echantillons_id)
+                                ->setParameter('valeur', $post_data[$attribut->getFieldId()])
+                                ->getResult();
+
+                            $echantillons_id = array();
+                            foreach ($echantillons_attribut as $echantillon_attribut) {
+                                $echantillons_id[] = $echantillon_attribut->getEchantillonId();
+                            }
+                        }
                     }
                 }
             }
-*/
-            $echantillons = null;
-        }
-		
 
+            if (count($echantillons_id) > 0) {
+                $echantillons = $repo_echantillon->findBy(array(
+                    'id' => $echantillons_id
+                ));
+
+                $grid_attributs = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_GRID);
+                foreach ($grid_attributs as $attribut_requete) {
+
+                }
+            } else {
+                $echantillons = null;
+            }
+        }
 
         return $this->render('LehaHistoriqueBundle:Default:search.html.twig', array(
             'requete' => $requete,
@@ -149,40 +183,48 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('leha_historique'));
     }
 
-    public function choix_criteresAction(Request $request, Requete $requete)
+    public function choix_attributsAction(Request $request, Requete $requete)
     {
 		$em = $this->getDoctrine()->getManager();
-		
+
+        $attributs_requete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+
         if ($request->isMethod('POST')) {
-            $criteres_id = $request->request->get('criteres_selectionnes');
+            $attributs_id = $request->request->get('attributs_selectionnes');
 
-            $repo = $this->getDoctrine()->getRepository('LehaHistoriqueBundle:Critere');
+            $repo_attribut = $this->getDoctrine()->getRepository('LehaAttributBundle:Attribut');
 
-            $aCriteresId = ($criteres_id == '') ? array() : explode('|', $criteres_id);
+            $aAttributsId = ($attributs_id == '') ? array() : explode('|', $attributs_id);
 
-            $criteres_requete = $requete->getCriteresRequete();
-            $criteres_a_conserver = array();
-            foreach ($criteres_requete as $critere_requete) {
-				if (($key_critere_id = array_search($critere_requete->getCritereId(), $aCriteresId)) !== false) {
-                //if (in_array($critere_requete->getCritereId(), $aCriteresId)) {
-                    $criteres_a_conserver[] = $critere_requete->getCritereId();
-					$critere_requete->setOrdre($key_critere_id);
-					$em->persist($critere_requete);
+
+            $form_builder = $this->createFormBuilder();
+            //$attributs = $repo_attribut->getFormAttributsByRequeteId($requete->getId());
+
+            $attributs_requete = $attributs_requete;
+            $attributs_a_conserver = array();
+            foreach ($attributs_requete as $attribut_requete) {
+				if (($key_attribut_id = array_search($attribut_requete->getAttributId(), $aAttributsId)) !== false) {
+                    $attributs_a_conserver[] = $attribut_requete->getAttributId();
+                    $attribut_requete->setOrdre($key_attribut_id);
+
+					$em->persist($attribut_requete);
                 } else {
-                    $em->remove($critere_requete);
+                    $em->remove($attribut_requete);
                 }
             }
-			
-            $criteres_to_add = array_diff($aCriteresId, $criteres_a_conserver);
 
-            foreach ($criteres_to_add as $indice => $critere_id) {
-				$critere = $repo->find($critere_id);
-                $critere_requete = new CritereRequete();
-				
-				$critere_requete->setRequete($requete);
-				$critere_requete->setCritere($critere);
-				$critere_requete->setOrdre($indice);
-				$em->persist($critere_requete);
+            $attributs_to_add = array_diff($aAttributsId, $attributs_a_conserver);
+
+            foreach ($attributs_to_add as $indice => $attribut_id) {
+				$attribut = $repo_attribut->find($attribut_id);
+
+                $attribut_requete = new AttributRequete();
+
+                $attribut_requete->setRequete($requete);
+                $attribut_requete->setAttribut($attribut);
+                $attribut_requete->setOrdre($indice);
+                $attribut_requete->setType(AttributRequete::ATTRIBUT_REQUETE_FORM);
+				$em->persist($attribut_requete);
             }
 			
             $em->flush();
@@ -191,12 +233,13 @@ class DefaultController extends Controller
         }
 
         
-        $criteres_disponibles = $em->getRepository('LehaHistoriqueBundle:Requete')->getCriteresDisponibles($requete);
+        $attributs_disponibles = $em->getRepository('LehaHistoriqueBundle:Requete')->getAttributsDisponibles($requete);
 
 
-        return $this->render('LehaHistoriqueBundle:Default:choix_criteres.html.twig', array(
+        return $this->render('LehaHistoriqueBundle:Default:choix_attributs.html.twig', array(
             'requete' => $requete,
-            'criteres_disponibles' => $criteres_disponibles
+            'attributs_disponibles' => $attributs_disponibles,
+            'attributs_requete' => $attributs_requete
         ));
     }
 }

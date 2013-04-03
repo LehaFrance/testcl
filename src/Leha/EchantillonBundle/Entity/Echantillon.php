@@ -154,6 +154,10 @@ class Echantillon
      */
     private $ceqCommentaireLibre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Leha\EchantillonBundle\Entity\AttributEchantillon", mappedBy="echantillon")
+     */
+    protected $echantillon_attributs;
 
     /**
      * Get id
@@ -600,5 +604,46 @@ class Echantillon
     public function getCeqCommentaireLibre()
     {
         return $this->ceqCommentaireLibre;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->echantillon_attributs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add echantillon_attributs
+     *
+     * @param \Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs
+     * @return Echantillon
+     */
+    public function addEchantillonAttribut(\Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs)
+    {
+        $this->echantillon_attributs[] = $echantillonAttributs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove echantillon_attributs
+     *
+     * @param \Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs
+     */
+    public function removeEchantillonAttribut(\Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs)
+    {
+        $this->echantillon_attributs->removeElement($echantillonAttributs);
+    }
+
+    /**
+     * Get echantillon_attributs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEchantillonAttributs()
+    {
+        return $this->echantillon_attributs;
     }
 }

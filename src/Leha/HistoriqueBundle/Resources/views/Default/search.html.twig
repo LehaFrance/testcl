@@ -2,12 +2,12 @@
 
 {% block content %}
 <style type="text/css">
-#modalChoixCriteres {
+#modalChoixAttributs {
     width:800px;
 }
 </style>
 <div id="modalEditQuery" class="modal hide"></div>
-<div id="modalChoixCriteres" class="modal hide">
+<div id="modalChoixAttributs" class="modal hide">
 
 </div>
 
@@ -49,11 +49,11 @@
             });
 
             $('#linkChoixCriteres').click(function() {
-                $.get('{{ path('leha_historique_choix_criteres', { id : requete.id}) }}', function(data) {
-                    $('#modalChoixCriteres').html(data);
+                $.get('{{ path('leha_historique_choix_attributs', { id : requete.id}) }}', function(data) {
+                    $('#modalChoixAttributs').html(data);
                 });
 
-                $('#modalChoixCriteres').modal();
+                $('#modalChoixAttributs').modal();
             });
 
             $('#linkDelete').click(function() {

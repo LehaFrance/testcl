@@ -5,10 +5,8 @@ namespace Leha\AttributBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Attribut
- * @package Leha\AttributBundle\Entity
+ * @ORM\Entity(repositoryClass="Leha\AttributBundle\Entity\AttributRepository")
  * @ORM\Table(name="t_attributs")
- * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"choice" = "AttributChoice", "string" = "AttributString"})
@@ -64,7 +62,6 @@ class Attribut
      * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="attribut")
      */
     private $attribut_requetes;
-
 
     /**
      * Constructor
@@ -132,47 +129,9 @@ class Attribut
     }
 
     /**
-     * Add attribut_requetes
-     *
-     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
-     * @return Attribut
-     */
-    public function addAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
-    {
-        $this->attribut_requetes[] = $attributRequetes;
-    
-        return $this;
-    }
-
-    /**
-     * Remove attribut_requetes
-     *
-     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
-     */
-    public function removeAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
-    {
-        $this->attribut_requetes->removeElement($attributRequetes);
-    }
-
-    /**
-     * Get attribut_requetes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAttributRequetes()
-    {
-        return $this->attribut_requetes;
-    }
-
-    public function getFieldId()
-    {
-        return 'ATTR_'.$this->getId();
-    }
-
-    /**
      * Set options
      *
-     * @param string $options
+     * @param array $options
      * @return Attribut
      */
     public function setOptions($options)
@@ -185,18 +144,11 @@ class Attribut
     /**
      * Get options
      *
-     * @return string 
+     * @return array 
      */
     public function getOptions()
     {
         return $this->options;
-    }
-
-    public function getFieldOptions()
-    {
-        return array(
-            'label' => $this->getLibelle()
-        );
     }
 
     /**
@@ -243,5 +195,50 @@ class Attribut
     public function getReferenceSolution()
     {
         return $this->reference_solution;
+    }
+
+    /**
+     * Add attribut_requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
+     * @return Attribut
+     */
+    public function addAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
+    {
+        $this->attribut_requetes[] = $attributRequetes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove attribut_requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
+     */
+    public function removeAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
+    {
+        $this->attribut_requetes->removeElement($attributRequetes);
+    }
+
+    /**
+     * Get attribut_requetes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttributRequetes()
+    {
+        return $this->attribut_requetes;
+    }
+
+    public function getFieldId()
+    {
+        return 'ATTR_'.$this->getId();
+    }
+
+    public function getFieldOptions()
+    {
+        return array(
+            'label' => $this->getLibelle()
+        );
     }
 }

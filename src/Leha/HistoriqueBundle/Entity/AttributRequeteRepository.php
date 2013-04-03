@@ -12,13 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class AttributRequeteRepository extends EntityRepository
 {
-	/*public function getByAttributRequete(Critere $critere, Requete $requete)
+	public function getByRequeteType(Requete $requete, $type)
 	{
-		$query = $this->getEntityManager()->createQuery('select cr from LehaHistoriqueBundle:CritereRequete cr');
+        $attributs_requete = $this->getEntityManager()->createQuery('select ar from LehaHistoriqueBundle:AttributRequete ar where ar.requete_id = :requete_id and ar.type = :type order by ar.ordre')
+            ->setParameter('requete_id', $requete->getId())
+            ->setParameter('type', AttributRequete::ATTRIBUT_REQUETE_FORM)
+            ->getResult();
 		
-		$dd = $query->getSingleResult();
-		exit;
-
-		return $dd; 
-	}*/
+		return $attributs_requete;
+	}
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Requete
 {
     /**
-     * @var
+     * @var integer
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,7 +21,7 @@ class Requete
     protected $id;
 
     /**
-     * @var
+     * @var string
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
      */
@@ -34,10 +34,10 @@ class Requete
     protected $utilisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\CritereRequete", mappedBy="requete")
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="requete")
 	 * @ORM\OrderBy({"ordre" = "ASC"})
      */
-    protected $criteres_requete;
+    protected $requete_attributs;
 
     /**
      * Get id
@@ -99,39 +99,72 @@ class Requete
      */
     public function __construct()
     {
-        $this->criteres_requete = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->requete_attributs = new \Doctrine\Common\Collections\ArrayCollection();
     }
    
     /**
-     * Add criteres_requete
+     * Add requete_attributs
      *
-     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributsRequete
      * @return Requete
      */
-    public function addCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
+    public function addAttributsRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributsRequete)
     {
-        $this->criteres_requete[] = $criteresRequete;
+        $this->requete_attributs[] = $attributsRequete;
     
         return $this;
     }
 
     /**
-     * Remove criteres_requete
+     * Remove requete_attributs
      *
-     * @param \Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributsRequete
      */
-    public function removeCriteresRequete(\Leha\HistoriqueBundle\Entity\CritereRequete $criteresRequete)
+    public function removeAttributsRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributsRequete)
     {
-        $this->criteres_requete->removeElement($criteresRequete);
+        $this->requete_attributs->removeElement($attributsRequete);
     }
 
     /**
-     * Get criteres_requete
+     * Get requete_attributs
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCriteresRequete()
+    public function getAttributsRequete()
     {
-        return $this->criteres_requete;
+        return $this->requete_attributs;
+    }
+
+    /**
+     * Add requete_attributs
+     *
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $requeteAttributs
+     * @return Requete
+     */
+    public function addRequeteAttribut(\Leha\HistoriqueBundle\Entity\AttributRequete $requeteAttributs)
+    {
+        $this->requete_attributs[] = $requeteAttributs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove requete_attributs
+     *
+     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $requeteAttributs
+     */
+    public function removeRequeteAttribut(\Leha\HistoriqueBundle\Entity\AttributRequete $requeteAttributs)
+    {
+        $this->requete_attributs->removeElement($requeteAttributs);
+    }
+
+    /**
+     * Get requete_attributs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRequeteAttributs()
+    {
+        return $this->requete_attributs;
     }
 }

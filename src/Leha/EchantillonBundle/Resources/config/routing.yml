@@ -1,3 +1,4 @@
 leha_echantillon_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: LehaEchantillonBundle:Default:index }
+

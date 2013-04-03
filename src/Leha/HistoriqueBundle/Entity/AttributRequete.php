@@ -12,9 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AttributRequete
 {
+    Const ATTRIBUT_REQUETE_FORM = 'form';
+    Const ATTRIBUT_REQUETE_GRID = 'grid';
+
     /**
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Leha\EchantillonBundle\Entity\Attribut", inversedBy="attribut_requetes")
+	 * @ORM\ManyToOne(targetEntity="Leha\AttributBundle\Entity\Attribut", inversedBy="attribut_requetes")
 	 * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
 	 */
     protected $attribut;
@@ -25,6 +28,14 @@ class AttributRequete
 	 * @ORM\JoinColumn(name="requete_id", referencedColumnName="id")
 	 */
     protected $requete;
+
+    /**
+     * @ORM\Id
+     * @var string
+     *
+     * @ORM\Column(name="type", columnDefinition="ENUM('form', 'grid')")
+     */
+    private $type;
 
 	/**
 	 * @ORM\Column(name="attribut_id", type="integer")
@@ -69,10 +80,10 @@ class AttributRequete
     /**
      * Set attribut
      *
-     * @param \Leha\EchantillonBundle\Entity\Attribut $attribut
+     * @param \Leha\AttributBundle\Entity\Attribut $attribut
      * @return AttributRequete
      */
-    public function setAttribut(\Leha\HistoriqueBundle\Entity\Attribut $attribut)
+    public function setAttribut(\Leha\AttributBundle\Entity\Attribut $attribut)
     {
         $this->attribut = $attribut;
 
@@ -82,7 +93,7 @@ class AttributRequete
     /**
      * Get attribut
      *
-     * @return \Leha\EchantillonBundle\Entity\Attribut
+     * @return \Leha\AttributBundle\Entity\Attribut
      */
     public function getAttribut()
     {
@@ -156,5 +167,28 @@ class AttributRequete
     public function getRequeteId()
     {
         return $this->requete_id;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return AttributRequete
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

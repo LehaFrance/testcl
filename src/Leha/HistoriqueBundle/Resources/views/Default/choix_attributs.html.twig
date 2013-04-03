@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 	 $( "#listeDroite" ).sortable();
 
-    $('#formChoixCriteres').on('submit', function() {
+    $('#formChoixAttributs').on('submit', function() {
         var lst_element = '';
         $('#listeDroite > li').each(function() {
             lst_element += $(this).attr('element_id') + '|';
@@ -36,13 +36,13 @@ $(document).ready(function() {
             lst_element = lst_element.substr(0, lst_element.length - 1);
         }
 
-        $('#criteres_selectionnes').val(lst_element);
+        $('#attributs_selectionnes').val(lst_element);
 
         return true;
     });
 });
 </script>
-<form id="formChoixCriteres" action="{{ path('leha_historique_choix_criteres', {id : requete.id}) }}" method="post">
+<form id="formChoixAttributs" action="{{ path('leha_historique_choix_attributs', {id : requete.id}) }}" method="post">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
         <h3>Choix critères</h3>
@@ -50,13 +50,13 @@ $(document).ready(function() {
     <div class="modal-body">
         <div>
             <ul id="listeGauche">
-                {% for critere in criteres_disponibles %}
+                {% for critere in attributs_disponibles %}
                     <li element_id="{{ critere.id }}">{{ critere.libelle }}</li>
                 {% endfor %}
             </ul>
             <ul id="listeDroite">
-                {% for critere_requete in requete.criteresRequete %}
-                    <li element_id="{{ critere_requete.critere.id }}">{{ critere_requete.critere.libelle }}</li>
+                {% for attribut_requete in attributs_requete %}
+                    <li element_id="{{ attribut_requete.attribut.id }}">{{ attribut_requete.attribut.libelle }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -65,5 +65,5 @@ $(document).ready(function() {
         <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     </div>
-    <input type="hidden" id="criteres_selectionnes" name="criteres_selectionnes" />
+    <input type="hidden" id="attributs_selectionnes" name="attributs_selectionnes" />
 </form>

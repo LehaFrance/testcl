@@ -4,6 +4,7 @@ namespace Leha\HistoriqueBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Leha\HistoriqueBundle\Entity\AttributRequete;
 
 /**
  * RequeteRepository
@@ -13,20 +14,21 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class RequeteRepository extends EntityRepository
 {
-    public function getCriteresDisponibles(Requete $requete)
+    public function getAttributsDisponibles(Requete $requete)
     {
         $rsm = new ResultSetMapping;
-        $rsm->addEntityResult('LehaHistoriqueBundle:Critere', 'c');
-        $rsm->addFieldResult('c', 'id', 'id');
-        $rsm->addFieldResult('c', 'libelle', 'libelle');
-        $rsm->addFieldResult('c', 'type', 'type');
+        $rsm->addEntityResult('LehaAttributBundle:Attribut', 'a');
+        $rsm->addFieldResult('a', 'id', 'id');
+        $rsm->addFieldResult('a', 'libelle', 'libelle');
+        $rsm->addFieldResult('a', 'type', 'type');
 
-        $query = $this->getEntityManager()->createNativeQuery("select c.id, c.libelle from t_criteres c left join t_criteres_requetes cr on c.id = cr.critere_id and cr.requete_id = ? where cr.requete_id is null", $rsm);
+        $query = $this->getEntityManager()->createNativeQuery("select a.id, a.libelle from t_attributs a left join t_attributs_requetes ar on a.id = ar.attribut_id and ar.requete_id = ? and ar.type = ? where ar.requete_id is null", $rsm);
 
         $query->setParameter(1, $requete->getId());
+        $query->setParameter(2, AttributRequete::ATTRIBUT_REQUETE_FORM);
 
-        $criteres = $query->getResult();
+        $attributs = $query->getResult();
 
-        return $criteres;
+        return $attributs;
     }
 }
