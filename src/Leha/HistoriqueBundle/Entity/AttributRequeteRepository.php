@@ -16,7 +16,7 @@ class AttributRequeteRepository extends EntityRepository
 	{
         $attributs_requete = $this->getEntityManager()->createQuery('select ar from LehaHistoriqueBundle:AttributRequete ar where ar.requete_id = :requete_id and ar.type = :type order by ar.ordre')
             ->setParameter('requete_id', $requete->getId())
-            ->setParameter('type', AttributRequete::ATTRIBUT_REQUETE_FORM)
+            ->setParameter('type', $type)
             ->getResult();
 		
 		return $attributs_requete;

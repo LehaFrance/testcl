@@ -158,10 +158,24 @@ class DefaultController extends Controller
                     'id' => $echantillons_id
                 ));
 
-                $grid_attributs = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_GRID);
+                $repo_ar = $em->getRepository('LehaHistoriqueBundle:AttributRequete');
+                $grid_attributs = $repo_ar->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_GRID);
+                //$repo_ae = $em->getRepository('LehaEchantillonBundle:AttributEchantillon');
+                $repo_ae = $this->getDoctrine()->getRepository('LehaEchantillonBundle:AttributEchantillon');
                 foreach ($grid_attributs as $attribut_requete) {
+                    foreach ($echantillons as $echantillon) {
+                        $ars = $repo_ae->findBy(
+                            array(
+                                'attribut_id' => $attribut_requete->getAttributId(),
+                                'echantillon_id' => $echantillon->getId()
+                            )
+                        );
 
+                        //$ar = $repo_ae->findAll();
+                    }
                 }
+
+
             } else {
                 $echantillons = null;
             }

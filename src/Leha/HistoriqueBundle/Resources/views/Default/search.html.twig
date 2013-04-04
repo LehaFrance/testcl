@@ -31,9 +31,15 @@
 <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
 
+<table>
 {% for echantillon in echantillons %}
-    {{ echantillon.prefixeNom ~ '.' ~ echantillon.demandeNumero ~ '.' ~ echantillon.echantNumero }}<br />
+    <tr>
+        <td>{{ echantillon.prefixeNom ~ '.' ~ echantillon.demandeNumero ~ '.' ~ echantillon.echantNumero }}</td>
+        <td>{{ echantillon.conditionnement }}</td>
+        <td>{{ echantillon.itm8 }}</td>
+    </tr>
 {% endfor %}
+</table>
 
 {% endblock %}
 

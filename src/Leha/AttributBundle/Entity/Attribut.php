@@ -54,6 +54,12 @@ class Attribut
 
     /**
      * @var string
+     * @ORM\Column(name="name", type="string", length=100)
+     */
+    private $name;
+
+    /**
+     * @var string
      * @ORM\Column(name="reference_solution", type="string", length=200)
      */
     private $reference_solution;
@@ -240,5 +246,28 @@ class Attribut
         return array(
             'label' => $this->getLibelle()
         );
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Attribut
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

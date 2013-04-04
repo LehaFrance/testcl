@@ -157,7 +157,7 @@ class Echantillon
     /**
      * @ORM\OneToMany(targetEntity="Leha\EchantillonBundle\Entity\AttributEchantillon", mappedBy="echantillon")
      */
-    protected $echantillon_attributs;
+    private $echantillon_attributs;
 
     /**
      * Get id
@@ -612,6 +612,7 @@ class Echantillon
     public function __construct()
     {
         $this->echantillon_attributs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attributes = array();
     }
     
     /**
@@ -645,5 +646,76 @@ class Echantillon
     public function getEchantillonAttributs()
     {
         return $this->echantillon_attributs;
+    }
+
+    private $attributes;
+
+    private function getNameAttribute($name)
+    {
+        $name = substr($name, 3);
+        return strtolower(substr($name, 0, 1)).substr($name, 1);
+    }
+
+    protected function getRepository()
+    {
+        global $kernel;
+
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+
+        $annotationReader = $kernel->getContainer()->get('annotation_reader');
+
+        $object = new \ReflectionObject($this);
+
+        if ($configuration = $annotationReader->getClassAnnotation($object, 'Doctrine\ORM\Mapping\Entity')) {
+            if (!is_null($configuration->repositoryClass)) {
+                $repository = $kernel->getContainer()->get('doctrine.orm.entity_manager')->getRepository(get_class($this));
+
+                return $repository;
+            }
+        }
+
+        return null;
+
+    }
+
+    private function getValueAttribute($name)
+    {
+        if (is_array($this->attributes)) {
+            if (array_key_exists($name, $this->attributes)) {
+                return $this->attributes[$name];
+            }
+        }
+
+        global $kernel;
+
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+
+        $attributeManager = $kernel->getContainer()->get('leha_attribut.manager');
+
+        return $attributeManager->getValue($this->getId(), $name);
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (strlen($name) > 3) {
+            switch (substr($name, 0, 3)) {
+                case 'get':
+                    return $this->getValueAttribute($this->getNameAttribute($name));
+                    break;
+                case 'set':
+                    $this->attributes[$this->getNameAttribute($name)] = $arguments[0];
+                    return $this;
+                    break;
+                default:
+                    return $this->getValueAttribute($name);
+                    break;
+            }
+        } else {
+            return $this->getValueAttribute($name);
+        }
     }
 }
