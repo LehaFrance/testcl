@@ -12,89 +12,97 @@ class DefaultController extends Controller
     public function initAction()
     {
         $em = $this->getDoctrine()->getManager();
-        //$repo_attribut = $this->getDoctrine()->getRepository('LehaAttributBundle:Attribut');
+        $repo_attribut = $this->getDoctrine()->getRepository('LehaAttributBundle:Attribut');
 
-        /*$attribut = new AttributString();
-        $attribut->setLibelle('Conditionnement');
-        $attribut->setDescription('Conditionnement');
-        $attribut->setName('conditionnement');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $em->persist($attribut);*/
-
-        /*$attribut = new AttributChoice();
-        $attribut->setLibelle('Etat réception');
-        $attribut->setDescription('Etat réception de l\'échantillon');
-        $attribut->setName('etatReception');
-        $attribut->setScope(Attribut::SCOPE_ECHANTILLON);
-        $attribut->setOptions(array(
-            'attributName' => 'etatReception',
-            'options' => array(
-                'En attente' => 'En attente',
-                'Anomalie' => 'Anomalie',
-                'Reçu' => 'Reçu',
-                'Abandonne' => 'Abandonne'
+        $items = array(
+            array(
+                'libelle' => 'Conditionnement',
+                'name' => 'conditionnement',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'Conditionnement',
+                'type' => 'String'
+            ),
+            array(
+                'libelle' => 'Etat réception',
+                'name' => 'etatReception',
+                'description' => 'Etat réception de l\'échantillon',
+                'scope' => Attribut::SCOPE_ECHANTILLON,
+                'type' => 'Choice',
+                'options' => array(
+                    'options' => array(
+                        'En attente' => 'En attente',
+                        'Anomalie' => 'Anomalie',
+                        'Reçu' => 'Reçu',
+                        'Abandonne' => 'Abandonne'
+                    )
+                )
+            ),
+            array(
+                'libelle' => 'ITM8',
+                'name' => 'itm8',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'ITM8',
+                'type' => 'String'
+            ),
+            array(
+                'libelle' => 'Désignation',
+                'name' => 'designation',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'Designation',
+                'type' => 'String'
+            ),
+            array(
+                'libelle' => 'Marque',
+                'name' => 'marque',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'Marque',
+                'type' => 'String'
+            ),
+            array(
+                'libelle' => 'Emballeur',
+                'name' => 'emballeur',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'Emballeur',
+                'type' => 'String'
+            ),
+            array(
+                'libelle' => 'EAN13',
+                'name' => 'ean13',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'EAN13',
+                'type' => 'String'
+            ),
+            array(
+                'libelle' => 'Fournisseur',
+                'name' => 'fournisseur',
+                'scope' => Attribut::SCOPE_ATTRIBUT,
+                'reference_solution' => 'Fournisseur',
+                'type' => 'String'
             )
-        ));
-        $em->persist($attribut);*/
+        );
 
-        $attribut = new AttributString();
-        $attribut->setLibelle('ITM8');
-        $attribut->setDescription('ITM8');
-        $attribut->setName('itm8');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('ITM8');
-        $em->persist($attribut);
+        foreach ($items as $item) {
+            $attributs = $repo_attribut->findByLibelle($item['libelle']);
+            if (sizeof($attributs) == 0) {
+                $classattribut = 'Leha\AttributBundle\Entity\Attribut'.$item['type'];
+                $attribut = new $classattribut();
+            } else {
+                $attribut = $attributs[0];
+            }
 
-        $attribut = new AttributString();
-        $attribut->setLibelle('Désignation');
-        $attribut->setDescription('Désignation');
-        $attribut->setName('designation');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('Designation');
-        $em->persist($attribut);
-
-        /*$attribut = new AttributString();
-        $attribut->setLibelle('Désignation');
-        $attribut->setDescription('Désignation');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('Ma');
-        $em->persist($attribut);*/
-
-        $attribut = new AttributString();
-        $attribut->setLibelle('Marque');
-        $attribut->setDescription('Marque');
-        $attribut->setName('marque');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('Marque');
-        $em->persist($attribut);
-
-        $attribut = new AttributString();
-        $attribut->setLibelle('Emballeur');
-        $attribut->setDescription('Emballeur');
-        $attribut->setName('emballeur');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('Emballeur');
-        $em->persist($attribut);
-
-        $attribut = new AttributString();
-        $attribut->setLibelle('Fournisseur');
-        $attribut->setDescription('Fournisseur');
-        $attribut->setName('fournisseur');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('Fournisseur');
-        $em->persist($attribut);
-
-        $attribut = new AttributString();
-        $attribut->setLibelle('EAN13');
-        $attribut->setDescription('EAN13');
-        $attribut->setName('ean13');
-        $attribut->setScope(Attribut::SCOPE_ATTRIBUT);
-        $attribut->setReferenceSolution('EAN13');
-        $em->persist($attribut);
+            $attribut->setLibelle($item['libelle']);
+            $attribut->setDescription((isset($item['description'])) ? $item['description'] : $item['libelle']);
+            $attribut->setReferenceSolution((isset($item['reference_solution'])) ? $item['reference_solution'] : '');
+            $attribut->setName($item['name']);
+            $attribut->setScope($item['scope']);
+            if (isset($item['options'])) {
+                $attribut->setOptions($item['options']);
+            }
+            $em->persist($attribut);
+        }
 
         $em->flush();
 
-        echo 'ok';
-        exit;
+        return $this->render('LehaAttributBundle:Default:index.html.twig');
     }
 }

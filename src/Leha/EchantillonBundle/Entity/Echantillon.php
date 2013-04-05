@@ -143,16 +143,16 @@ class Echantillon
     /**
      * @var string
      *
-     * @ORM\Column(name="ceq_commentaire_conforme", type="string", length=255)
+     * @ORM\Column(name="conclusion_client", type="string", length=255)
      */
-    private $ceqCommentaireConforme;
+    private $conclusionClient;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ceq_commentaire_libre", type="text")
+     * @ORM\Column(name="commentaire_client", type="text")
      */
-    private $ceqCommentaireLibre;
+    private $commentaireClient;
 
     /**
      * @ORM\OneToMany(targetEntity="Leha\EchantillonBundle\Entity\AttributEchantillon", mappedBy="echantillon")
@@ -561,58 +561,12 @@ class Echantillon
     }
 
     /**
-     * Set ceqCommentaireConforme
-     *
-     * @param string $ceqCommentaireConforme
-     * @return Echantillon
-     */
-    public function setCeqCommentaireConforme($ceqCommentaireConforme)
-    {
-        $this->ceqCommentaireConforme = $ceqCommentaireConforme;
-    
-        return $this;
-    }
-
-    /**
-     * Get ceqCommentaireConforme
-     *
-     * @return string 
-     */
-    public function getCeqCommentaireConforme()
-    {
-        return $this->ceqCommentaireConforme;
-    }
-
-    /**
-     * Set ceqCommentaireLibre
-     *
-     * @param string $ceqCommentaireLibre
-     * @return Echantillon
-     */
-    public function setCeqCommentaireLibre($ceqCommentaireLibre)
-    {
-        $this->ceqCommentaireLibre = $ceqCommentaireLibre;
-    
-        return $this;
-    }
-
-    /**
-     * Get ceqCommentaireLibre
-     *
-     * @return string 
-     */
-    public function getCeqCommentaireLibre()
-    {
-        return $this->ceqCommentaireLibre;
-    }
-    
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->echantillon_attributs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->attributes = array();
+        $this->attributs = array();
     }
     
     /**
@@ -648,8 +602,6 @@ class Echantillon
         return $this->echantillon_attributs;
     }
 
-    private $attributes;
-
     private function getNameAttribute($name)
     {
         $name = substr($name, 3);
@@ -680,11 +632,13 @@ class Echantillon
 
     }
 
+    private $attributs;
+
     private function getValueAttribute($name)
     {
-        if (is_array($this->attributes)) {
-            if (array_key_exists($name, $this->attributes)) {
-                return $this->attributes[$name];
+        if (is_array($this->attributs)) {
+            if (array_key_exists($name, $this->attributs)) {
+                return $this->attributs[$name];
             }
         }
 
@@ -707,7 +661,7 @@ class Echantillon
                     return $this->getValueAttribute($this->getNameAttribute($name));
                     break;
                 case 'set':
-                    $this->attributes[$this->getNameAttribute($name)] = $arguments[0];
+                    $this->attributs[$this->getNameAttribute($name)] = $arguments[0];
                     return $this;
                     break;
                 default:
@@ -717,5 +671,51 @@ class Echantillon
         } else {
             return $this->getValueAttribute($name);
         }
+    }
+
+    /**
+     * Set conclusionClient
+     *
+     * @param string $conclusionClient
+     * @return Echantillon
+     */
+    public function setConclusionClient($conclusionClient)
+    {
+        $this->conclusionClient = $conclusionClient;
+    
+        return $this;
+    }
+
+    /**
+     * Get conclusionClient
+     *
+     * @return string 
+     */
+    public function getConclusionClient()
+    {
+        return $this->conclusionClient;
+    }
+
+    /**
+     * Set commentaireClient
+     *
+     * @param string $commentaireClient
+     * @return Echantillon
+     */
+    public function setCommentaireClient($commentaireClient)
+    {
+        $this->commentaireClient = $commentaireClient;
+    
+        return $this;
+    }
+
+    /**
+     * Get commentaireClient
+     *
+     * @return string 
+     */
+    public function getCommentaireClient()
+    {
+        return $this->commentaireClient;
     }
 }

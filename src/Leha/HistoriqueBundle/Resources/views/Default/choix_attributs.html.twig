@@ -1,11 +1,16 @@
 <style type="text/css">
-    #listeGauche, #listeDroite {
+    .listeGauche, .listeDroite {
         float:left;
         border:1px solid #000000;
-        height:200px;
+        height:300px;
+        overflow-y: auto;
         width:300px;
         margin:5px;
         padding:5px;
+    }
+
+    #listeGauche, #listeDroite {
+        height:200px;
     }
 
     #listeGauche > li, #listeDroite > li {
@@ -13,6 +18,16 @@
         padding:5px;
         border:1px solid #999999;
 		list-style-type: none;
+        background-color: #FFFFFF;
+    }
+    #listeGauche > li:hover, #listeDroite > li:hover {
+        background-color: #d9edf7;
+    }
+
+    #listeGauche li.placeholder, #listeDroite li.placeholder {
+        border:1px dashed #2f96b4;
+        height:20px;
+        background-color: #d9edf7;
     }
 </style>
 <script type="text/javascript">
@@ -25,7 +40,11 @@ $(document).ready(function() {
         $(this).appendTo('#listeGauche');
     });
 
-	 $( "#listeDroite" ).sortable();
+	$( "#listeGauche, #listeDroite" ).sortable({
+        connectWith: '.connectedSortable',
+        placeholder: 'placeholder',
+        dropOnEmpty: true
+    }).disableSelection();
 
     $('#formChoixAttributs').on('submit', function() {
         var lst_element = '';
@@ -49,16 +68,20 @@ $(document).ready(function() {
     </div>
     <div class="modal-body">
         <div>
-            <ul id="listeGauche">
-                {% for critere in attributs_disponibles %}
-                    <li element_id="{{ critere.id }}">{{ critere.libelle }}</li>
-                {% endfor %}
-            </ul>
-            <ul id="listeDroite">
-                {% for attribut_requete in attributs_requete %}
-                    <li element_id="{{ attribut_requete.attribut.id }}">{{ attribut_requete.attribut.libelle }}</li>
-                {% endfor %}
-            </ul>
+            <div class="listeGauche">
+                <ul id="listeGauche" class="connectedSortable">
+                    {% for critere in attributs_disponibles %}
+                        <li element_id="{{ critere.id }}">{{ critere.libelle }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="listeDroite">
+                <ul id="listeDroite" class="connectedSortable">
+                    {% for attribut_requete in attributs_requete %}
+                        <li element_id="{{ attribut_requete.attribut.id }}">{{ attribut_requete.attribut.libelle }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

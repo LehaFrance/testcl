@@ -14,21 +14,5 @@ use Leha\HistoriqueBundle\Entity\AttributRequete;
  */
 class RequeteRepository extends EntityRepository
 {
-    public function getAttributsDisponibles(Requete $requete)
-    {
-        $rsm = new ResultSetMapping;
-        $rsm->addEntityResult('LehaAttributBundle:Attribut', 'a');
-        $rsm->addFieldResult('a', 'id', 'id');
-        $rsm->addFieldResult('a', 'libelle', 'libelle');
-        $rsm->addFieldResult('a', 'type', 'type');
 
-        $query = $this->getEntityManager()->createNativeQuery("select a.id, a.libelle from t_attributs a left join t_attributs_requetes ar on a.id = ar.attribut_id and ar.requete_id = ? and ar.type = ? where ar.requete_id is null", $rsm);
-
-        $query->setParameter(1, $requete->getId());
-        $query->setParameter(2, AttributRequete::ATTRIBUT_REQUETE_FORM);
-
-        $attributs = $query->getResult();
-
-        return $attributs;
-    }
 }

@@ -3,7 +3,10 @@
 {% block content %}
 <style type="text/css">
 #modalChoixAttributs {
-    width:800px;
+    width:1000px;
+}
+#modalEditQuery {
+    width:1000px;
 }
 </style>
 <div id="modalEditQuery" class="modal hide"></div>
@@ -31,12 +34,14 @@
 <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
 
+{{ echantillons|length }}
 <table>
 {% for echantillon in echantillons %}
     <tr>
         <td>{{ echantillon.prefixeNom ~ '.' ~ echantillon.demandeNumero ~ '.' ~ echantillon.echantNumero }}</td>
-        <td>{{ echantillon.conditionnement }}</td>
+        <td>{{ echantillon.etatReception }}</td>
         <td>{{ echantillon.itm8 }}</td>
+        <td>{{ echantillon.conditionnement }}</td>
     </tr>
 {% endfor %}
 </table>

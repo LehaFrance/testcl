@@ -13,8 +13,5 @@ use Leha\HistoriqueBundle\Entity\AttributRequete;
  */
 class AttributRepository extends EntityRepository
 {
-    /*public function find()
-    {
-        echo 'YES';
-    }*/
+
 }

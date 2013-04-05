@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"choice" = "AttributChoice", "string" = "AttributString"})
  */
-class Attribut
+abstract class Attribut
 {
     Const SCOPE_ECHANTILLON = 'echantillon';
     Const SCOPE_ATTRIBUT = 'attribut';
@@ -70,11 +70,17 @@ class Attribut
     private $attribut_requetes;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Leha\ClientBundle\Entity\Client", mappedBy="attributs")
+     */
+    private $clients;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->attribut_requetes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
         $this->options = array();
     }
     
@@ -244,7 +250,8 @@ class Attribut
     public function getFieldOptions()
     {
         return array(
-            'label' => $this->getLibelle()
+            'label' => $this->getLibelle(),
+            'required' => false
         );
     }
 

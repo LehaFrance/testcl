@@ -84,16 +84,12 @@ class DefaultController extends Controller
         $form_builder = $this->createFormBuilder();
 
         $attributs_requete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+
         foreach ($attributs_requete as $attribut_requete) {
             $attribut = $attribut_requete->getAttribut();
             $form_builder->add($attribut->getFieldId(), $attribut->getType(), $attribut->getFieldOptions());
         }
-/*
-         $attributs = $em->getRepository('LehaAttributBundle:Attribut')->getFormAttributsByRequeteId($requete->getId());
-         foreach ($attributs as $attribut) {
-            $form_builder->add($attribut->getFieldId(), $attribut->getType(), $attribut->getFieldOptions());
-        }
-*/
+
         $form = $form_builder->getForm();
 
         $echantillons = null;
@@ -109,12 +105,11 @@ class DefaultController extends Controller
                 if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
                     if ($attribut->getScope() == Attribut::SCOPE_ECHANTILLON) {
                         $options = $attribut->getOptions();
-                        $filter .= 'e.'.$options['attributName'].' = :'.$attribut->getFieldId();
+                        $filter .= 'e.'.$attribut->getName().' = :'.$attribut->getFieldId();
                         $post_use_data[$attribut->getFieldId()] = $post_data[$attribut->getFieldId()];
                     }
                 }
             }
-
 
             $queryBuilder = $repo_echantillon->createQueryBuilder('e');
             if (strlen($filter) > 0) {
@@ -123,7 +118,7 @@ class DefaultController extends Controller
                     $queryBuilder->setParameter(':'.$key, $value);
                 }
             }
-            $queryBuilder->setFirstResult(11400);
+
             $queryBuilder->setMaxResults(1000);
 
             $echantillons = $queryBuilder->getQuery()->getResult();
@@ -148,36 +143,23 @@ class DefaultController extends Controller
                             foreach ($echantillons_attribut as $echantillon_attribut) {
                                 $echantillons_id[] = $echantillon_attribut->getEchantillonId();
                             }
+
+                            if (sizeof($echantillons_id) == 0) {
+                                break;
+                            }
                         }
                     }
                 }
-            }
 
-            if (count($echantillons_id) > 0) {
-                $echantillons = $repo_echantillon->findBy(array(
-                    'id' => $echantillons_id
-                ));
-
-                $repo_ar = $em->getRepository('LehaHistoriqueBundle:AttributRequete');
-                $grid_attributs = $repo_ar->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_GRID);
-                //$repo_ae = $em->getRepository('LehaEchantillonBundle:AttributEchantillon');
-                $repo_ae = $this->getDoctrine()->getRepository('LehaEchantillonBundle:AttributEchantillon');
-                foreach ($grid_attributs as $attribut_requete) {
-                    foreach ($echantillons as $echantillon) {
-                        $ars = $repo_ae->findBy(
-                            array(
-                                'attribut_id' => $attribut_requete->getAttributId(),
-                                'echantillon_id' => $echantillon->getId()
-                            )
-                        );
-
-                        //$ar = $repo_ae->findAll();
+                if (count($echantillons_id) > 0) {
+                    foreach ($echantillons as $indice => $echantillon) {
+                        if (!in_array($echantillon->getId(), $echantillons_id)) {
+                            unset($echantillons[$indice]);
+                        }
                     }
+                } else {
+                    $echantillons = null;
                 }
-
-
-            } else {
-                $echantillons = null;
             }
         }
 
@@ -210,11 +192,8 @@ class DefaultController extends Controller
 
             $aAttributsId = ($attributs_id == '') ? array() : explode('|', $attributs_id);
 
-
             $form_builder = $this->createFormBuilder();
-            //$attributs = $repo_attribut->getFormAttributsByRequeteId($requete->getId());
 
-            $attributs_requete = $attributs_requete;
             $attributs_a_conserver = array();
             foreach ($attributs_requete as $attribut_requete) {
 				if (($key_attribut_id = array_search($attribut_requete->getAttributId(), $aAttributsId)) !== false) {
@@ -246,9 +225,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('leha_historique_search', array('id' => $requete->getId())));
         }
 
-        
-        $attributs_disponibles = $em->getRepository('LehaHistoriqueBundle:Requete')->getAttributsDisponibles($requete);
-
+        $attributs_disponibles = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getAttributsDisponibles($requete);
 
         return $this->render('LehaHistoriqueBundle:Default:choix_attributs.html.twig', array(
             'requete' => $requete,

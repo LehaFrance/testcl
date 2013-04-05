@@ -2,6 +2,8 @@
 
 namespace Leha\AttributBundle\Services;
 
+use Leha\AttributBundle\Exception\AttributException;
+
 class AttributManager
 {
     private $entityManager;
@@ -11,6 +13,11 @@ class AttributManager
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param $echantillon_id
+     * @param $name
+     * @return string
+     */
     public function getValue($echantillon_id, $name)
     {
         $repo_attribut = $this->entityManager->getRepository('LehaAttributBundle:Attribut');
@@ -33,11 +40,11 @@ class AttributManager
                     return $attribut_echantillon->getValue();
                     break;
                 default:
-                    //TODO : Lever exception
+                    throw new AttributException('Plusieurs valeurs pour cet attribut');
                     break;
             }
         } else {
-            //TODO : Lever exception
+            throw new AttributException('Attribut non reconnu');
         }
 
         return '';

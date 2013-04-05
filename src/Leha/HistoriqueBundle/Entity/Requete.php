@@ -34,7 +34,7 @@ class Requete
     protected $utilisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="requete")
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="requete", cascade={"remove"})
 	 * @ORM\OrderBy({"ordre" = "ASC"})
      */
     protected $requete_attributs;
