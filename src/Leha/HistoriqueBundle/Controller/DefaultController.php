@@ -9,6 +9,7 @@ use Leha\EchantillonBundle\Entity\EchantillonAttribut;
 use Leha\AttributBundle\Entity\Attribut;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Leha\HistoriqueBundle\Form\Handler\RequeteHandler;
 
 class DefaultController extends Controller
 {
@@ -28,22 +29,13 @@ class DefaultController extends Controller
             ->add('libelle', 'text')
             ->getForm();
 
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-
-            $requete->setUtilisateur($this->getUser());
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($requete);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('leha_historique_search', array(
-                    'id' => $requete->getId()
-                )));
-            }
-        }
-
+		$process = $this->container->get('leha_requete.handler')->process($this->get('request'), $form);
+		if ($process) {
+			return $this->redirect($this->generateUrl('leha_historique_search', array(
+				'id' => $requete->getId()
+            )));
+		}
+		
         return $this->render('LehaHistoriqueBundle:Default:add.html.twig', array(
             'form' => $form->createView()
         ));

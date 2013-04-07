@@ -608,7 +608,7 @@ class Echantillon
         return strtolower(substr($name, 0, 1)).substr($name, 1);
     }
 
-    protected function getRepository()
+    /*protected function getRepository()
     {
         global $kernel;
 
@@ -630,7 +630,7 @@ class Echantillon
 
         return null;
 
-    }
+    }*/
 
     private $attributs;
 

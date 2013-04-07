@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Central LEHA{% endblock %}</title>
         {% block stylesheets %}
             <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+			<link href="{{ asset('bootstrap/css/custom.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -12,14 +13,14 @@
         <div class="navbar">
             <div class="navbar-inner">
                 <ul class="nav">
-                    <li><a href="{{ path('leha_dashboard_homepage') }}">{% trans %}Accueil{% endtrans %}</a></li>
+				
+                    <li><a href="{{ path('leha_dashboard_homepage') }}"><i class="icon_home" title="{% trans %}Accueil{% endtrans %}"></i></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="{{ path('leha_historique') }}">
                             Historique
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('leha_historique') }}">Liste</a></li>
                             {% for requete in app.user.requetes %}
                                 <li><a href="{{ path('leha_historique_search', {id : requete.id}) }}">{{ requete.libelle }}</a></li>
                             {% endfor %}
@@ -36,8 +37,15 @@
                         </ul>
                     </li>
                 </ul>
-                {{ app.user.prenom ~ ' ' ~ app.user.nom }}
-                <a href="{{ path('logout') }}">logout</a>
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a href="#">{{ app.user.prenom ~ ' ' ~ app.user.nom }}</a>
+						<ul class="dropdown-menu">
+                            <li><a href="{{ path('logout') }}">{% trans %}Déconnexion{% endtrans %}</a></li>
+							<li><a href="#">{% trans %}Paramètres{% endtrans %}</a></li>
+                        </ul>
+					</li>
+				</ul>
             </div>
 
         </div>
