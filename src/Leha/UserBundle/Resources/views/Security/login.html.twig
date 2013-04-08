@@ -10,11 +10,12 @@ form {
 }
 </style>
 {% endblock %}
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
 
 <form action="{{ path('login_check') }}" method="post">
+    {% if error %}
+        <div class="alert alert-error">{{ error.message }}</div>
+    {% endif %}
+
     <label for="username">Identifiant :</label>
     <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
@@ -22,8 +23,8 @@ form {
     <input type="password" id="password" name="_password" />
 
     {#
-        Si vous voulez contrôler l'URL vers laquelle l'utilisateur est redirigé en cas de succès
-        (plus de détails ci-dessous)
+        Si vous voulez contrï¿½ler l'URL vers laquelle l'utilisateur est redirigï¿½ en cas de succï¿½s
+        (plus de dï¿½tails ci-dessous)
         <input type="hidden" name="_target_path" value="/account" />
     #}
 	<br />

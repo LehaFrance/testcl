@@ -1,0 +1,7 @@
+parameters:
+#    leha_user_test.example.class: Leha\UserTestBundle\Example
+
+services:
+#    leha_user_test.example:
+#        class: %leha_user_test.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

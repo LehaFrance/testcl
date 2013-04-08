@@ -608,30 +608,6 @@ class Echantillon
         return strtolower(substr($name, 0, 1)).substr($name, 1);
     }
 
-    /*protected function getRepository()
-    {
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        $annotationReader = $kernel->getContainer()->get('annotation_reader');
-
-        $object = new \ReflectionObject($this);
-
-        if ($configuration = $annotationReader->getClassAnnotation($object, 'Doctrine\ORM\Mapping\Entity')) {
-            if (!is_null($configuration->repositoryClass)) {
-                $repository = $kernel->getContainer()->get('doctrine.orm.entity_manager')->getRepository(get_class($this));
-
-                return $repository;
-            }
-        }
-
-        return null;
-
-    }*/
-
     private $attributs;
 
     private function getValueAttribute($name)
