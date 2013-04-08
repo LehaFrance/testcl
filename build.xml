@@ -13,7 +13,7 @@
 
 
 <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec executable="phpunit" failonerror="true">
+  <exec executable="phpunit" failonerror="false">
 	<arg value="-c"/>
 	<arg value="app/"/>
 	<arg value="--log-junit"/>
@@ -22,7 +22,7 @@
  </target>
 
  <target name="phpcs" description="Check syntax">
-	 <exec executable="phpcs" failonerror="true">
+	 <exec executable="phpcs" failonerror="false">
 		 <arg value="--report-xml=build/phpcs.xml" />
 		 <arg value="--standard=Symfony2" />
 		 <arg value="src" />
