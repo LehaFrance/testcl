@@ -18,6 +18,8 @@
 	<arg value="app/"/>
 	<arg value="--log-junit"/>
 	<arg value="build/phpunit.xml"/>
+	<arg line="--coverage-clover build/clover.xml"/>
+	<arg line="--coverage-html build/coverage" />
 </exec>
  </target>
 
