@@ -29,4 +29,12 @@
 		 <arg value="src" />
 	 </exec>
  </target>
+
+<target name="pdpend" description="Analyse de la structure de classes">
+	<exec name="pdepend" failonerror="false">
+		<arg value="--jdepend-xml=buid/jdepend.xml"/>
+		<arg value="--jdepend-chart=build/jdepend-chart.svg"/>
+		<arg value="--overview-pyarmid=build/pyramid.svg"/>
+	</exec>
+</target>
 </project>
