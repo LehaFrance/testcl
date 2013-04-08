@@ -8,7 +8,7 @@
   </target>
 
  <target name="build"
-   depends="composer,phpunit"/>
+   depends="composer,phpunit,phpcs"/>
 
 
 
@@ -19,5 +19,13 @@
 	<arg value="--log-junit"/>
 	<arg value="build/phpunit.xml"/>
 </exec>
+ </target>
+
+ <target name="phpcs" description="Check syntax">
+	 <exec executable="phpcs" failonerror="true">
+		 <arg value="--report-xml=build/phpcs.xml" />
+		 <arg value="--standard=Symfony2" />
+		 <arg value="src" />
+	 </exec>
  </target>
 </project>
