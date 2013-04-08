@@ -1,0 +1,7 @@
+parameters:
+#    leha_central.example.class: Leha\CentralBundle\Example
+
+services:
+#    leha_central.example:
+#        class: %leha_central.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
