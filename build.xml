@@ -23,7 +23,8 @@
 
  <target name="phpcs" description="Check syntax">
 	 <exec executable="phpcs" failonerror="false">
-		 <arg value="--report-xml=build/phpcs.xml" />
+	         <arg value="--report=checkstyle"/>
+		 <arg value="--report-file=build/phpcs.xml" />
 		 <arg value="--standard=Symfony2" />
 		 <arg value="src" />
 	 </exec>
