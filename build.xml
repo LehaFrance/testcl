@@ -8,7 +8,7 @@
   </target>
 
  <target name="build"
-   depends="composer,phpunit,phpcs"/>
+   depends="composer,phpunit,phpcs,pdepend"/>
 
 
 
@@ -30,11 +30,12 @@
 	 </exec>
  </target>
 
-<target name="pdpend" description="Analyse de la structure de classes">
-	<exec name="pdepend" failonerror="false">
-		<arg value="--jdepend-xml=buid/jdepend.xml"/>
+<target name="pdepend" description="Analyse de la structure de classes">
+	<exec executable="pdepend" failonerror="false">
+		<arg value="--jdepend-xml=build/jdepend.xml"/>
 		<arg value="--jdepend-chart=build/jdepend-chart.svg"/>
-		<arg value="--overview-pyarmid=build/pyramid.svg"/>
+		<arg value="--overview-pyramid=build/pyramid.svg"/>
+		<arg value="src" />
 	</exec>
 </target>
 </project>
