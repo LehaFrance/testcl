@@ -25,7 +25,7 @@ class AttributEchantillon
     protected $echantillon_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Leha\AttributBundle\Entity\Attribut", inversedBy="attribut_echantillons")
+     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attribut_echantillons")
      * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
      */
     protected $attribut;
@@ -136,10 +136,10 @@ class AttributEchantillon
     /**
      * Set attribut
      *
-     * @param \Leha\AttributBundle\Entity\Attribut $attribut
+     * @param \Leha\CentralBundle\Entity\Attribut $attribut
      * @return AttributEchantillon
      */
-    public function setAttribut(\Leha\AttributBundle\Entity\Attribut $attribut = null)
+    public function setAttribut(\Leha\CentralBundle\Entity\Attribut $attribut = null)
     {
         $this->attribut = $attribut;
     
@@ -149,7 +149,7 @@ class AttributEchantillon
     /**
      * Get attribut
      *
-     * @return \Leha\AttributBundle\Entity\Attribut
+     * @return \Leha\CentralBundle\Entity\Attribut
      */
     public function getAttribut()
     {

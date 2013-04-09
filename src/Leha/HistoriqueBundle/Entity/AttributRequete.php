@@ -17,7 +17,7 @@ class AttributRequete
 
     /**
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Leha\AttributBundle\Entity\Attribut", inversedBy="attribut_requetes")
+	 * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attribut_requetes")
 	 * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
 	 */
     protected $attribut;
@@ -80,10 +80,10 @@ class AttributRequete
     /**
      * Set attribut
      *
-     * @param \Leha\AttributBundle\Entity\Attribut $attribut
+     * @param \Leha\CentralBundle\Entity\Attribut $attribut
      * @return AttributRequete
      */
-    public function setAttribut(\Leha\AttributBundle\Entity\Attribut $attribut)
+    public function setAttribut(\Leha\CentralBundle\Entity\Attribut $attribut)
     {
         $this->attribut = $attribut;
 
@@ -93,7 +93,7 @@ class AttributRequete
     /**
      * Get attribut
      *
-     * @return \Leha\AttributBundle\Entity\Attribut
+     * @return \Leha\CentralBundle\Entity\Attribut
      */
     public function getAttribut()
     {

@@ -24,7 +24,7 @@ class AttributRequeteRepository extends EntityRepository
 
     public function getAttributsDisponibles(Requete $requete)
     {
-        $attributs_requete = $this->getEntityManager()->createQuery("select a from LehaAttributBundle:Attribut a left join a.attribut_requetes ar with ar.requete_id = :requete_id and ar.type = :type where ar.requete_id is null")
+        $attributs_requete = $this->getEntityManager()->createQuery("select a from LehaCentralBundle:Attribut a left join a.attribut_requetes ar with ar.requete_id = :requete_id and ar.type = :type where ar.requete_id is null")
             ->setParameter('requete_id', $requete->getId())
             ->setParameter('type', AttributRequete::ATTRIBUT_REQUETE_FORM)
             ->getResult();

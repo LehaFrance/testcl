@@ -1,8 +1,8 @@
 <?php
 
-namespace Leha\AttributBundle\Services;
+namespace Leha\CentralBundle\Services;
 
-use Leha\AttributBundle\Exception\AttributException;
+use Leha\CentralBundle\Exception\AttributException;
 
 class AttributManager
 {
@@ -20,7 +20,7 @@ class AttributManager
      */
     public function getValue($echantillon_id, $name)
     {
-        $repo_attribut = $this->entityManager->getRepository('LehaAttributBundle:Attribut');
+        $repo_attribut = $this->entityManager->getRepository('LehaCentralBundle:Attribut');
         $attributs = $repo_attribut->findByName($name);
         if (sizeof($attributs) == 1) {
             $attribut = $attributs[0];

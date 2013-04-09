@@ -1,3 +1,0 @@
-leha_attribut_init:
-    pattern:  /attribut/init
-    defaults: { _controller: LehaAttributBundle:Default:init }

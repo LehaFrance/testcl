@@ -6,7 +6,7 @@ use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\EchantillonBundle\Entity\EchantillonAttribut;
-use Leha\AttributBundle\Entity\Attribut;
+use Leha\CentralBundle\Entity\Attribut;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Leha\HistoriqueBundle\Form\Handler\RequeteHandler;
@@ -180,7 +180,7 @@ class DefaultController extends Controller
         if ($request->isMethod('POST')) {
             $attributs_id = $request->request->get('attributs_selectionnes');
 
-            $repo_attribut = $this->getDoctrine()->getRepository('LehaAttributBundle:Attribut');
+            $repo_attribut = $this->getDoctrine()->getRepository('LehaCentralBundle:Attribut');
 
             $aAttributsId = ($attributs_id == '') ? array() : explode('|', $attributs_id);
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Leha\AttributBundle\Entity;
+namespace Leha\CentralBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Leha\AttributBundle\Model\AttributInterface;
+use Leha\CentralBundle\Model\AttributInterface;
 
 /**
  * Class AttributChoice
- * @package Leha\AttributBundle\Entity
+ * @package Leha\CentralBundle\Entity
  *
  * @ORM\Entity
  */

@@ -1,4 +1,4 @@
-Leha\AttributBundle\Entity\AttributString:
+Leha\CentralBundle\Entity\AttributString:
     Attribut0:
         libelle:  Conditionnement
         name: conditionnement
@@ -13,7 +13,7 @@ Leha\AttributBundle\Entity\AttributString:
         scope:  attribut
         referenceSolution: ITM8
 
-Leha\AttributBundle\Entity\AttributChoice:
+Leha\CentralBundle\Entity\AttributChoice:
     Attribut2:
         libelle: Etat_reception
         name: etatreception

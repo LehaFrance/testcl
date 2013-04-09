@@ -1,5 +1,5 @@
 <?php
-namespace Leha\AttributBundle\Model;
+namespace Leha\CentralBundle\Model;
 
 interface AttributInterface
 {

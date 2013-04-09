@@ -1,11 +1,11 @@
 <?php
 
-namespace Leha\AttributBundle\Entity;
+namespace Leha\CentralBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Leha\AttributBundle\Entity\AttributRepository")
+ * @ORM\Entity(repositoryClass="Leha\CentralBundle\Entity\AttributRepository")
  * @ORM\Table(name="t_attributs")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")

@@ -1,6 +1,6 @@
 <?php
 
-namespace Leha\AttributBundle\Entity;
+namespace Leha\CentralBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Leha\HistoriqueBundle\Entity\AttributRequete;

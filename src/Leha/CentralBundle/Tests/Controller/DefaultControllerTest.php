@@ -23,6 +23,6 @@ class DefaultControllerTest extends WebTestCase
         $persister = new Doctrine($em);
         $persister->persist($objects);
 
-        $this->assertCount(3, $em->getRepository('LehaAttributBundle:Attribut')->findAll());
+        $this->assertCount(3, $em->getRepository('LehaCentralBundle:Attribut')->findAll());
     }
 }
