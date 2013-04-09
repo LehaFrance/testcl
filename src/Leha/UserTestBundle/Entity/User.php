@@ -4,7 +4,7 @@ namespace Leha\UserTestBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -14,15 +14,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
  */
 class User extends BaseUSer
 {
-    public function setRequetes($requetes)
-    {
-        $this->requetes = $requetes;
-    }
 
-    public function getRequetes()
-    {
-        return $this->requetes;
-    }
     /**
      * @var integer
      *
@@ -32,13 +24,94 @@ class User extends BaseUSer
      */
     protected  $id;
 
+    /**
+     * @var
+     * @ORM\Column(name="nom", type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $firstName;
+
+    /**
+     * @var
+     * @ORM\Column(name="prenom", type="string", length=50)
+     * @Assert\NotBlank()
+     */
+    protected $lastName;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
+     */
+    protected $requetes;
+
     public function __construct()
     {
        parent::__construct();
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
+     * @param  $firstName
      */
-    protected $requetes;
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param  $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+
+
+    /**
+     * Add requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\Requete $requetes
+     * @return Utilisateur
+     */
+    public function addRequete(\Leha\HistoriqueBundle\Entity\Requete $requetes)
+    {
+        $this->requetes[] = $requetes;
+
+        return $this;
+    }
+
+    /**
+     * Remove requetes
+     *
+     * @param \Leha\HistoriqueBundle\Entity\Requete $requetes
+     */
+    public function removeRequete(\Leha\HistoriqueBundle\Entity\Requete $requetes)
+    {
+        $this->requetes->removeElement($requetes);
+    }
+
+    /**
+     * Get requetes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequetes()
+    {
+        return $this->requetes;
+    }
 }

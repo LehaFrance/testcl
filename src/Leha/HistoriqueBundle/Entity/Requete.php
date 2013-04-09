@@ -28,7 +28,7 @@ class Requete
     protected $libelle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Leha\UserBundle\Entity\Utilisateur", inversedBy="requetes")
+     * @ORM\ManyToOne(targetEntity="Leha\UserTestBundle\Entity\User", inversedBy="requetes")
      * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")
      */
     protected $utilisateur;
@@ -75,10 +75,10 @@ class Requete
     /**
      * Set utilisateur
      *
-     * @param \Leha\UserBundle\Entity\Utilisateur $utilisateur
+     * @param \Leha\UserTestBundle\Entity\User $utilisateur
      * @return Requete
      */
-    public function setUtilisateur(\Leha\UserBundle\Entity\Utilisateur $utilisateur = null)
+    public function setUtilisateur(\Leha\UserTestBundle\Entity\User $utilisateur = null)
     {
         $this->utilisateur = $utilisateur;
     

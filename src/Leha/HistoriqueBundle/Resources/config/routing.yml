@@ -4,7 +4,7 @@ leha_historique:
 
 leha_historique_add:
     pattern:  /historique/add
-    defaults: {_controller: LehaHistoriqueBundle:Default:add}
+    defaults: {_controller: LehaHistoriqueBundle:Default:edit}
 
 leha_historique_edit:
     pattern:  /historique/edit/{id}

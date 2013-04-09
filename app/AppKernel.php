@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Leha\UserTestBundle\LehaUserTestBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Leha\CentralBundle\LehaCentralBundle(),
+            new Leha\CommonBundle\LehaCommonBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

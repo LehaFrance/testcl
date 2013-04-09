@@ -99,4 +99,28 @@ class AttributEchantillon
     {
         return $this->attribut;
     }
+
+    /**
+     * @return integer
+     */
+    public function getEchantillonId()
+    {
+        if (!$this->echantillon) {
+            return null;
+        }
+
+        return $this->echantillon->getId();
+    }
+
+    /**
+     * @return integer
+     */
+    public function getAttributId()
+    {
+        if (!$this->attribut) {
+            return null;
+        }
+
+        return $this->attribut->getId();
+    }
 }

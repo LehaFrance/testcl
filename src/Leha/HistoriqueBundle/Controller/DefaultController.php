@@ -2,71 +2,68 @@
 
 namespace Leha\HistoriqueBundle\Controller;
 
+use Leha\CommonBundle\Controller\AbstractController;
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
 use Leha\CentralBundle\Entity\Attribut;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Leha\HistoriqueBundle\Form\Handler\RequeteHandler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+/**
+ * Class DefaultController
+ *
+ * @Template
+ *
+ * @package Leha\HistoriqueBundle\Controller
+ */
+class DefaultController extends AbstractController
 {
+    /**
+     * Liste les requêtes de l'utilisateur
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction()
     {
         $requetes = $this->getUser()->getRequetes();
 
-        return $this->render('LehaHistoriqueBundle:Default:index.html.twig', array(
+        return array(
             'requetes' => $requetes
-        ));
+        );
     }
 
-    public function addAction(Request $request)
+    /**
+     * Permet la création d'une nouvelle requête
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, Requete $requete = null)
     {
-        $requete = new Requete();
-        $form = $this->createFormBuilder($requete)
-            ->add('libelle', 'text')
-            ->getForm();
-
-		$process = $this->container->get('leha_requete.handler')->process($this->get('request'), $form);
-		if ($process) {
-			return $this->redirect($this->generateUrl('leha_historique_search', array(
-				'id' => $requete->getId()
-            )));
-		}
-		
-        return $this->render('LehaHistoriqueBundle:Default:add.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
-    public function editAction(Request $request, Requete $requete)
-    {
-        $form = $this->createFormBuilder($requete)
-            ->add('libelle', 'text')
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-
-            $requete->setUtilisateur($this->getUser());
-
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($requete);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('leha_historique_search', array(
-                    'id' => $requete->getId()
-                )));
-            }
+        if ($requete == null) {
+            $requete = new Requete();
         }
 
-        return $this->render('LehaHistoriqueBundle:Default:edit.html.twig', array(
+        $form = $this->createFormBuilder($requete)
+            ->add('libelle', 'text')
+            ->getForm();
+
+		$process = $this->container->get('leha_requete.handler')
+            ->process($request, $form);
+
+		if ($process) {
+			return $this->redirectRoute('leha_historique_search', array(
+				'id' => $requete->getId()
+            ));
+		}
+
+        return array(
             'form' => $form->createView(),
             'requete' => $requete
-        ));
+        );
     }
 
     public function searchAction(Request $request, Requete $requete)
@@ -119,9 +116,9 @@ class DefaultController extends Controller
                     $attribut = $attribut_requete->getAttribut();
                     if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
                         if ($attribut->getScope() == Attribut::SCOPE_ATTRIBUT) {
-                            $echantillons_attribut = $em->createQuery('select e from LehaCentralBundle:AttributEchantillon e where e.attribut_id = :attribut_id and e.echantillon_id in (:echantillons_id) and e.value like :valeur')
-                                ->setParameter('attribut_id', $attribut->getId())
-                                ->setParameter('echantillons_id', $echantillons_id)
+                            $echantillons_attribut = $em->createQuery('select e from LehaCentralBundle:AttributEchantillon e where e.attribut = :attributId and e.echantillon in (:echantillonsId) and e.value like :valeur')
+                                ->setParameter('attributId', $attribut->getId())
+                                ->setParameter('echantillonsId', $echantillons_id)
                                 ->setParameter('valeur', $post_data[$attribut->getFieldId()])
                                 ->getResult();
 
@@ -149,11 +146,11 @@ class DefaultController extends Controller
             }
         }
 
-        return $this->render('LehaHistoriqueBundle:Default:search.html.twig', array(
+        return array(
             'requete' => $requete,
             'form' => $form->createView(),
             'echantillons' => $echantillons
-        ));
+        );
     }
 
     public function removeAction(Requete $requete)
@@ -162,7 +159,7 @@ class DefaultController extends Controller
         $em->remove($requete);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('leha_historique'));
+        return $this->redirectRoute('leha_historique');
     }
 
     public function choix_attributsAction(Request $request, Requete $requete)
@@ -208,15 +205,15 @@ class DefaultController extends Controller
 			
             $em->flush();
 
-            return $this->redirect($this->generateUrl('leha_historique_search', array('id' => $requete->getId())));
+            return $this->redirectRoute('leha_historique_search', array('id' => $requete->getId()));
         }
 
         $attributs_disponibles = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getAttributsDisponibles($requete);
 
-        return $this->render('LehaHistoriqueBundle:Default:choix_attributs.html.twig', array(
+        return array(
             'requete' => $requete,
             'attributs_disponibles' => $attributs_disponibles,
             'attributs_requete' => $attributs_requete
-        ));
+        );
     }
 }
