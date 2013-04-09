@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AttributEchantillon
  *
  * @ORM\Table(name="t_attributs_echantillons")
- * @ORM\Entity(repositoryClass="Leha\EchantillonBundle\Entity\AttributEchantillonRepository")
+ * @ORM\Entity(repositoryClass="Leha\CentralBundle\Repository\AttributEchantillonRepository")
  */
 class AttributEchantillon
 {

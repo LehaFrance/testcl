@@ -14,30 +14,30 @@ class AttributManager
     }
 
     /**
-     * @param $echantillon_id
+     * @param $echantillonId
      * @param $name
      * @return string
      */
-    public function getValue($echantillon_id, $name)
+    public function getValue($echantillonId, $name)
     {
-        $repo_attribut = $this->entityManager->getRepository('LehaCentralBundle:Attribut');
-        $attributs = $repo_attribut->findByName($name);
+        $attributs = $this->entityManager->getRepository('LehaCentralBundle:Attribut')
+            ->findByName($name);
         if (sizeof($attributs) == 1) {
             $attribut = $attributs[0];
-            $repo_ae = $this->entityManager->getRepository('LehaEchantillonBundle:AttributEchantillon');
-            $attribut_echantillons = $repo_ae->findBy(
+            $repoAttributEchantillon = $this->entityManager->getRepository('LehaEchantillonBundle:AttributEchantillon');
+            $attributEchantillons = $repoAttributEchantillon->findBy(
                 array(
-                    'echantillon_id' => $echantillon_id,
+                    'echantillon_id' => $echantillonId,
                     'attribut_id' => $attribut->getId()
                 )
             );
-            switch (sizeof($attribut_echantillons)) {
+            switch (sizeof($attributEchantillons)) {
                 case 0:
                     return '';
                     break;
                 case 1:
-                    $attribut_echantillon = $attribut_echantillons[0];
-                    return $attribut_echantillon->getValue();
+                    $attributEchantillon = $attributEchantillons[0];
+                    return $attributEchantillon->getValue();
                     break;
                 default:
                     throw new AttributException('Plusieurs valeurs pour cet attribut');
