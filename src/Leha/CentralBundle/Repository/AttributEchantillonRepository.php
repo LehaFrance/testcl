@@ -15,12 +15,22 @@ class AttributEchantillonRepository extends EntityRepository
      * La fonction cherche un AttributEchantillon à partir de l'id d'echantillon et le nom de l'attribut
      *
      * @param string $name
-     * @param int $echantillonId
+     * @param Leha\CentralBundle\Entity\Echantillon
      *
      * @return DoctrineCollection
      */
-    public function findByNameAndEchantillonId($name, $echantillonId)
+    public function findByNameAndEchantillon($name, $echantillon)
     {
-        return true;
+        $query =  $this->createQueryBuilder('e')
+            ->select()
+            ->where('e.echantillon = :echantillonId')
+            ->innerJoin('e.attribut','a')
+            ->andWhere('a.name = :name')
+            ->setParameters(array(
+                ':echantillonId' => $echantillon->getId(),
+                ':name' => $name,
+            ))->getQuery();
+
+            return $query->getSingleResult();
     }
 }

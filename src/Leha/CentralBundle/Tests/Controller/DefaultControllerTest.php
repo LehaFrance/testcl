@@ -3,25 +3,24 @@
 namespace Leha\CentralBundle\Tests\Controller;
 
 use Leha\CentralBundle\Tests\WebTestCase;
-use Nelmio\Alice\Loader\Base;
-use Nelmio\Alice\Loader\Yaml;
-use Nelmio\Alice\ORM\Doctrine;
 
+/**
+ * Test le controlleur. Pour l'instant juste pour charger les fixtures
+ *
+ * @package Leha\CentralBundle\Tests\Controller
+ */
 class DefaultControllerTest extends WebTestCase
 {
+    /**
+     * Test le bon chargement de fixtures
+     */
     public function testFixture()
     {
-        $client = self::createClient();
         self::generateSchema();
 
-        $loader = new Yaml();
-        $bundles = static::$kernel->getBundles();
-
-        $objects = $loader->load($bundles['LehaCentralBundle']->getPath() . '/Resources/fixtures/attributs.yml');
-
         $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $persister = new Doctrine($em);
-        $persister->persist($objects);
+
+        $this->loadFixtures($em, 'attributs.yml');
 
         $this->assertCount(3, $em->getRepository('LehaCentralBundle:Attribut')->findAll());
     }

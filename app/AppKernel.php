@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Leha\UserBundle\LehaUserBundle(),
             new Leha\HistoriqueBundle\LehaHistoriqueBundle(),
             new Leha\DashboardBundle\LehaDashboardBundle(),
-            new Leha\EchantillonBundle\LehaEchantillonBundle(),
             new Leha\ClientBundle\LehaClientBundle(),
             new Leha\UserTestBundle\LehaUserTestBundle(),
             new FOS\UserBundle\FOSUserBundle(),

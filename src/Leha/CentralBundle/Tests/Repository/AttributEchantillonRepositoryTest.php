@@ -12,14 +12,21 @@ use Leha\CentralBundle\Repository\EchantillonAttributeRepository;
  */
 class AttributEchantillonRepositoryTest extends WebTestCase
 {
-    public function testGetsEntitesByNameAndEchantillonId()
+    public function testGetsEntitesByNameAndEchantillon()
     {
-        $client = self::createClient();
-        $repository = static::$kernel->getContainer()->get('doctrine.orm.entity_manager')
-            ->getRepository('LehaEchantillonBundle:AttributEchantillon');
+        self::generateSchema();
 
-        $object = $repository->findByNameAndEchantillonId('toto', 1);
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $this->loadFixtures($em, 'attributs.yml');
+        $this->loadFixtures($em, 'attributEchantillons.yml');
 
-        $this->assertTrue($object);
+        /** @var $repository AttributEchantillonRepository */
+        $repository = $em->getRepository('LehaCentralBundle:AttributEchantillon');
+
+        $echantillon = $em->getRepository('LehaCentralBundle:Echantillon')->findOneByEchantNumero(35);
+
+        $attributEchantillon = $repository->findByNameAndEchantillon('itm8', $echantillon);
+
+        $this->assertEquals('par 4', $attributEchantillon->getValue());
     }
 }

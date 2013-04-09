@@ -65,7 +65,7 @@ abstract class Attribut
     private $reference_solution;
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="attribut")
+     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="attribut", cascade={"persist", "remove"})
      */
     private $attribut_requetes;
 

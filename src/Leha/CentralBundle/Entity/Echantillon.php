@@ -1,6 +1,6 @@
 <?php
 
-namespace Leha\EchantillonBundle\Entity;
+namespace Leha\CentralBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Echantillon
  *
  * @ORM\Table(name="t_echantillons")
- * @ORM\Entity(repositoryClass="Leha\EchantillonBundle\Entity\EchantillonRepository")
+ * @ORM\Entity(repositoryClass="Leha\CentralBundle\Repository\EchantillonRepository")
  */
 class Echantillon
 {
@@ -155,7 +155,7 @@ class Echantillon
     private $commentaireClient;
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\EchantillonBundle\Entity\AttributEchantillon", mappedBy="echantillon")
+     * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributEchantillon", mappedBy="echantillon", cascade={"persist", "remove"})
      */
     private $echantillon_attributs;
 
@@ -572,10 +572,10 @@ class Echantillon
     /**
      * Add echantillon_attributs
      *
-     * @param \Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs
+     * @param \Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs
      * @return Echantillon
      */
-    public function addEchantillonAttribut(\Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs)
+    public function addEchantillonAttribut(\Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs)
     {
         $this->echantillon_attributs[] = $echantillonAttributs;
     
@@ -585,9 +585,9 @@ class Echantillon
     /**
      * Remove echantillon_attributs
      *
-     * @param \Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs
+     * @param \Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs
      */
-    public function removeEchantillonAttribut(\Leha\EchantillonBundle\Entity\AttributEchantillon $echantillonAttributs)
+    public function removeEchantillonAttribut(\Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs)
     {
         $this->echantillon_attributs->removeElement($echantillonAttributs);
     }

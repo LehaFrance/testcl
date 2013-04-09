@@ -5,7 +5,7 @@ namespace Leha\HistoriqueBundle\Controller;
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
-use Leha\EchantillonBundle\Entity\EchantillonAttribut;
+use Leha\CentralBundle\Entity\EchantillonAttribut;
 use Leha\CentralBundle\Entity\Attribut;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,7 +86,7 @@ class DefaultController extends Controller
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
-            $repo_echantillon = $this->getDoctrine()->getRepository('LehaEchantillonBundle:Echantillon');
+            $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
 
             $post_data = $form->bind($request)->getData();
 
@@ -125,7 +125,7 @@ class DefaultController extends Controller
                     $attribut = $attribut_requete->getAttribut();
                     if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
                         if ($attribut->getScope() == Attribut::SCOPE_ATTRIBUT) {
-                            $echantillons_attribut = $em->createQuery('select e from LehaEchantillonBundle:AttributEchantillon e where e.attribut_id = :attribut_id and e.echantillon_id in (:echantillons_id) and e.value like :valeur')
+                            $echantillons_attribut = $em->createQuery('select e from LehaCentralBundle:AttributEchantillon e where e.attribut_id = :attribut_id and e.echantillon_id in (:echantillons_id) and e.value like :valeur')
                                 ->setParameter('attribut_id', $attribut->getId())
                                 ->setParameter('echantillons_id', $echantillons_id)
                                 ->setParameter('valeur', $post_data[$attribut->getFieldId()])

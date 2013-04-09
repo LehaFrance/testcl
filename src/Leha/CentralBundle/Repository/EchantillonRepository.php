@@ -1,6 +1,6 @@
 <?php
 
-namespace Leha\EchantillonBundle\Entity;
+namespace Leha\CentralBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

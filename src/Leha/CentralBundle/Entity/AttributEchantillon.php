@@ -1,6 +1,6 @@
 <?php
 
-namespace Leha\EchantillonBundle\Entity;
+namespace Leha\CentralBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,79 +13,23 @@ use Doctrine\ORM\Mapping as ORM;
 class AttributEchantillon
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Leha\EchantillonBundle\Entity\Echantillon", inversedBy="echantillon_attributs")
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Echantillon", inversedBy="echantillon_attributs")
      * @ORM\JoinColumn(name="echantillon_id", referencedColumnName="id")
      */
     protected $echantillon;
 
     /**
      * @ORM\Id
-     * @ORM\Column(name="echantillon_id", type="integer")
-     */
-    protected $echantillon_id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attribut_echantillons")
      * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
      */
     protected $attribut;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(name="attribut_id", type="integer")
-     */
-    protected $attribut_id;
-
-    /**
      * @ORM\Column(name="value", type="string", length=2000)
      */
     protected $value;
-
-    /**
-     * Set echantillon_id
-     *
-     * @param integer $echantillonId
-     * @return AttributEchantillon
-     */
-    public function setEchantillonId($echantillonId)
-    {
-        $this->echantillon_id = $echantillonId;
-    
-        return $this;
-    }
-
-    /**
-     * Get echantillon_id
-     *
-     * @return integer 
-     */
-    public function getEchantillonId()
-    {
-        return $this->echantillon_id;
-    }
-
-    /**
-     * Set attribut_id
-     *
-     * @param integer $attributId
-     * @return AttributEchantillon
-     */
-    public function setAttributId($attributId)
-    {
-        $this->attribut_id = $attributId;
-    
-        return $this;
-    }
-
-    /**
-     * Get attribut_id
-     *
-     * @return integer 
-     */
-    public function getAttributId()
-    {
-        return $this->attribut_id;
-    }
 
     /**
      * Set value
@@ -113,10 +57,10 @@ class AttributEchantillon
     /**
      * Set echantillon
      *
-     * @param \Leha\EchantillonBundle\Entity\Echantillon $echantillon
+     * @param \Leha\CentralBundle\Entity\Echantillon $echantillon
      * @return AttributEchantillon
      */
-    public function setEchantillon(\Leha\EchantillonBundle\Entity\Echantillon $echantillon = null)
+    public function setEchantillon(\Leha\CentralBundle\Entity\Echantillon $echantillon = null)
     {
         $this->echantillon = $echantillon;
     
@@ -126,7 +70,7 @@ class AttributEchantillon
     /**
      * Get echantillon
      *
-     * @return \Leha\EchantillonBundle\Entity\Echantillon 
+     * @return \Leha\CentralBundle\Entity\Echantillon 
      */
     public function getEchantillon()
     {

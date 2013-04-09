@@ -24,7 +24,7 @@ class AttributManager
             ->findByName($name);
         if (sizeof($attributs) == 1) {
             $attribut = $attributs[0];
-            $repoAttributEchantillon = $this->entityManager->getRepository('LehaEchantillonBundle:AttributEchantillon');
+            $repoAttributEchantillon = $this->entityManager->getRepository('LehaCentralBundle:AttributEchantillon');
             $attributEchantillons = $repoAttributEchantillon->findBy(
                 array(
                     'echantillon_id' => $echantillonId,
