@@ -7,20 +7,35 @@
     </exec>
   </target>
 
- <target name="build"
-   depends="composer,phpunit,phpcs,pdepend"/>
 
 
+<target name="build" depends="buildPrepare,composer,phpunit,phpcs,pdepend" />
+
+<target name="buildPrepare">
+    <copy file="app/config/parameters.yml.dist" tofile="app/config/parameters.yml" overwrite="true">
+        <filterchain>
+            <replacetokens>
+                <token key="database_name" value="${db_name}" />
+                <token key="database_user" value="${db_user}" />
+                <token key="database_password" value="${db_passwd}" />
+                <token key="test_database_name" value="${test_db_name}" />
+                <token key="test_database_user" value="${test_db_user}" />
+                <token key="test_database_password" value="${test_db_passwd}" />
+                <token key="secret" value="${secret}" />
+            </replacetokens>
+        </filterchain>
+    </copy>
+</target>
 
 <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec executable="phpunit" failonerror="false">
-	<arg value="-c"/>
-	<arg value="app/"/>
-	<arg value="--log-junit"/>
-	<arg value="build/phpunit.xml"/>
-	<arg line="--coverage-clover build/clover.xml"/>
-	<arg line="--coverage-html build/coverage" />
-</exec>
+    <exec executable="phpunit" failonerror="false">
+        <arg value="-c"/>
+        <arg value="app/"/>
+        <arg value="--log-junit"/>
+        <arg value="build/phpunit.xml"/>
+        <arg line="--coverage-clover build/clover.xml"/>
+        <arg line="--coverage-html build/coverage" />
+    </exec>
  </target>
 
  <target name="phpcs" description="Check syntax">
