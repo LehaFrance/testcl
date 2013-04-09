@@ -17,6 +17,8 @@ class AttributEchantillonRepository extends EntityRepository
      * @param string $name
      * @param Leha\CentralBundle\Entity\Echantillon
      *
+     * @throws Doctrine\ORM\NoResultException If no result
+     *
      * @return DoctrineCollection
      */
     public function findByNameAndEchantillon($name, $echantillon)
@@ -31,6 +33,6 @@ class AttributEchantillonRepository extends EntityRepository
                 ':name' => $name,
             ))->getQuery();
 
-            return $query->getSingleResult();
+        return $query->getSingleResult();
     }
 }

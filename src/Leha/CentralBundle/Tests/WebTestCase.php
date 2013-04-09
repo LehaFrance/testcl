@@ -16,11 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
  */
 class WebTestCase extends BaseWebTestCase
 {
-    protected static $client;
+    protected $client;
 
-    public static function setUpBeforeClass()
+    public function setUp()
     {
-        static::$client = self::createClient();
+        $this->client = self::createClient();
     }
 
     /**

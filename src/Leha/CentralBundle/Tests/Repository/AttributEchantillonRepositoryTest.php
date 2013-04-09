@@ -12,6 +12,9 @@ use Leha\CentralBundle\Repository\EchantillonAttributeRepository;
  */
 class AttributEchantillonRepositoryTest extends WebTestCase
 {
+    /**
+     * Teste la méthode du repository pour la récuperation d'un AttributEchantillon
+     */
     public function testGetsEntitesByNameAndEchantillon()
     {
         self::generateSchema();
@@ -28,5 +31,18 @@ class AttributEchantillonRepositoryTest extends WebTestCase
         $attributEchantillon = $repository->findByNameAndEchantillon('itm8', $echantillon);
 
         $this->assertEquals('par 4', $attributEchantillon->getValue());
+    }
+
+    /**
+     * @expectedException Doctrine\ORM\NoResultException
+     */
+    public function testThrowsExceptionIfUnknownAttribute()
+    {
+        $em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $echantillon = $em->getRepository('LehaCentralBundle:Echantillon')->findOneByEchantNumero(35);
+
+        $em->getRepository('LehaCentralBundle:AttributEchantillon')
+            ->findByNameAndEchantillon('non-existent', $echantillon);
     }
 }
