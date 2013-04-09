@@ -14,14 +14,14 @@ class AttributEchantillon
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Echantillon", inversedBy="echantillon_attributs")
+     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Echantillon", inversedBy="echantillonAttributs")
      * @ORM\JoinColumn(name="echantillon_id", referencedColumnName="id")
      */
     protected $echantillon;
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attribut_echantillons")
+     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attributEchantillons")
      * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
      */
     protected $attribut;

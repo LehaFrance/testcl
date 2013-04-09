@@ -29,7 +29,7 @@ class Client
     private $nom;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Leha\CentralBundle\Entity\Attribut")
+     * @ORM\ManyToMany(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="clients")
      * @ORM\JoinTable(name="t_attributs_clients",
      *      joinColumns={@ORM\JoinColumn(name="client_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="attribut_id", referencedColumnName="id")}

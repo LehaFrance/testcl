@@ -12,4 +12,40 @@ use Doctrine\ORM\EntityRepository;
  */
 class EchantillonRepository extends EntityRepository
 {
+    public function getAll()
+    {
+        $query = $this->joinAttributs($this->createQueryBuilder('e'))
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getQueryBuilderFiltered($filter, $post_use_data)
+    {
+        $queryBuilder = $this->createQueryBuilder('e')->select('e');
+        if (strlen($filter) > 0) {
+            $queryBuilder->where($filter);
+            foreach ($post_use_data as $key => $value) {
+                $queryBuilder->setParameter(':'.$key, $value);
+            }
+        }
+
+        $this->joinAttributs($queryBuilder);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $qb
+     * @param string $alias
+     * @return mixed
+     */
+    private function joinAttributs($qb, $alias = 'e')
+    {
+        $qb->leftJoin($alias . '.echantillonAttributs', 'ea')
+            ->leftJoin('ea.attribut', 'eaa')
+            ->addSelect('eaa, ea');
+
+        return $qb;
+    }
 }

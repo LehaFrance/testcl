@@ -1,7 +1,0 @@
-parameters:
-    leha_attribut.manager.class: Leha\CentralBundle\Services\AttributManager
-
-services:
-    leha_attribut.manager:
-        class: %leha_attribut.manager.class%
-        arguments: [@doctrine.orm.default_entity_manager]

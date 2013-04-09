@@ -70,6 +70,11 @@ abstract class Attribut
     private $attribut_requetes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributEchantillon", mappedBy="attribut", cascade={"persist", "remove"})
+     */
+    private $attributEchantillons;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Leha\ClientBundle\Entity\Client", mappedBy="attributs")
      */
     private $clients;

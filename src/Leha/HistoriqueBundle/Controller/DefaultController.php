@@ -103,13 +103,7 @@ class DefaultController extends Controller
                 }
             }
 
-            $queryBuilder = $repo_echantillon->createQueryBuilder('e');
-            if (strlen($filter) > 0) {
-                $queryBuilder->where($filter);
-                foreach ($post_use_data as $key => $value) {
-                    $queryBuilder->setParameter(':'.$key, $value);
-                }
-            }
+            $queryBuilder = $repo_echantillon->getQueryBuilderFiltered($filter, $post_use_data);
 
             $queryBuilder->setMaxResults(1000);
 

@@ -2,6 +2,7 @@
 
 namespace Leha\CentralBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -157,7 +158,7 @@ class Echantillon
     /**
      * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributEchantillon", mappedBy="echantillon", cascade={"persist", "remove"})
      */
-    private $echantillon_attributs;
+    private $echantillonAttributs;
 
     /**
      * Get id
@@ -565,7 +566,7 @@ class Echantillon
      */
     public function __construct()
     {
-        $this->echantillon_attributs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->echantillonAttributs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->attributs = array();
     }
     
@@ -577,7 +578,7 @@ class Echantillon
      */
     public function addEchantillonAttribut(\Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs)
     {
-        $this->echantillon_attributs[] = $echantillonAttributs;
+        $this->echantillonAttributs[] = $echantillonAttributs;
     
         return $this;
     }
@@ -589,7 +590,7 @@ class Echantillon
      */
     public function removeEchantillonAttribut(\Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs)
     {
-        $this->echantillon_attributs->removeElement($echantillonAttributs);
+        $this->echantillonAttributs->removeElement($echantillonAttributs);
     }
 
     /**
@@ -599,7 +600,7 @@ class Echantillon
      */
     public function getEchantillonAttributs()
     {
-        return $this->echantillon_attributs;
+        return $this->echantillonAttributs;
     }
 
     private function getNameAttribute($name)
@@ -612,21 +613,11 @@ class Echantillon
 
     private function getValueAttribute($name)
     {
-        if (is_array($this->attributs)) {
-            if (array_key_exists($name, $this->attributs)) {
-                return $this->attributs[$name];
-            }
-        }
+        $attributEchantillon = $this->getEchantillonAttributs()->filter(function ($item) use ($name) {
+            return $item->getAttribut()->getName() == $name;
+        });
 
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        $attributeManager = $kernel->getContainer()->get('leha_attribut.manager');
-
-        return $attributeManager->getValue($this->getId(), $name);
+        return (count($attributEchantillon) == 0) ? '' : $attributEchantillon->first()->getValue();
     }
 
     public function __call($name, $arguments)
