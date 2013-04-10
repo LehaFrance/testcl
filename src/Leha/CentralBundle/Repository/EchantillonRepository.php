@@ -20,15 +20,22 @@ class EchantillonRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getQueryBuilderFiltered($filter, $post_use_data)
+    public function getQueryBuilderFiltered($values)
     {
         $queryBuilder = $this->createQueryBuilder('e')->select('e');
+
+        foreach ($values as $property => $value) {
+            $queryBuilder->andWhere('e.' . $property . ' = :' . $property)
+                ->setParameter(':' . $property, $value);
+        }
+
+        /*$filter = implode(' AND ', $filter);
         if (strlen($filter) > 0) {
             $queryBuilder->where($filter);
-            foreach ($post_use_data as $key => $value) {
+            foreach ($values as $key => $value) {
                 $queryBuilder->setParameter(':'.$key, $value);
             }
-        }
+        }*/
 
         $this->joinAttributs($queryBuilder);
 
