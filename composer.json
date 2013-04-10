@@ -23,7 +23,8 @@
         "fzaninotto/faker": "1.1.*@dev",
         "nelmio/alice": "1.4.*@dev",
         "phpunit/phpunit": "3.7.18",
-        "friendsofsymfony/user-bundle": "1.3.*"
+        "friendsofsymfony/user-bundle": "1.3.*",
+        "phake/phake" : "*"
     },
     "scripts": {
         "post-install-cmd": [

@@ -8,6 +8,8 @@ use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
 use Leha\CentralBundle\Entity\Attribut;
+use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
+use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -74,33 +76,18 @@ class DefaultController extends AbstractController
 
         $attributs_requete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
 
-        foreach ($attributs_requete as $attribut_requete) {
-            $attribut = $attribut_requete->getAttribut();
-            $form_builder->add($attribut->getFieldId(), $attribut->getType(), $attribut->getFieldOptions());
-        }
-
-        $form = $form_builder->getForm();
+        $form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributs_requete), array('attribut_requete' => $attributs_requete));
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
             $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
 
-            $post_data = $form->bind($request)->getData();
+            /**
+             * @var $historySearch \Leha\HistoriqueBundle\Model\HistorySearch
+             */
+            $historySearch = $form->bind($request)->getData();
 
-            $filter = '';
-            $post_use_data = array();
-			foreach ($attributs_requete as $attribut_requete) {
-                $attribut = $attribut_requete->getAttribut();
-                if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
-                    if ($attribut->getScope() == Attribut::SCOPE_ECHANTILLON) {
-                        $options = $attribut->getOptions();
-                        $filter .= 'e.'.$attribut->getName().' = :'.$attribut->getFieldId();
-                        $post_use_data[$attribut->getFieldId()] = $post_data[$attribut->getFieldId()];
-                    }
-                }
-            }
-
-            $queryBuilder = $repo_echantillon->getQueryBuilderFiltered($filter, $post_use_data);
+            $queryBuilder = $repo_echantillon->getQueryBuilderFiltered($historySearch->getEchantillonProperties());
 
             $queryBuilder->setMaxResults(1000);
 
