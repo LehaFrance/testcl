@@ -87,28 +87,6 @@ class DefaultController extends AbstractController
              */
             $historySearch = $form->bind($request)->getData();
 
-
-            //$post_data = $form->bind($request)->getData();
-            //$post_data = $post_data->attributes;
-
-/*
-
-            $post_use_data = array();
-			foreach ($attributs_requete as $attribut_requete) {
-                $attribut = $attribut_requete->getAttribut();
-                if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
-                    if ($attribut->getScope() == Attribut::SCOPE_ECHANTILLON) {
-                        $options = $attribut->getOptions();
-                        $filter .= 'e.'.$attribut->getName().' = :'.$attribut->getFieldId();
-                        $post_use_data[$attribut->getFieldId()] = $post_data[$attribut->getFieldId()];
-                    }
-                }
-            }
-
-
-*/
-
-            $post_use_data = array();
             $queryBuilder = $repo_echantillon->getQueryBuilderFiltered($historySearch->getEchantillonProperties());
 
             $queryBuilder->setMaxResults(1000);
