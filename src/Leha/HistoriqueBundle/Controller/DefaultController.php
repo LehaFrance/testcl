@@ -8,6 +8,10 @@ use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
 use Leha\CentralBundle\Entity\Attribut;
+use Leha\CentralBundle\Specifications\Filters\Specification;
+use Leha\CentralBundle\Specifications\Filters\AsArray;
+use Leha\CentralBundle\Specifications\Filters\FilterAttribut;
+use Leha\CentralBundle\Specifications\Filters\AndX;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,7 +91,12 @@ class DefaultController extends AbstractController
              */
             $historySearch = $form->bind($request)->getData();
 
-            $queryBuilder = $repo_echantillon->getQueryBuilderFiltered($historySearch->getEchantillonProperties());
+            //$queryBuilder = $repo_echantillon->getQueryBuilderFiltered($historySearch->getEchantillonProperties());
+
+            $specification =  new AsArray(new AndX(
+                new FilterAttribut(8)
+            ));
+            $repo_echantillon->match($specification);
 
             $queryBuilder->setMaxResults(1000);
 
@@ -103,7 +112,7 @@ class DefaultController extends AbstractController
                     $attribut = $attribut_requete->getAttribut();
                     if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
                         if ($attribut->getScope() == Attribut::SCOPE_ATTRIBUT) {
-                            $echantillons_attribut = $em->createQuery('select e from LehaCentralBundle:AttributEchantillon e where e.attribut = :attributId and e.echantillon in (:echantillonsId) and e.value like :valeur')
+                            /*$echantillons_attribut = $em->createQuery('select e from LehaCentralBundle:AttributEchantillon e where e.attribut = :attributId and e.echantillon in (:echantillonsId) and e.value like :valeur')
                                 ->setParameter('attributId', $attribut->getId())
                                 ->setParameter('echantillonsId', $echantillons_id)
                                 ->setParameter('valeur', $post_data[$attribut->getFieldId()])
@@ -116,10 +125,16 @@ class DefaultController extends AbstractController
 
                             if (sizeof($echantillons_id) == 0) {
                                 break;
-                            }
+                            }*/
+
+
                         }
                     }
                 }
+
+
+
+
 
                 if (count($echantillons_id) > 0) {
                     foreach ($echantillons as $indice => $echantillon) {
