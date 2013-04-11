@@ -3,6 +3,7 @@
 namespace Leha\CentralBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Leha\CentralBundle\Specifications\Filters\Specification;
 
 /**
  * EchantillonRepository
@@ -54,5 +55,17 @@ class EchantillonRepository extends EntityRepository
             ->addSelect('eaa, ea');
 
         return $qb;
+    }
+
+    public function match(Specification $specification)
+    {
+        $qb = $this->createQueryBuilder('e');
+        $expr = $specification->match($qb, 'e');
+
+        $query = $qb->where($expr)->getQuery();
+
+        $specification->modifyQuery($query);
+
+        return $query->getResult();
     }
 }

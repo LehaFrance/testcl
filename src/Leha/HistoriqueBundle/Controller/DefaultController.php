@@ -2,12 +2,16 @@
 
 namespace Leha\HistoriqueBundle\Controller;
 
+use Leha\CentralBundle\Entity\AttributEchantillon;
 use Leha\CommonBundle\Controller\AbstractController;
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
 use Leha\CentralBundle\Entity\Attribut;
+use Leha\CentralBundle\Specifications\Filters\AsArray;
+use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\AndX;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,9 +78,9 @@ class DefaultController extends AbstractController
 
         $form_builder = $this->createFormBuilder();
 
-        $attributs_requete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+        $attributsRequete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
 
-        $form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributs_requete), array('attribut_requete' => $attributs_requete));
+        $form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributsRequete), array('attribut_requete' => $attributsRequete));
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
@@ -87,50 +91,15 @@ class DefaultController extends AbstractController
              */
             $historySearch = $form->bind($request)->getData();
 
-            $queryBuilder = $repo_echantillon->getQueryBuilderFiltered($historySearch->getEchantillonProperties());
+            $attributEchantillon = new AttributEchantillon();
+            $attributEchantillon->setAttribut($attributsRequete[0]->getAttribut());
+            $attributEchantillon->setValue('41395');
 
-            $queryBuilder->setMaxResults(1000);
+            $specification =  new AsArray(new AndX(
+                new FilterAttributEchantillon($attributEchantillon)
+            ));
 
-            $echantillons = $queryBuilder->getQuery()->getResult();
-
-            $echantillons_id = array();
-            foreach ($echantillons as $echantillon) {
-                $echantillons_id[] = $echantillon->getId();
-            }
-
-            if (sizeof($echantillons_id) > 0) {
-                foreach ($attributs_requete as $attribut_requete) {
-                    $attribut = $attribut_requete->getAttribut();
-                    if (isset($post_data[$attribut->getFieldId()]) && $post_data[$attribut->getFieldId()] != '') {
-                        if ($attribut->getScope() == Attribut::SCOPE_ATTRIBUT) {
-                            $echantillons_attribut = $em->createQuery('select e from LehaCentralBundle:AttributEchantillon e where e.attribut = :attributId and e.echantillon in (:echantillonsId) and e.value like :valeur')
-                                ->setParameter('attributId', $attribut->getId())
-                                ->setParameter('echantillonsId', $echantillons_id)
-                                ->setParameter('valeur', $post_data[$attribut->getFieldId()])
-                                ->getResult();
-
-                            $echantillons_id = array();
-                            foreach ($echantillons_attribut as $echantillon_attribut) {
-                                $echantillons_id[] = $echantillon_attribut->getEchantillonId();
-                            }
-
-                            if (sizeof($echantillons_id) == 0) {
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (count($echantillons_id) > 0) {
-                    foreach ($echantillons as $indice => $echantillon) {
-                        if (!in_array($echantillon->getId(), $echantillons_id)) {
-                            unset($echantillons[$indice]);
-                        }
-                    }
-                } else {
-                    $echantillons = null;
-                }
-            }
+            $echantillons = $repo_echantillon->match($specification);
         }
 
         return array(
