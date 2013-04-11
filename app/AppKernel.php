@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new Leha\HistoriqueBundle\LehaHistoriqueBundle(),
             new Leha\DashboardBundle\LehaDashboardBundle(),
             new Leha\ClientBundle\LehaClientBundle(),
-            new Leha\UserTestBundle\LehaUserTestBundle(),
+            new Leha\UserBundle\LehaUserBundle(),
             new Leha\CentralBundle\LehaCentralBundle(),
             new Leha\CommonBundle\LehaCommonBundle(),
             new \Sonata\BlockBundle\SonataBlockBundle(),
