@@ -5,7 +5,7 @@ services:
             - { name: sonata.admin, manager_type: orm, group: posts, label: "User" }
         arguments:
             - ~
-            - Leha\UserTestBundle\Entity\User
+            - Leha\UserBundle\Entity\User
             - 'SonataAdminBundle:CRUD'
         calls:
             - [ setTranslationDomain, [YourNSAdminBundle]]

@@ -1,10 +1,10 @@
 <?php
 
-namespace Leha\UserTestBundle;
+namespace Leha\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class LehaUserTestBundle extends Bundle
+class LehaUserBundle extends Bundle
 {
     public function getParent()
     {

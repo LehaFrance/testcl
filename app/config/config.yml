@@ -68,7 +68,7 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Leha\UserTestBundle\Entity\User
+    user_class: Leha\UserBundle\Entity\User
 
 sonata_block:
     default_contexts: [cms]

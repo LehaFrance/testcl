@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     {% block head %}
-        <link rel="stylesheet" href="{{ asset('bundles/lehausertest/css/User.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/lehauser/css/User.css') }}" />
         <link href="{{ asset('bundles/framework/css/structure.css') }}" rel="stylesheet" type="text/css" media="all" />
         <link href="{{ asset('bundles/framework/css/body.css') }}" rel="stylesheet" type="text/css" media="all" />
     {% endblock %}
@@ -13,18 +13,18 @@
 <div id="content">
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-        <a href="{{ path('leha_usertest_security_logout') }}">
+        <a href="{{ path('leha_user_security_logout') }}">
             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
         </a>
-        <a href="{{ path('leha_usertest_register') }}">
+        <a href="{{ path('leha_user_register') }}">
             {{ 'layout.Add'|trans({}, 'FOSUserBundle') }}
         </a>
-        <a href="{{ path('leha_usertest_passwd') }}">
+        <a href="{{ path('leha_user_passwd') }}">
         {{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}
         </a>
 
     {% else %}
-        <a href="{{ path('leha_usertest_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        <a href="{{ path('leha_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
 
     {% endif %}
 {% endblock %}
