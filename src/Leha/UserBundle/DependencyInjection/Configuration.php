@@ -1,6 +1,6 @@
 <?php
 
-namespace Leha\UserTestBundle\DependencyInjection;
+namespace Leha\UserBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

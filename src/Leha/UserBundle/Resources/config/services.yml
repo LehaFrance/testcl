@@ -1,5 +1,5 @@
 parameters:
-#    leha_user_test.example.class: Leha\UserTestBundle\Example
+#    leha_user_test.example.class: Leha\UserBundle\Example
 
 services:
 #    leha_user_test.example:

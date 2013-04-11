@@ -14,8 +14,8 @@ leha_historique:
     resource: "@LehaHistoriqueBundle/Resources/config/routing.yml"
     prefix:   /
 
-leha_usertest_security:
-    resource: "@LehaUserTestBundle/Resources/config/routing.yml"
+leha_user_security:
+    resource: "@LehaUserBundle/Resources/config/routing.yml"
 
 #fos_user_security:
  # resource: "@FOSUserBundle/Resources/config/routing/security.xml"
