@@ -3,8 +3,9 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+        ROLE_ADMIN: [ROLE_USER,ROLE_LEHA_ADMIN_USERADMIN_LIST]
         ROLE_SUPER_ADMIN: ROLE_ADMIN
+
 
     providers:
         fos_userbundle:
