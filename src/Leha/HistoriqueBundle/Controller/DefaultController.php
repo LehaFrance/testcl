@@ -15,7 +15,6 @@ use Leha\CentralBundle\Specifications\Filters\AndX;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Class DefaultController
@@ -76,8 +75,6 @@ class DefaultController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form_builder = $this->createFormBuilder();
-
         $attributsRequete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
 
         $form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributsRequete), array('attribut_requete' => $attributsRequete));
@@ -85,11 +82,6 @@ class DefaultController extends AbstractController
         $echantillons = null;
         if ($request->isMethod('POST')) {
             $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
-
-            /**
-             * @var $historySearch \Leha\HistoriqueBundle\Model\HistorySearch
-             */
-            $historySearch = $form->bind($request)->getData();
 
             $attributEchantillon = new AttributEchantillon();
             $attributEchantillon->setAttribut($attributsRequete[0]->getAttribut());
@@ -109,6 +101,13 @@ class DefaultController extends AbstractController
         );
     }
 
+    /**
+     * Supprime une requête
+     *
+     * @param Requete $requete
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function removeAction(Requete $requete)
     {
         $em = $this->getDoctrine()->getManager();
@@ -118,6 +117,14 @@ class DefaultController extends AbstractController
         return $this->redirectRoute('leha_historique');
     }
 
+    /**
+     * Permet d'associer des attributs à une requête
+     *
+     * @param Request $request
+     * @param Requete $requete
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function choix_attributsAction(Request $request, Requete $requete)
     {
 		$em = $this->getDoctrine()->getManager();
