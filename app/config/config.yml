@@ -83,10 +83,11 @@ sonata_admin:
     security:
         handler: sonata.admin.security.handler.role
 
-    title:      Sonata Project
-    title_logo: /bundles/sonataadmin/logo_title.png
+    #title:      Sonata Project
+    #title_logo: /bundles/sonataadmin/logo_title.png
     templates:
         # default global templates
+        layout:  ::base.html.twig
         layout:  SonataAdminBundle::standard_layout.html.twig
         ajax:    SonataAdminBundle::ajax_layout.html.twig
         dashboard: SonataAdminBundle:Core:dashboard.html.twig
