@@ -3,6 +3,7 @@
 namespace Leha\CentralBundle\Specifications\Filters;
 
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query;
 
 class AndX implements Specification
 {
@@ -29,5 +30,10 @@ class AndX implements Specification
         foreach ($this->children as $child) {
             $child->modifyQuery($query);
         }
+    }
+
+    public function supports($className)
+    {
+        return false;
     }
 }

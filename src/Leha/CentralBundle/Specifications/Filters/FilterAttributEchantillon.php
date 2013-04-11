@@ -4,20 +4,23 @@ namespace Leha\CentralBundle\Specifications\Filters;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 
-class FilterAttributRequete implements Specification
+class FilterAttributEchantillon implements Specification
 {
-    private $attributRequete;
+    private $attributEchantillon;
 
-    public function __construct($attributRequete)
+    public function __construct($attributEchantillon)
     {
-        $this->attributRequte = $attributRequete;
+        $this->attributEchantillon = $attributEchantillon;
     }
 
     public function match(QueryBuilder $qb, $dqlAlias)
     {
-        $qb->setParameter('attribut_requete', $this->attributRequete);
+        $qb->setParameter('value', $this->attributEchantillon->getValue());
+        $qb->setParameter('attribut', $this->attributEchantillon->getAttribut());
 
-        return $qb->expr()->eq($dqlAlias . '.attribut_requete', ':attribut_requete');
+        $qb->innerJoin($dqlAlias . '.echantillonAttributs', 'ea', 'WITH', 'ea.attribut = :attribut and ea.value = :value');
+
+        return "1 = 1";
     }
 
     public function modifyQuery(Query $query)
@@ -27,6 +30,6 @@ class FilterAttributRequete implements Specification
 
     public function supports($className)
     {
-        return ($className === 'Leha\CentralBundle\Entity\Echantillon');
+        return ($className === 'Leha\CentralBundle\Entity\AttributEchantillon');
     }
 }

@@ -3,6 +3,7 @@
 namespace Leha\CentralBundle\Specifications\Filters;
 
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query;
 
 class AsArray implements Specification
 {
@@ -15,11 +16,18 @@ class AsArray implements Specification
 
     public function modifyQuery(Query $query)
     {
-        $query->setHydrationMode(Query::HYDRATE_ARRAY);
+        //echo 'okaaa';
+        //$query->setHydrationMode(Query::HYDRATE_ARRAY);
+        $this->parent->modifyQuery($query);
     }
 
     public function match(QueryBuilder $qb, $dqlAlias)
     {
         return $this->parent->match($qb, $dqlAlias);
+    }
+
+    public function supports($className)
+    {
+        return false;
     }
 }
