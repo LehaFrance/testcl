@@ -1,5 +1,49 @@
-{% extends '::base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    {% block head %}
+        <link rel="stylesheet" href="{{ asset('bundles/lehauser/css/User.css') }}" />
+        <link href="{{ asset('bundles/framework/css/structure.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('bundles/framework/css/body.css') }}" rel="stylesheet" type="text/css" media="all" />
+    {% endblock %}
+</head>
+<body>
+{% block bare %}
+<div id="content">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+        <a href="{{ path('leha_user_security_logout') }}">
+            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+        </a>
+        <a href="{{ path('leha_user_register') }}">
+            {{ 'layout.Add'|trans({}, 'FOSUserBundle') }}
+        </a>
+        <a href="{{ path('leha_user_passwd') }}">
+        {{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}
+        </a>
 
-{% block body %}
-{% block content %}{% endblock %}
+    {% else %}
+        <a href="{{ path('leha_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+
+    {% endif %}
 {% endblock %}
+
+{% for key, message in app.session.getFlashes() %}
+    <div class="{{ key }}">
+        {{ message|trans({}, 'FOSUserBundle') }}
+    </div>
+{% endfor %}
+
+<div>
+    <div class="sf-reset">
+        <div class="block">
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+            </div>
+    </div>
+
+</div>
+</div>
+</body>
+</html>

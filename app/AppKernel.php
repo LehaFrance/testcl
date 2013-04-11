@@ -19,14 +19,19 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Leha\UserBundle\LehaUserBundle(),
             new Leha\HistoriqueBundle\LehaHistoriqueBundle(),
             new Leha\DashboardBundle\LehaDashboardBundle(),
             new Leha\ClientBundle\LehaClientBundle(),
-            new Leha\UserTestBundle\LehaUserTestBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
+            new Leha\UserBundle\LehaUserBundle(),
             new Leha\CentralBundle\LehaCentralBundle(),
             new Leha\CommonBundle\LehaCommonBundle(),
+            new \Sonata\BlockBundle\SonataBlockBundle(),
+            new \Sonata\jQueryBundle\SonatajQueryBundle(),
+            new \Sonata\AdminBundle\SonataAdminBundle(),
+            new \Leha\AdminBundle\LehaAdminBundle(),
+            new \Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

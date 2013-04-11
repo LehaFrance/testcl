@@ -14,12 +14,8 @@ leha_historique:
     resource: "@LehaHistoriqueBundle/Resources/config/routing.yml"
     prefix:   /
 
-leha_user:
-    resource: "@LehaUserBundle/Resources/config/routing.xml"
-    prefix:   /
-
-leha_usertest_security:
-    resource: "@LehaUserTestBundle/Resources/config/routing.yml"
+leha_user_security:
+    resource: "@LehaUserBundle/Resources/config/routing.yml"
 
 #fos_user_security:
  # resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -40,4 +36,12 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
 

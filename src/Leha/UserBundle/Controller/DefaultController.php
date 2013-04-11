@@ -6,12 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction($name)
     {
-
-        $this->get('leha_user.envoi')->aa();
-
-
-        return $this->render('LehaUserBundle:Default:index.html.twig', array('name' => 'dd'));
+        return $this->render('LehaUserBundle:Default:index.html.twig', array('name' => $name));
     }
 }
