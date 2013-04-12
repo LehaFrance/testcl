@@ -3,6 +3,7 @@
 namespace Leha\CentralBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Leha\CentralBundle\Specifications\Filters\Specification;
 
 /**
  * EchantillonRepository
@@ -29,14 +30,6 @@ class EchantillonRepository extends EntityRepository
                 ->setParameter(':' . $property, $value);
         }
 
-        /*$filter = implode(' AND ', $filter);
-        if (strlen($filter) > 0) {
-            $queryBuilder->where($filter);
-            foreach ($values as $key => $value) {
-                $queryBuilder->setParameter(':'.$key, $value);
-            }
-        }*/
-
         $this->joinAttributs($queryBuilder);
 
         return $queryBuilder;
@@ -49,10 +42,24 @@ class EchantillonRepository extends EntityRepository
      */
     private function joinAttributs($qb, $alias = 'e')
     {
-        $qb->leftJoin($alias . '.echantillonAttributs', 'ea')
-            ->leftJoin('ea.attribut', 'eaa')
-            ->addSelect('eaa, ea');
+        $qb->leftJoin($alias . '.echantillonAttributs', 'lea')
+            ->leftJoin('lea.attribut', 'laa')
+            ->addSelect('la, lea');
 
         return $qb;
+    }
+
+    public function match(Specification $specification)
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb = $this->joinAttributs($qb);
+
+        $expr = $specification->match($qb, 'e');
+
+        $query = $qb->where($expr)->getQuery();
+
+        $specification->modifyQuery($query);
+
+        return $query->getResult();
     }
 }
