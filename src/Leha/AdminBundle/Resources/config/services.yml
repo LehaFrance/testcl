@@ -8,4 +8,4 @@ services:
             - Leha\UserBundle\Entity\User
             - 'SonataAdminBundle:CRUD'
         calls:
-            - [ setTranslationDomain, [YourNSAdminBundle]]
+            - [ setUserManager, [@fos_user.user_manager]]
