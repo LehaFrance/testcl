@@ -5,6 +5,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
 
 class UserAdmin extends Admin
@@ -17,15 +18,14 @@ class UserAdmin extends Admin
     {
       $form
       ->with('Compte')
-      ->add('username', null, array('required' => true))
+      ->add('username', null, array('required' => true, 'label' => 'label.is_name'))
       ->add('email', null, array('required' => true))
-          ->add('plainPassword', 'text')
-          ->add('roles', 'sonata_security_roles', array( 'multiple' => true))
-          ->add('enabled', null, array('required' => false))
+      ->add('roles', 'sonata_security_roles', array( 'multiple' => true))
+      ->add('enabled', null, array('required' => false))
       ->end()
       ->with('Information')
-          ->add('lastName')
-          ->add('firstName')
+      ->add('lastName')
+      ->add('firstName')
       ->end()
       ;
     }
@@ -38,10 +38,7 @@ class UserAdmin extends Admin
     {
         $datagridMapper
         ->add('username')
-        ->add('firstName')
-        ->add('lastName')
         ->add('enabled')
-        ->add('lastLogin')
         ;
     }
 
@@ -52,12 +49,37 @@ class UserAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-        ->addIdentifier('username')
+        ->addIdentifier('userName')
         ->addIdentifier('firstName')
         ->add('lastName')
         ->add('email')
         ->add('lastLogin','datetime')
         ->add('enabled')
+        // add custom action links
+            ->add('_action', 'actions', array(
+            'actions' => array(
+                'view' => array(),
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ))
+        ;
+    }
+
+    protected function configureShowField(ShowMapper $showMapper )
+    {
+        $showMapper
+        ->with('Compte')
+        ->add('username')
+        ->add('email')
+        ->end()
+        ->with('Inforamation')
+        ->add('firstName')
+        ->add('lastName')
+        ->end()
+        ->with('Historique')
+        ->add('lastLogin')
+        ->end()
         ;
     }
 
@@ -79,5 +101,6 @@ class UserAdmin extends Admin
     {
         return $this->userManager;
     }
+
 
 }

@@ -15,6 +15,7 @@ use Leha\CentralBundle\Specifications\Filters\AndX;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Class DefaultController

@@ -22,7 +22,7 @@ class User extends BaseUSer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected  $id;
+    protected $id;
 
     /**
      * @var
@@ -37,6 +37,18 @@ class User extends BaseUSer
      * @Assert\NotBlank()
      */
     protected $lastName;
+
+    /**
+     * @var
+     * @ORM\Column(name="date_naissance", type="datetime")
+     */
+    protected $dateOfBirth;
+
+    /**
+     * @var
+     * @ORM\Column(name="pays", type="string", length=100)
+     */
+    protected $country;
 
     /**
      * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
