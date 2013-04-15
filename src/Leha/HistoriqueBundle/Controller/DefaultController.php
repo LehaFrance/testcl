@@ -8,13 +8,14 @@ use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
-use Leha\CentralBundle\Entity\Attribut;
 use Leha\CentralBundle\Specifications\Filters\AsArray;
 use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
 use Leha\CentralBundle\Specifications\Filters\AndX;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 /**
  * Class DefaultController

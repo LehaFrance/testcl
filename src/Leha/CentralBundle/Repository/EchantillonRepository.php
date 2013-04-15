@@ -43,7 +43,7 @@ class EchantillonRepository extends EntityRepository
     private function joinAttributs($qb, $alias = 'e')
     {
         $qb->leftJoin($alias . '.echantillonAttributs', 'lea')
-            ->leftJoin('lea.attribut', 'laa')
+            ->leftJoin('lea.attribut', 'la')
             ->addSelect('la, lea');
 
         return $qb;
