@@ -50,7 +50,7 @@
         <exec executable="phpcpd" failonerror="false">
             <arg value="--log-pmd" />
             <arg value="build/php-cpd.xml" />
-            <arg path="src" />
+            <arg value="src" />
         </exec>
     </target>
 
