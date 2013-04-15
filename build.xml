@@ -49,7 +49,7 @@
     <target name="phpcpd" description="Check duplicate code">
         <exec executable="phpcpd" failonerror="false">
             <arg value="--log-pmd" />
-            <arg value="build/php-cpd.xml" />
+            <arg value="build/pmd-cpd.xml" />
             <arg value="src" />
         </exec>
     </target>
