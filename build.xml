@@ -2,7 +2,7 @@
 <project name="central_leha" default="build">
 
     <target name="build" depends="composer,phpunit,phpcs,pdepend" />
-    <target name="jenkins" depends="buildPrepare,composer,phpunit,phpcs,pdepend" />
+    <target name="jenkins" depends="buildPrepare,composer,phpunit,phpcpd,phpcs,pdepend" />
 
     <target name="composer">
         <exec executable="composer" failonerror="true">
