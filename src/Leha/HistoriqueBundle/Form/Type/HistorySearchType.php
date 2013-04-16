@@ -39,8 +39,10 @@ class HistorySearchType extends AbstractType
             }
         }
 
-        $builder->add('echantillon_properties', new SearchEchantillonType(), array('attribut_requete' => $echantillonProperties));
-        $builder->add('related_attributes', new SearchAttributesType(), array('attribut_requete' => $relatedAttributes));
+        //$builder->add('echantillon_properties', new SearchEchantillonType(), array('attribut_requete' => $echantillonProperties));
+        //$builder->add('related_attributes', new SearchAttributesType(), array('attribut_requete' => $relatedAttributes));
+
+        $builder->add('echantillonAttributs', new SearchAttributesType(), array('attribut_requete' => $relatedAttributes));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -49,11 +51,20 @@ class HistorySearchType extends AbstractType
 
         $resolver
             ->setDefaults(array(
-                'data_model' => 'Leha\HistoriqueBundle\Model\HistorySearch',
+                'data_model' => 'Leha\HistoriqueBundle\Entity\AttributEchantillon',
                 'csrf_protection' => false
             ))->setRequired(array(
                 'attribut_requete'
             )
         );
+/*
+        $resolver
+            ->setDefaults(array(
+                'data_model' => 'Leha\HistoriqueBundle\Model\HistorySearch',
+                'csrf_protection' => false
+            ))->setRequired(array(
+                    'attribut_requete'
+                )
+            );*/
     }
 }

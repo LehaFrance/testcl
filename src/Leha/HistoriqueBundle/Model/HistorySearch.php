@@ -35,6 +35,4 @@ class HistorySearch
     {
         return $this->relatedAttributes;
     }
-
-
 }

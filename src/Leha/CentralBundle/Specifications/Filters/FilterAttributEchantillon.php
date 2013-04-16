@@ -23,11 +23,6 @@ class FilterAttributEchantillon implements Specification
         return "1 = 1";
     }
 
-    public function modifyQuery(Query $query)
-    {
-
-    }
-
     public function supports($className)
     {
         return ($className === 'Leha\CentralBundle\Entity\AttributEchantillon');

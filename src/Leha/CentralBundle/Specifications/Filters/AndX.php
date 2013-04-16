@@ -25,13 +25,6 @@ class AndX implements Specification
         );
     }
 
-    public function modifyQuery(Query $query)
-    {
-        foreach ($this->children as $child) {
-            $child->modifyQuery($query);
-        }
-    }
-
     public function supports($className)
     {
         return false;

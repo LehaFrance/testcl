@@ -9,7 +9,5 @@ interface Specification
 {
     public function match(QueryBuilder $qb, $dqlAlias);
 
-    public function modifyQuery(Query $query);
-
     public function supports($className);
 }
