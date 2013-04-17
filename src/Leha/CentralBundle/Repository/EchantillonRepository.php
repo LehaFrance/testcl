@@ -3,8 +3,14 @@
 namespace Leha\CentralBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Leha\CentralBundle\Entity\Attribut;
 use Leha\CentralBundle\Specifications\Filters\Specification;
+use Leha\CentralBundle\Entity\AttributEchantillon;
 use Leha\HistoriqueBundle\Model\HistorySearch;
+use Leha\CentralBundle\Specifications\Filters\AsArray;
+use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
+use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\AndX;
 
 /**
  * EchantillonRepository
@@ -50,25 +56,31 @@ class EchantillonRepository extends EntityRepository
         return $qb;
     }
 
-	public function search($historySearch)
+	public function search($filters)
 	{
-		/*foreach ($historySearch->getRelatedAttributes() as $attributRequete) {
-            if (empty($attributRequete)) {
-                echo 'empty<br />';
-            } else {
-                echo 'ok<br />';
-            }
-		}*/
-		
-/*$attributEchantillon = new AttributEchantillon();
-        $attributEchantillon->setAttribut($attributsRequete[0]->getAttribut());
-        $attributEchantillon->setValue('41395');
+        $andX = new AndX();
 
-        $specification =  new AsArray(new AndX(
-            new FilterAttributEchantillon($attributEchantillon)
-        ));
-*/
-        return null;//$repo_echantillon->match($specification);
+        foreach ($filters as $scope => $filtersScope) {
+            switch ($scope) {
+                case Attribut::SCOPE_ECHANTILLON :
+                    foreach ($filtersScope as $indice => $filter) {
+                        $attribut = $filter['attribut'];
+                        $andX->addChildren(new FilterEchantillon($attribut->getName(), $filter['value']));
+                    }
+                    break;
+                case Attribut::SCOPE_ATTRIBUT :
+                    foreach ($filtersScope as $indice => $filter) {
+                        $attributEchantillon = new AttributEchantillon();
+                        $attributEchantillon->setAttribut($filter['attribut']);
+                        $attributEchantillon->setValue($filter['value']);
+
+                        $andX->addChildren(new FilterAttributEchantillon($attributEchantillon, 'ea' . $indice));
+                    }
+                    break;
+            }
+        }
+
+        return $this->match(new AsArray($andX));
 	}
 
     public function match(Specification $specification)

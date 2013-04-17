@@ -2,6 +2,7 @@
 
 namespace Leha\HistoriqueBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Leha\CentralBundle\Entity\AttributEchantillon;
 use Leha\CommonBundle\Controller\AbstractController;
 use Leha\HistoriqueBundle\Entity\Requete;
@@ -9,9 +10,6 @@ use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
 use Leha\CentralBundle\Repository\EchantillonRepository;
-use Leha\CentralBundle\Specifications\Filters\AsArray;
-use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
-use Leha\CentralBundle\Specifications\Filters\AndX;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,9 +76,7 @@ class DefaultController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $attributsRequete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
-
-        //$form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributsRequete), array('attribut_requete' => $attributsRequete));
-        $form = $this->get('form.factory')->create(new HistorySearchType(), new \Leha\CentralBundle\Entity\Echantillon(), array('attribut_requete' => $attributsRequete));
+        $form = $this->createForm(new HistorySearchType(), null, array('attributs_requete' => $attributsRequete));
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
@@ -90,8 +86,19 @@ class DefaultController extends AbstractController
              * @var $repo_echantillon \Leha\CentralBundle\Repository\EchantillonRepository
              */
             $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
+            $data = $form->getData();
+            $filters = array();
+            array_walk($attributsRequete, function($attributRequete, $key) use($data, &$filters)
+            {
+                if (isset($data[$attributRequete->getAttribut()->getName()])) {
+                    $filters[$attributRequete->getAttribut()->getScope()][] = array(
+                        'value' => $data[$attributRequete->getAttribut()->getName()],
+                        'attribut' => $attributRequete->getAttribut()
+                    );
+                }
+            });
 
-            $echantillons = $repo_echantillon->search($form->getData());
+            $echantillons = $repo_echantillon->search($filters);
         }
 
         return array(
