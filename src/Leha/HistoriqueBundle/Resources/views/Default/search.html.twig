@@ -30,7 +30,13 @@
 </div>
 
 <form method="POST" action="{{ path('leha_historique_search', {id : requete.id}) }}">
-{{ form_widget(form) }}
+
+    {% for attributEchantillon in form.echantillonAttributs %}
+        {% block form_row %}
+            {{ form_label(attributEchantillon.value) }}
+            {{ form_widget(attributEchantillon.value) }}
+        {% endblock %}
+    {% endfor %}
 <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
 

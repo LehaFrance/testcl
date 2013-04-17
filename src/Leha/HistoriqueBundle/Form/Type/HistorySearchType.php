@@ -26,23 +26,25 @@ class HistorySearchType extends AbstractType
         $echantillonProperties = array();
         $relatedAttributes = array();
 
-        foreach ($options['attribut_requete'] as $attributRequete) {
+        //foreach ($options['attribut_requete'] as $attributRequete) {
             /**
              * @var $attribut \Leha\CentralBundle\Entity\Attribut
              */
-            $attribut = $attributRequete->getAttribut();
+          /*  $attribut = $attributRequete->getAttribut();
 
             if ($attribut->getScope() == Attribut::SCOPE_ECHANTILLON) {
                 $echantillonProperties[] = $attribut;
             } else {
                 $relatedAttributes[] = $attribut;
             }
-        }
+        }*/
 
         //$builder->add('echantillon_properties', new SearchEchantillonType(), array('attribut_requete' => $echantillonProperties));
         //$builder->add('related_attributes', new SearchAttributesType(), array('attribut_requete' => $relatedAttributes));
 
-        $builder->add('echantillonAttributs', new SearchAttributesType(), array('attribut_requete' => $relatedAttributes));
+        $builder->add('etatReception', null, array('label' => 'Etat réception'));
+
+        $builder->add('echantillonAttributs', 'collection', array('type' => new SearchAttributesType()));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -51,10 +53,7 @@ class HistorySearchType extends AbstractType
 
         $resolver
             ->setDefaults(array(
-                'data_model' => 'Leha\HistoriqueBundle\Entity\AttributEchantillon',
-                'csrf_protection' => false
-            ))->setRequired(array(
-                'attribut_requete'
+                'data_model' => 'Leha\HistoriqueBundle\Entity\AttributEchantillonaaaaaaaaaaa',
             )
         );
 /*

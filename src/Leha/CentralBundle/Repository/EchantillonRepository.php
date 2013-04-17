@@ -5,6 +5,7 @@ namespace Leha\CentralBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Leha\CentralBundle\Specifications\Filters\Specification;
 use Leha\HistoriqueBundle\Model\HistorySearch;
+use Leha\CentralBundle\Entity\AttributEchantillon;
 
 /**
  * EchantillonRepository
@@ -60,15 +61,16 @@ class EchantillonRepository extends EntityRepository
             }
 		}*/
 		
-/*$attributEchantillon = new AttributEchantillon();
+        /*$attributEchantillon = new AttributEchantillon();
         $attributEchantillon->setAttribut($attributsRequete[0]->getAttribut());
         $attributEchantillon->setValue('41395');
 
         $specification =  new AsArray(new AndX(
             new FilterAttributEchantillon($attributEchantillon)
         ));
-*/
-        return null;//$repo_echantillon->match($specification);
+
+        return $repo_echantillon->match($specification);*/
+        return null;
 	}
 
     public function match(Specification $specification)

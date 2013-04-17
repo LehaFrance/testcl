@@ -3,6 +3,7 @@
 namespace Leha\HistoriqueBundle\Controller;
 
 use Leha\CentralBundle\Entity\AttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
 use Leha\CommonBundle\Controller\AbstractController;
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
@@ -80,7 +81,19 @@ class DefaultController extends AbstractController
         $attributsRequete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
 
         //$form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributsRequete), array('attribut_requete' => $attributsRequete));
-        $form = $this->get('form.factory')->create(new HistorySearchType(), new \Leha\CentralBundle\Entity\Echantillon(), array('attribut_requete' => $attributsRequete));
+
+        $echantillon = new \Leha\CentralBundle\Entity\Echantillon();
+        foreach ($attributsRequete as $attribut) {
+            $ae = new AttributEchantillon();
+            $ae->setAttribut($attribut->getAttribut());
+
+            $echantillon->addEchantillonAttribut($ae);
+        }
+
+
+
+
+        $form = $this->get('form.factory')->create(new HistorySearchType(), $echantillon);
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
@@ -91,7 +104,37 @@ class DefaultController extends AbstractController
              */
             $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
 
-            $echantillons = $repo_echantillon->search($form->getData());
+
+
+
+
+
+
+
+
+
+            $attributEchantillon = new AttributEchantillon();
+            $attributEchantillon->setAttribut($attributsRequete[0]->getAttribut());
+            $attributEchantillon->setValue('41395');
+
+
+
+            $specification =  new AsArray(new AndX(
+                new FilterAttributEchantillon($attributEchantillon),
+                new FilterEchantillon('etatReception', 'Anomalie')
+            ));
+
+            $echantillons = $repo_echantillon->match($specification);
+
+
+
+
+
+
+
+
+
+            //$echantillons = $repo_echantillon->search($form->getData());
         }
 
         return array(
