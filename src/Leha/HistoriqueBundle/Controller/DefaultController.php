@@ -4,6 +4,7 @@ namespace Leha\HistoriqueBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Leha\CentralBundle\Entity\AttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
 use Leha\CommonBundle\Controller\AbstractController;
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
@@ -76,6 +77,7 @@ class DefaultController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $attributsRequete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+
         $form = $this->createForm(new HistorySearchType(), null, array('attributs_requete' => $attributsRequete));
 
         $echantillons = null;
