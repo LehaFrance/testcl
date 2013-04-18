@@ -65,7 +65,7 @@ abstract class Attribut
     private $reference_solution;
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\AttributRequete", mappedBy="attribut", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributRequete", mappedBy="attribut", cascade={"persist", "remove"})
      */
     private $attribut_requetes;
 
@@ -75,7 +75,7 @@ abstract class Attribut
     private $attributEchantillons;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Leha\ClientBundle\Entity\Client", mappedBy="attributs")
+     * @ORM\ManyToMany(targetEntity="Leha\CentralBundle\Entity\Client", mappedBy="attributs")
      */
     private $clients;
 
@@ -217,10 +217,10 @@ abstract class Attribut
     /**
      * Add attribut_requetes
      *
-     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
+     * @param \Leha\CentralBundle\Entity\AttributRequete $attributRequetes
      * @return Attribut
      */
-    public function addAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
+    public function addAttributRequete(\Leha\CentralBundle\Entity\AttributRequete $attributRequetes)
     {
         $this->attribut_requetes[] = $attributRequetes;
     
@@ -230,9 +230,9 @@ abstract class Attribut
     /**
      * Remove attribut_requetes
      *
-     * @param \Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes
+     * @param \Leha\CentralBundle\Entity\AttributRequete $attributRequetes
      */
-    public function removeAttributRequete(\Leha\HistoriqueBundle\Entity\AttributRequete $attributRequetes)
+    public function removeAttributRequete(\Leha\CentralBundle\Entity\AttributRequete $attributRequetes)
     {
         $this->attribut_requetes->removeElement($attributRequetes);
     }

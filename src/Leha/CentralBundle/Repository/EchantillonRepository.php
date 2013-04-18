@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Leha\CentralBundle\Entity\Attribut;
 use Leha\CentralBundle\Specifications\Filters\Specification;
 use Leha\CentralBundle\Entity\AttributEchantillon;
-use Leha\HistoriqueBundle\Model\HistorySearch;
+use Leha\CentralBundle\Model\HistorySearch;
 use Leha\CentralBundle\Specifications\Filters\AsArray;
 use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
 use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;

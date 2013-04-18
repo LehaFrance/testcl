@@ -25,7 +25,7 @@ class HelperHistory
         Phake::when($a1)->getScope()->thenReturn(Attribut::SCOPE_ECHANTILLON);
         Phake::when($a1)->getName()->thenReturn('itm8');
 
-        $at1 = Phake::mock('Leha\HistoriqueBundle\Entity\AttributRequete');
+        $at1 = Phake::mock('Leha\CentralBundle\Entity\AttributRequete');
         Phake::when($at1)->getAttribut()->thenReturn($a1);
         $attributRequete[] = $at1;
 

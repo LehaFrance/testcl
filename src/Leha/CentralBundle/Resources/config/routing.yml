@@ -1,0 +1,23 @@
+leha_historique:
+    pattern:  /historique
+    defaults: { _controller: LehaCentralBundle:History:index}
+
+leha_historique_add:
+    pattern:  /historique/add
+    defaults: {_controller: LehaCentralBundle:History:edit}
+
+leha_historique_edit:
+    pattern:  /historique/edit/{id}
+    defaults: {_controller: LehaCentralBundle:History:edit}
+
+leha_historique_search:
+    pattern:  /historique/recherche/{id}
+    defaults: {_controller: LehaCentralBundle:History:search}
+
+leha_historique_remove:
+    pattern: /historique/remove/{id}
+    defaults: {_controller: LehaCentralBundle:History:remove}
+
+leha_historique_choix_attributs:
+    pattern: /historique/choix_attributs/{id}
+    defaults: {_controller: LehaCentralBundle:History:choix_attributs}
