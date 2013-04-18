@@ -7,7 +7,7 @@
 /vendor/
 /bin/
 /composer.phar
-.idea/*
+/.idea/
 /app/config/parameters.yml
 *.swp
 *~
