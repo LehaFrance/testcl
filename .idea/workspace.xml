@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05029f79-452b-4f9a-80b2-25898f583995" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/central_leha.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/frameworkRootSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Controller/DefaultController.php" afterPath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Controller/DefaultController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Leha/CentralBundle/Repository/EchantillonRepository.php" afterPath="$PROJECT_DIR$/src/Leha/CentralBundle/Repository/EchantillonRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Form/Type/HistorySearchType.php" afterPath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Form/Type/HistorySearchType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Form/Type/SearchAttributesType.php" afterPath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Form/Type/SearchAttributesType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Resources/views/Default/search.html.twig" afterPath="$PROJECT_DIR$/src/Leha/HistoriqueBundle/Resources/views/Default/search.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="central_leha.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +13,7 @@
     <file path="/HistorySearchType.php" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366128338196" ignored="false" />
     <file path="/SearchAttributesType.php" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366132258660" ignored="false" />
     <file path="/search.html.twig" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366138423598" ignored="false" />
-    <file path="/EchantillonRepository.php" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366142963637" ignored="false" />
+    <file path="/EchantillonRepository.php" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366273810515" ignored="false" />
     <file path="/FilterEchantillon.php" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366144820179" ignored="false" />
     <file path="/a.dummy" changelist="05029f79-452b-4f9a-80b2-25898f583995" time="1366273371648" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,7 +38,36 @@
       <file leaf-file-name="DefaultController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="0" selection-start="2405" selection-end="2405" vertical-scroll-proportion="-59.142857">
+            <state line="102" column="49" selection-start="3339" selection-end="3339" vertical-scroll-proportion="-11.142858">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EchantillonRepository.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Repository/EchantillonRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="96" column="37" selection-start="3041" selection-end="3041" vertical-scroll-proportion="-10.25">
+              <folding>
+                <element signature="e#49#83#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AsArray.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/AsArray.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndX.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/AndX.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="2.5714285">
               <folding />
             </state>
           </provider>
@@ -61,72 +76,25 @@
       <file leaf-file-name="FilterAttributEchantillon.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/FilterAttributEchantillon.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="36" selection-start="588" selection-end="588" vertical-scroll-proportion="0.0">
+            <state line="18" column="5" selection-start="459" selection-end="459" vertical-scroll-proportion="-14.571428">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FilterEchantillon.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Specification.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/Specification.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="20" selection-start="163" selection-end="163" vertical-scroll-proportion="-6.857143">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FilterEchantillon.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/FilterEchantillon.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="81" selection-start="596" selection-end="596" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EchantillonRepository.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Repository/EchantillonRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="3" selection-start="662" selection-end="662" vertical-scroll-proportion="0.4390244">
-              <folding>
-                <element signature="e#49#83#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SearchAttributesType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Form/Type/SearchAttributesType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="769" selection-end="769" vertical-scroll-proportion="-2.857143">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HistorySearchType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Form/Type/HistorySearchType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="1123" selection-end="1123" vertical-scroll-proportion="-22.571428">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Resources/views/Default/search.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="1102" selection-end="1102" vertical-scroll-proportion="-9.25">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AttributEchantillon.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Entity/AttributEchantillon.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AttributRequeteRepository.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Entity/AttributRequeteRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="5" selection-start="724" selection-end="724" vertical-scroll-proportion="0.0">
+            <state line="21" column="81" selection-start="596" selection-end="596" vertical-scroll-proportion="0.52589643">
               <folding />
             </state>
           </provider>
@@ -650,8 +618,8 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2132964" sideWeight="0.6010568" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3989432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2132964" sideWeight="0.60150373" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39849624" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -734,30 +702,16 @@
           <line>20</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Leha/CentralBundle/Repository/EchantillonRepository.php</url>
+          <line>94</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="13" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Entity/AttributEchantillon.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Entity/AttributRequeteRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="5" selection-start="724" selection-end="724" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Form/FormBuilderInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="20" selection-start="956" selection-end="956" vertical-scroll-proportion="0.46305418" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Component/Form/Form.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="450" column="7" selection-start="14484" selection-end="14484" vertical-scroll-proportion="0.25287357" />
@@ -777,37 +731,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Entity/AttributEchantillon.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Entity/AttributRequeteRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="5" selection-start="724" selection-end="724" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/EchantillonSpecification.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/FilterAttributEchantillon.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="36" selection-start="588" selection-end="588" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/FilterEchantillon.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="81" selection-start="596" selection-end="596" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -826,13 +752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Controller/DefaultController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="0" selection-start="2405" selection-end="2405" vertical-scroll-proportion="-59.142857">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Resources/views/Default/search.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="0" selection-start="1102" selection-end="1102" vertical-scroll-proportion="-9.25">
@@ -840,12 +759,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Entity/AttributEchantillon.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Entity/AttributRequeteRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="5" selection-start="724" selection-end="724" vertical-scroll-proportion="0.4976744">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/Specification.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="20" selection-start="163" selection-end="163" vertical-scroll-proportion="-6.857143">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/AsArray.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/AndX.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="2.5714285">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/FilterAttributEchantillon.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="5" selection-start="459" selection-end="459" vertical-scroll-proportion="-14.571428">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Repository/EchantillonRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="3" selection-start="662" selection-end="662" vertical-scroll-proportion="0.4390244">
+        <state line="96" column="37" selection-start="3041" selection-end="3041" vertical-scroll-proportion="-10.25">
           <folding>
             <element signature="e#49#83#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/HistoriqueBundle/Controller/DefaultController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="49" selection-start="3339" selection-end="3339" vertical-scroll-proportion="-11.142858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Leha/CentralBundle/Specifications/Filters/FilterEchantillon.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="81" selection-start="596" selection-end="596" vertical-scroll-proportion="0.52589643">
+          <folding />
         </state>
       </provider>
     </entry>

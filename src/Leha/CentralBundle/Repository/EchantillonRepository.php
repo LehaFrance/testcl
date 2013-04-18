@@ -58,6 +58,10 @@ class EchantillonRepository extends EntityRepository
 
 	public function search($filters)
 	{
+        if (empty($filters)) {
+            return null;
+        }
+
         $andX = new AndX();
 
         foreach ($filters as $scope => $filtersScope) {
@@ -89,8 +93,12 @@ class EchantillonRepository extends EntityRepository
         $qb = $this->joinAttributs($qb);
 
         $expr = $specification->match($qb, 'e');
+        if (empty($expr)) {
+            $query = $qb->getQuery();
+        } else {
+            $query = $qb->where($expr)->getQuery();
+        }
 
-        $query = $qb->where($expr)->getQuery();
 
         return $query->getResult();
     }
