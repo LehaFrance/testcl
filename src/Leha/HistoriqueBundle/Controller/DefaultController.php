@@ -2,15 +2,15 @@
 
 namespace Leha\HistoriqueBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Leha\CentralBundle\Entity\AttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
 use Leha\CommonBundle\Controller\AbstractController;
 use Leha\HistoriqueBundle\Entity\Requete;
 use Leha\HistoriqueBundle\Entity;
 use Leha\HistoriqueBundle\Entity\AttributRequete;
 use Leha\CentralBundle\Entity\EchantillonAttribut;
-use Leha\CentralBundle\Specifications\Filters\AsArray;
-use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
-use Leha\CentralBundle\Specifications\Filters\AndX;
+use Leha\CentralBundle\Repository\EchantillonRepository;
 use Leha\HistoriqueBundle\Form\Type\HistorySearchType;
 use Leha\HistoriqueBundle\Model\HistorySearch;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,21 +78,29 @@ class DefaultController extends AbstractController
 
         $attributsRequete = $em->getRepository('LehaHistoriqueBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
 
-        $form = $this->get('form.factory')->create(new HistorySearchType(), new HistorySearch($attributsRequete), array('attribut_requete' => $attributsRequete));
+        $form = $this->createForm(new HistorySearchType(), null, array('attributs_requete' => $attributsRequete));
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
+			$form->bind($request);
+
+            /**
+             * @var $repo_echantillon \Leha\CentralBundle\Repository\EchantillonRepository
+             */
             $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
+            $data = $form->getData();
+            $filters = array();
+            array_walk($attributsRequete, function($attributRequete, $key) use($data, &$filters)
+            {
+                if (isset($data[$attributRequete->getAttribut()->getName()])) {
+                    $filters[$attributRequete->getAttribut()->getScope()][] = array(
+                        'value' => $data[$attributRequete->getAttribut()->getName()],
+                        'attribut' => $attributRequete->getAttribut()
+                    );
+                }
+            });
 
-            $attributEchantillon = new AttributEchantillon();
-            $attributEchantillon->setAttribut($attributsRequete[0]->getAttribut());
-            $attributEchantillon->setValue('41395');
-
-            $specification =  new AsArray(new AndX(
-                new FilterAttributEchantillon($attributEchantillon)
-            ));
-
-            $echantillons = $repo_echantillon->match($specification);
+            $echantillons = $repo_echantillon->search($filters);
         }
 
         return array(

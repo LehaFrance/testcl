@@ -3,7 +3,14 @@
 namespace Leha\CentralBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Leha\CentralBundle\Entity\Attribut;
 use Leha\CentralBundle\Specifications\Filters\Specification;
+use Leha\CentralBundle\Entity\AttributEchantillon;
+use Leha\HistoriqueBundle\Model\HistorySearch;
+use Leha\CentralBundle\Specifications\Filters\AsArray;
+use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
+use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\AndX;
 
 /**
  * EchantillonRepository
@@ -49,16 +56,49 @@ class EchantillonRepository extends EntityRepository
         return $qb;
     }
 
+	public function search($filters)
+	{
+        if (empty($filters)) {
+            return null;
+        }
+
+        $andX = new AndX();
+
+        foreach ($filters as $scope => $filtersScope) {
+            switch ($scope) {
+                case Attribut::SCOPE_ECHANTILLON :
+                    foreach ($filtersScope as $indice => $filter) {
+                        $attribut = $filter['attribut'];
+                        $andX->addChildren(new FilterEchantillon($attribut->getName(), $filter['value']));
+                    }
+                    break;
+                case Attribut::SCOPE_ATTRIBUT :
+                    foreach ($filtersScope as $indice => $filter) {
+                        $attributEchantillon = new AttributEchantillon();
+                        $attributEchantillon->setAttribut($filter['attribut']);
+                        $attributEchantillon->setValue($filter['value']);
+
+                        $andX->addChildren(new FilterAttributEchantillon($attributEchantillon, 'ea' . $indice));
+                    }
+                    break;
+            }
+        }
+
+        return $this->match(new AsArray($andX));
+	}
+
     public function match(Specification $specification)
     {
         $qb = $this->createQueryBuilder('e');
         $qb = $this->joinAttributs($qb);
 
         $expr = $specification->match($qb, 'e');
+        if (empty($expr)) {
+            $query = $qb->getQuery();
+        } else {
+            $query = $qb->where($expr)->getQuery();
+        }
 
-        $query = $qb->where($expr)->getQuery();
-
-        $specification->modifyQuery($query);
 
         return $query->getResult();
     }
