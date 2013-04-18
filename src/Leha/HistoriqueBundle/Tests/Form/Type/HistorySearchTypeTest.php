@@ -15,10 +15,8 @@ class HistorySearchTypeTest extends TypeTestCase
     {
         $attributs_requete = HelperHistory::getAttributsRequete();
 
-        $historySearch = new HistorySearch($attributs_requete);
-
         $type = new HistorySearchType();
-        $form = $this->factory->create($type, $historySearch, array(
+        $form = $this->factory->create($type, null, array(
             'attribut_requete' => $attributs_requete
         ));
 
