@@ -14,6 +14,11 @@ class AndX implements Specification
         $this->children = func_get_args();
     }
 
+    public function addChildren(Specification $specification)
+    {
+        $this->children[] = $specification;
+    }
+
     public function match(QueryBuilder $qb, $dqlAlias)
     {
         return call_user_func_array(
@@ -23,13 +28,6 @@ class AndX implements Specification
                 }, $this->children
             )
         );
-    }
-
-    public function modifyQuery(Query $query)
-    {
-        foreach ($this->children as $child) {
-            $child->modifyQuery($query);
-        }
     }
 
     public function supports($className)
