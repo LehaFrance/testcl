@@ -4,7 +4,7 @@ namespace Leha\CentralBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class ClientController extends Controller
 {
     public function indexAction($name)
     {
