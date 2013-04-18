@@ -61,7 +61,7 @@ $(document).ready(function() {
     });
 });
 </script>
-<form id="formChoixAttributs" action="{{ path('leha_historique_choix_attributs', {id : requete.id}) }}" method="post">
+<form id="formChoixAttributs" action="{{ path('leha_historique_choix_criteres', {id : requete.id, type : type}) }}" method="post">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
         <h3>Choix critères</h3>

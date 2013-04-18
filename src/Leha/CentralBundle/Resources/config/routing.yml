@@ -18,6 +18,10 @@ leha_historique_remove:
     pattern: /historique/remove/{id}
     defaults: {_controller: LehaCentralBundle:History:remove}
 
-leha_historique_choix_attributs:
-    pattern: /historique/choix_attributs/{id}
-    defaults: {_controller: LehaCentralBundle:History:choix_attributs}
+leha_historique_choix_criteres:
+    pattern: /historique/choix_criteres/{id}/{type}
+    defaults: {_controller: LehaCentralBundle:History:choixCriteres, type: form}
+
+leha_historique_choix_colonnes:
+    pattern: /historique/choix_colonnes/{id}/{type}
+    defaults: {_controller: LehaCentralBundle:History:choixCriteres, type: grid}

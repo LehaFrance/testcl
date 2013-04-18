@@ -22,6 +22,7 @@
             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog icon-white"></i>&nbsp;&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="#" id="linkChoixCriteres">Définir mes critères de recherche</a></li>
+                <li><a href="#" id="linkChoixColonnes">Définir mes colonnes</a></li>
                 <li><a href="#" id="linkEdit">Enregistrer sous</a></li>
                 <li><a href="#" id="linkDelete">Supprimer</a></li>
             </ul>
@@ -38,6 +39,9 @@
 <table>
 {% for echantillon in echantillons %}
     <tr>
+        {% for gridAttributeRequete in gridAttributesRequete %}
+            <td>{{ attribute(echantillon, gridAttributeRequete.attribut.name) }}</td>
+        {% endfor %}
         <td>{{ echantillon.prefixeNom ~ '.' ~ echantillon.demandeNumero ~ '.' ~ echantillon.echantNumero }}</td>
         <td>{{ echantillon.etatReception }}</td>
         <td>{{ echantillon.itm8 }}</td>
@@ -59,7 +63,15 @@
             });
 
             $('#linkChoixCriteres').click(function() {
-                $.get('{{ path('leha_historique_choix_attributs', { id : requete.id}) }}', function(data) {
+                $.get('{{ path('leha_historique_choix_criteres', { id : requete.id}) }}', function(data) {
+                    $('#modalChoixAttributs').html(data);
+                });
+
+                $('#modalChoixAttributs').modal();
+            });
+
+            $('#linkChoixColonnes').click(function() {
+                $.get('{{ path('leha_historique_choix_colonnes', { id : requete.id}) }}', function(data) {
                     $('#modalChoixAttributs').html(data);
                 });
 

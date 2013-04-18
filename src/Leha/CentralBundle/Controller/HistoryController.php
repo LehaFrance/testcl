@@ -70,39 +70,41 @@ class HistoryController extends AbstractController
         );
     }
 
+    /**
+     * Permet de lancer le moteur de recherche dans l'historique
+     *
+     * @param Request $request
+     * @param Requete $requete
+     *
+     * @return DoctrineCollection
+     */
     public function searchAction(Request $request, Requete $requete)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $attributsRequete = $em->getRepository('LehaCentralBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+        /**
+         * @var $repoAttribute \Leha\CentralBundle\Repository\AttributRepository
+         */
+        $repoAttribute = $em->getRepository('LehaCentralBundle:AttributRequete');
+        $formAttributesRequete = $repoAttribute->getFormAttributes($requete);
+        $gridAttributesRequete = $repoAttribute->getGridAttributes($requete);
 
-        $form = $this->createForm(new HistorySearchType(), null, array('attributs_requete' => $attributsRequete));
+        $form = $this->createForm(new HistorySearchType(), null, array('form_attributes_requete' => $formAttributesRequete));
 
         $echantillons = null;
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
             /**
-             * @var $repo_echantillon \Leha\CentralBundle\Repository\EchantillonRepository
+             * @var $repoEchantillon \Leha\CentralBundle\Repository\EchantillonRepository
              */
-            $repo_echantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
-            $data = $form->getData();
-            $filters = array();
-            array_walk($attributsRequete, function($attributRequete, $key) use($data, &$filters)
-            {
-                if (isset($data[$attributRequete->getAttribut()->getName()])) {
-                    $filters[$attributRequete->getAttribut()->getScope()][] = array(
-                        'value' => $data[$attributRequete->getAttribut()->getName()],
-                        'attribut' => $attributRequete->getAttribut()
-                    );
-                }
-            });
-
-            $echantillons = $repo_echantillon->search($filters);
+            $repoEchantillon = $this->getDoctrine()->getRepository('LehaCentralBundle:Echantillon');
+            $echantillons = $repoEchantillon->search($form->getData(), $formAttributesRequete);
         }
 
         return array(
             'requete' => $requete,
+            'gridAttributesRequete' => $gridAttributesRequete,
             'form' => $form->createView(),
             'echantillons' => $echantillons
         );
@@ -132,45 +134,47 @@ class HistoryController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function choix_attributsAction(Request $request, Requete $requete)
+    public function choixCriteresAction(Request $request, Requete $requete, $type)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $attributs_requete = $em->getRepository('LehaCentralBundle:AttributRequete')->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+        /**
+         * @var $repoAttributRequete \Leha\CentralBundle\Repository\AttributRequeteRepository
+         */
+        $repoAttributRequete = $em->getRepository('LehaCentralBundle:AttributRequete');
 
+        $formAttributesRequete = $repoAttributRequete->getByRequeteType($requete, $type);
         if ($request->isMethod('POST')) {
             $attributs_id = $request->request->get('attributs_selectionnes');
 
-            $repo_attribut = $this->getDoctrine()->getRepository('LehaCentralBundle:Attribut');
+            $repoAttribut = $this->getDoctrine()->getRepository('LehaCentralBundle:Attribut');
 
             $aAttributsId = ($attributs_id == '') ? array() : explode('|', $attributs_id);
 
-            $form_builder = $this->createFormBuilder();
+            $attributesToKeep = array();
+            foreach ($formAttributesRequete as $formAttributeRequete) {
+                if (($attributeOrder = array_search($formAttributeRequete->getAttributId(), $aAttributsId)) !== false) {
+                    $attributesToKeep[] = $formAttributeRequete->getAttributId();
+                    $formAttributeRequete->setOrdre($attributeOrder);
 
-            $attributs_a_conserver = array();
-            foreach ($attributs_requete as $attribut_requete) {
-                if (($key_attribut_id = array_search($attribut_requete->getAttributId(), $aAttributsId)) !== false) {
-                    $attributs_a_conserver[] = $attribut_requete->getAttributId();
-                    $attribut_requete->setOrdre($key_attribut_id);
-
-                    $em->persist($attribut_requete);
+                    $em->persist($formAttributeRequete);
                 } else {
-                    $em->remove($attribut_requete);
+                    $em->remove($formAttributeRequete);
                 }
             }
 
-            $attributs_to_add = array_diff($aAttributsId, $attributs_a_conserver);
+            $attributesToAdd = array_diff($aAttributsId, $attributesToKeep);
 
-            foreach ($attributs_to_add as $indice => $attribut_id) {
-                $attribut = $repo_attribut->find($attribut_id);
+            foreach ($attributesToAdd as $indice => $attribut_id) {
+                $attribut = $repoAttribut->find($attribut_id);
 
-                $attribut_requete = new AttributRequete();
+                $attributRequete = new AttributRequete();
 
-                $attribut_requete->setRequete($requete);
-                $attribut_requete->setAttribut($attribut);
-                $attribut_requete->setOrdre($indice);
-                $attribut_requete->setType(AttributRequete::ATTRIBUT_REQUETE_FORM);
-                $em->persist($attribut_requete);
+                $attributRequete->setRequete($requete);
+                $attributRequete->setAttribut($attribut);
+                $attributRequete->setOrdre($indice);
+                $attributRequete->setType($type);
+                $em->persist($attributRequete);
             }
 
             $em->flush();
@@ -178,12 +182,13 @@ class HistoryController extends AbstractController
             return $this->redirectRoute('leha_historique_search', array('id' => $requete->getId()));
         }
 
-        $attributs_disponibles = $em->getRepository('LehaCentralBundle:AttributRequete')->getAttributsDisponibles($requete);
+        $attributsDisponibles = $repoAttributRequete->getAttributsDisponibles($requete, $type);
 
         return array(
             'requete' => $requete,
-            'attributs_disponibles' => $attributs_disponibles,
-            'attributs_requete' => $attributs_requete
+            'type' => $type,
+            'attributs_disponibles' => $attributsDisponibles,
+            'attributs_requete' => $formAttributesRequete
         );
     }
 }

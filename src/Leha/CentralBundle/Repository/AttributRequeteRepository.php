@@ -14,23 +14,89 @@ use Leha\CentralBundle\Entity\Requete;
  */
 class AttributRequeteRepository extends EntityRepository
 {
-	public function getByRequeteType(Requete $requete, $type)
-	{
-        $attributs_requete = $this->getEntityManager()->createQuery('select ar, a from LehaCentralBundle:AttributRequete ar join ar.attribut a where ar.requete_id = :requete_id and ar.type = :type order by ar.ordre')
+    /**
+     * Cette fonctionne retourne une liste d'entité attributRequete avec l'attribut associé
+     * en fonction de l'id requête et le type d'attributs (GRID ou FORM)
+     *
+     * @param Requete $requete
+     * @param $type
+     *
+     * @return DoctrineCollection
+     */
+    public function getByRequeteType(Requete $requete, $type)
+    {
+        $attributsRequete = $this->getEntityManager()->createQuery('select ar, a from LehaCentralBundle:AttributRequete ar join ar.attribut a where ar.requete_id = :requete_id and ar.type = :type order by ar.ordre')
             ->setParameter('requete_id', $requete->getId())
             ->setParameter('type', $type)
             ->getResult();
 
-		return $attributs_requete;
-	}
+        return $attributsRequete;
+    }
 
-    public function getAttributsDisponibles(Requete $requete)
+    /**
+     * Cette fonction retourne une collection d'attributRequete de type FORM à partir de l'id requête
+     *
+     *
+     * @param Requete $requete
+     *
+     * @return DoctrineCollection
+     */
+    public function getFormAttributes(Requete $requete)
     {
-        $attributs_requete = $this->getEntityManager()->createQuery("select a from LehaCentralBundle:Attribut a left join a.attribut_requetes ar with ar.requete_id = :requete_id and ar.type = :type where ar.requete_id is null")
+        return $this->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+    }
+
+    /**
+     * Cette fonction retourne une collection d'attributRequete de type GRID à partir de l'id requête
+     *
+     * @param Requete $requete
+     *
+     * @return DoctrineCollection
+     */
+    public function getGridAttributes(Requete $requete)
+    {
+        return $this->getByRequeteType($requete, AttributRequete::ATTRIBUT_REQUETE_GRID);
+    }
+
+    /**
+     * Cette fonction retourne la liste des attributs disponibles par rapport à un id requête et un type d'attribut (GRID ou FORM)
+     *
+     * @param Requete $requete
+     * @param $type
+     *
+     * @return DoctrineCollection
+     */
+    public function getAttributsDisponibles(Requete $requete, $type)
+    {
+        $attributsRequete = $this->getEntityManager()->createQuery("select a from LehaCentralBundle:Attribut a left join a.attributRequetes ar with ar.requete_id = :requete_id and ar.type = :type where ar.requete_id is null")
             ->setParameter('requete_id', $requete->getId())
-            ->setParameter('type', AttributRequete::ATTRIBUT_REQUETE_FORM)
+            ->setParameter('type', $type)
             ->getResult();
 
-        return $attributs_requete;
+        return $attributsRequete;
+    }
+
+    /**
+     * Cette fonction retourne la liste des attributes disponibles par rapport à un id requête pour affichage dans un formulaire
+     *
+     * @param Requete $requete
+     *
+     * @return DoctrineCollection
+     */
+    public function getCriteresDisponibles(Requete $requete)
+    {
+        return $this->getAttributsDisponibles($requete, AttributRequete::ATTRIBUT_REQUETE_FORM);
+    }
+
+    /**
+     * Cette fonction retourne la liste des attributes disponibles par rapport à un id requête pour affichage dans un datagrid
+     *
+     * @param Requete $requete
+     *
+     * @return DoctrineCollection
+     */
+    public function getColonnesDisponibles(Requete $requete)
+    {
+        return $this->getAttributsDisponibles($requete, AttributRequete::ATTRIBUT_REQUETE_GRID);
     }
 }

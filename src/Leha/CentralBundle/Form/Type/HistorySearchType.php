@@ -23,7 +23,7 @@ class HistorySearchType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        foreach ($options['attributs_requete'] as $attributRequete) {
+        foreach ($options['form_attributes_requete'] as $attributRequete) {
             $attribut = $attributRequete->getAttribut();
             $builder->add($attribut->getName(), $attribut->getType(), $attribut->getFieldOptions());
         }
@@ -35,7 +35,7 @@ class HistorySearchType extends AbstractType
 
         $resolver
             ->setRequired(array(
-                    'attributs_requete'
+                    'form_attributes_requete'
                 )
             );
     }

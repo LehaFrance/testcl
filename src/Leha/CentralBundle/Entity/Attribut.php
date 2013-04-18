@@ -5,7 +5,7 @@ namespace Leha\CentralBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Leha\CentralBundle\Entity\AttributRepository")
+ * @ORM\Entity(repositoryClass="Leha\CentralBundle\Repository\AttributRepository")
  * @ORM\Table(name="t_attributs")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -67,7 +67,7 @@ abstract class Attribut
     /**
      * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributRequete", mappedBy="attribut", cascade={"persist", "remove"})
      */
-    private $attribut_requetes;
+    private $attributRequetes;
 
     /**
      * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributEchantillon", mappedBy="attribut", cascade={"persist", "remove"})
@@ -84,7 +84,7 @@ abstract class Attribut
      */
     public function __construct()
     {
-        $this->attribut_requetes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attributRequetes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->clients = new \Doctrine\Common\Collections\ArrayCollection();
         $this->options = array();
     }
@@ -222,7 +222,7 @@ abstract class Attribut
      */
     public function addAttributRequete(\Leha\CentralBundle\Entity\AttributRequete $attributRequetes)
     {
-        $this->attribut_requetes[] = $attributRequetes;
+        $this->attributRequetes[] = $attributRequetes;
     
         return $this;
     }
@@ -234,7 +234,7 @@ abstract class Attribut
      */
     public function removeAttributRequete(\Leha\CentralBundle\Entity\AttributRequete $attributRequetes)
     {
-        $this->attribut_requetes->removeElement($attributRequetes);
+        $this->attributRequetes->removeElement($attributRequetes);
     }
 
     /**
@@ -244,7 +244,7 @@ abstract class Attribut
      */
     public function getAttributRequetes()
     {
-        return $this->attribut_requetes;
+        return $this->attributRequetes;
     }
 
     public function getFieldId()

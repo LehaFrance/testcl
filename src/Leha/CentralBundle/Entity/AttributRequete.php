@@ -17,7 +17,7 @@ class AttributRequete
 
     /**
 	 * @ORM\Id
-	 * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attribut_requetes")
+	 * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Attribut", inversedBy="attributRequetes")
 	 * @ORM\JoinColumn(name="attribut_id", referencedColumnName="id")
 	 */
     protected $attribut;
