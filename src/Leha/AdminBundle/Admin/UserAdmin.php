@@ -18,14 +18,19 @@ class UserAdmin extends Admin
     {
       $form
       ->with('Compte')
-      ->add('username', null, array('required' => true, 'label' => 'label.is_name'))
+      ->add('username', null, array('required' => true))
       ->add('email', null, array('required' => true))
       ->add('roles', 'sonata_security_roles', array( 'multiple' => true))
       ->add('enabled', null, array('required' => false))
+      ->add('locked', null, array('required' => false))
+     // ->add('groups', 'sonata_type_model', array('multiple' => true))
       ->end()
       ->with('Information')
       ->add('lastName')
       ->add('firstName')
+      ->add('type')
+      ->add('dateOfBirth','birthday',array('label' => 'Date of birth','required' => true))
+      ->add('country')
       ->end()
       ;
     }
@@ -54,6 +59,8 @@ class UserAdmin extends Admin
         ->add('lastName')
         ->add('email')
         ->add('lastLogin','datetime')
+        ->add('dateOfBirth')
+        ->add('country')
         ->add('enabled')
         // add custom action links
             ->add('_action', 'actions', array(

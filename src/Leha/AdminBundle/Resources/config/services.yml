@@ -9,3 +9,14 @@ services:
             - 'SonataAdminBundle:CRUD'
         calls:
             - [ setUserManager, [@fos_user.user_manager]]
+    leha.admin.groupadmin:
+        class: Leha\AdminBundle\Admin\GroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: posts, label: "Group" }
+        arguments:
+            - ~
+            - Leha\UserBundle\Entity\Group
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            -  [ setGroupManager, [@fos_user.group_manager]]
+

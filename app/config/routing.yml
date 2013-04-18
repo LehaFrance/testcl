@@ -17,6 +17,10 @@ leha_historique:
 leha_user_security:
     resource: "@LehaUserBundle/Resources/config/routing.yml"
 
+leha_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /group
+
 #fos_user_security:
  # resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

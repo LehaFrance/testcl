@@ -33,6 +33,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('admin_leha_user_user_list') }}">Utilisateur</a></li>
+                            <li><a href="{{ path('admin_leha_user_group_list') }}">Groupes</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -41,7 +42,7 @@
                         <a href="#">{{ app.user.username }}</a>
 						<ul class="dropdown-menu">
                             <li><a href="{{ path('leha_user_security_logout') }}">{% trans %}Déconnexion{% endtrans %}</a></li>
-							<li><a href="#">{% trans %}Paramètres{% endtrans %}</a></li>
+                            <li><a href="{{ path('admin_leha_user_user_show',{id: app.user.id}) }}">{% trans %}Paramètres{% endtrans %}</a></li>
                         </ul>
 					</li>
 				</ul>

@@ -40,9 +40,9 @@ class User extends BaseUSer
 
     /**
      * @var
-     * @ORM\Column(name="date_naissance", type="datetime")
+     * @ORM\Column(name="date_naissance", type="date")
      */
-    protected $dateOfBirth;
+    private $dateOfBirth;
 
     /**
      * @var
@@ -54,6 +54,22 @@ class User extends BaseUSer
      * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
      */
     protected $requetes;
+
+    /**
+     * @var array
+     * @ORM\ManyToMany(targetEntity="Leha\UserBundle\Entity\Group")
+     * @ORM\JoinTable(name="user_group",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    protected $groups;
+
+    /**
+     * @var string
+     * @ORM\OneToMany(targetEntity="Leha\UserBundle\Entity\Type", mappedBy="t_user")
+     */
+    protected $type;
 
     public function __construct()
     {
@@ -126,4 +142,52 @@ class User extends BaseUSer
     {
         return $this->requetes;
     }
+
+    /**
+     * @return
+     */
+    public function getDateOfBirth()
+    {
+        return $this->dateOfBirth;
+    }
+
+    /**
+     * @return
+     */
+    public function setDateOfBirth($dateOfBirth)
+    {
+        $this->dateOfBirth = $dateOfBirth;
+    }
+
+    /**
+     * @return
+     */
+    public function getcountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @return
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param $type
+     */
+    public function setType($type)
+    {
+        $this->type=$type;
+    }
+
 }

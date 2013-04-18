@@ -65,19 +65,23 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Leha\UserBundle\Entity\User
+    group:
+        group_class: Leha\UserBundle\Entity\Group
 
 sonata_block:
     default_contexts: [cms]
     blocks:
         sonata.admin.block.admin_list:
             contexts:   [admin]
-
+        leha.admin.useradmin:
         sonata.block.service.text:
         sonata.block.service.rss:
+        sonata.block.service.action:
 
 sonata_admin:
     security:
@@ -101,12 +105,18 @@ sonata_admin:
         blocks:
             # display a dashboard block
             - { position: left, type: sonata.admin.block.admin_list }
+#            - { position: left, type: leha.admin.useradmin }
 
             # Customize this part to add new block configuration
-            - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p> <br /> For instance, here a RSS feed parser (<code>sonata.block.service.rss</code>):"} }
-            - { position: right, type: sonata.block.service.rss, settings: { title: Sonata Project's Feeds, url: http://sonata-project.org/blog/archive.rss }}
+#            - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p> <br /> For instance, here a RSS feed parser (<code>sonata.block.service.rss</code>):"} }
+#            - { position: right, type: sonata.block.service.rss, settings: { title: Sonata Project's Feeds, url: http://sonata-project.org/blog/archive.rss }}
         groups:
-            sonata_page: ~
+            sonata_page:
+                label: Administation
+                items:
+                    - leha.admin.useradmin
+                    - leha.admin.groupadmin
+            sonata_user: ~
 
     # set to true to persist filter settings per admin module in the user's session
     persist_filters: true
