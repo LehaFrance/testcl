@@ -5,6 +5,7 @@ namespace Leha\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections;
 
 /**
  * User
@@ -57,23 +58,27 @@ class User extends BaseUSer
 
     /**
      * @var array
-     * @ORM\ManyToMany(targetEntity="Leha\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="user_group",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
-     * )
+     * @ORM\ManyToMany(targetEntity="Leha\UserBundle\Entity\Group", mappedBy="users")
      */
     protected $groups;
 
     /**
      * @var string
-     * @ORM\OneToMany(targetEntity="Leha\UserBundle\Entity\Type", mappedBy="t_user")
+     * @ORM\ManyToOne(targetEntity="Leha\UserBundle\Entity\Type", inversedBy="users", cascade={"remove"})
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      */
     protected $type;
 
+    /**
+     * @var string
+     * @ORM\Column(name="civilite", type="string", length=50)
+     */
+    protected $civility;
+
     public function __construct()
     {
-       parent::__construct();
+        parent::__construct();
+        $this->groups = new Collections\ArrayCollection();
     }
 
     /**
@@ -175,7 +180,7 @@ class User extends BaseUSer
         $this->country = $country;
     }
     /**
-     * @return mixed
+     * @return \Leha\UserBundle\Enity\Type $type
      */
     public function getType()
     {
@@ -183,11 +188,43 @@ class User extends BaseUSer
     }
 
     /**
-     * @param $type
+     * @param \Leha\UserBundle\Entity\Type
      */
     public function setType($type)
     {
         $this->type=$type;
+    }
+
+    /**
+     * @param \Leha\UserBundle\Entity\Group $groups
+     */
+    public function setGroups(\Leha\UserBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
+    }
+
+    /**
+     * @return \Leha\UserBundle\Entity\Group $groups
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param string
+     */
+    public function setCivility($civility)
+    {
+        $this->civility = $civility;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCivility()
+    {
+        return $this->civility;
     }
 
 }

@@ -16,21 +16,23 @@ class UserAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $form)
     {
+
       $form
-      ->with('Compte')
-      ->add('username', null, array('required' => true))
-      ->add('email', null, array('required' => true))
-      ->add('roles', 'sonata_security_roles', array( 'multiple' => true))
-      ->add('enabled', null, array('required' => false))
-      ->add('locked', null, array('required' => false))
-     // ->add('groups', 'sonata_type_model', array('multiple' => true))
-      ->end()
       ->with('Information')
-      ->add('lastName')
-      ->add('firstName')
-      ->add('type')
-      ->add('dateOfBirth','birthday',array('label' => 'Date of birth','required' => true))
-      ->add('country')
+          ->add('type','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => false,'required' => true))
+          ->add('lastName')
+          ->add('firstName')
+          ->add('email', null, array('required' => true))
+          ->add('type')
+          ->add('dateOfBirth','birthday',array('label' => 'Date of birth','required' => true))
+          ->add('civility','choice',array('choices' => array("Homme","Femme")))
+      ->end()
+      ->with('Compte')
+          ->add('username', null, array('required' => true))
+          ->add('enabled', null, array('required' => false))
+          ->add('locked', null, array('required' => false))
+          ->add('groups','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => true, "required" => true))
+          ->add('country')
       ->end()
       ;
     }

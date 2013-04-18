@@ -24,7 +24,9 @@ class GroupAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-        ->add('name');
+        ->addIdentifier('name')
+        ->addIdentifier('createAt')
+        ;
     }
 
     public function preUpdate($group)

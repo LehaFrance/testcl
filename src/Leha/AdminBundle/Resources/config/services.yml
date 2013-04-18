@@ -20,3 +20,11 @@ services:
         calls:
             -  [ setGroupManager, [@fos_user.group_manager]]
 
+    leha.admin.typeadmin:
+            class: Leha\AdminBundle\Admin\TypeAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: posts, label: "Type" }
+            arguments:
+                - ~
+                - Leha\UserBundle\Entity\Type
+                - 'SonataAdminBundle:CRUD'
