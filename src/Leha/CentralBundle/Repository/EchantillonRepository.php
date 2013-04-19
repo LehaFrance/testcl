@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Leha\CentralBundle\Entity\Attribut;
 use Leha\CentralBundle\Specifications\Filters\Specification;
 use Leha\CentralBundle\Entity\AttributEchantillon;
-use Leha\HistoriqueBundle\Model\HistorySearch;
+use Leha\CentralBundle\Model\HistorySearch;
 use Leha\CentralBundle\Specifications\Filters\AsArray;
 use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
 use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
@@ -56,8 +56,27 @@ class EchantillonRepository extends EntityRepository
         return $qb;
     }
 
-	public function search($filters)
+    public function getFilter()
+    {
+
+    }
+
+	public function search($data, $formAttributesRequete)
 	{
+        //$data = $form->getData();
+        $filters = array();
+
+        array_walk($formAttributesRequete, function($formAttributeRequete, $key) use($data, &$filters)
+        {
+            $attribute = $formAttributeRequete->getAttribut();
+            if (isset($data[$attribute->getName()])) {
+                $filters[$attribute->getScope()][] = array(
+                    'value' => $data[$attribute->getName()],
+                    'attribut' => $attribute
+                );
+            }
+        });
+
         if (empty($filters)) {
             return null;
         }

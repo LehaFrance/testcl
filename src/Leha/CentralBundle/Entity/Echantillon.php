@@ -156,6 +156,11 @@ class Echantillon
     private $commentaireClient;
 
     /**
+     * @var array
+     */
+    private $attributs;
+
+    /**
      * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributEchantillon", mappedBy="echantillon", cascade={"persist", "remove"})
      */
     private $echantillonAttributs;
@@ -174,6 +179,7 @@ class Echantillon
      * Set prefixeNom
      *
      * @param string $prefixeNom
+     *
      * @return Echantillon
      */
     public function setPrefixeNom($prefixeNom)
@@ -197,6 +203,7 @@ class Echantillon
      * Set demandeNumero
      *
      * @param integer $demandeNumero
+     *
      * @return Echantillon
      */
     public function setDemandeNumero($demandeNumero)
@@ -220,6 +227,7 @@ class Echantillon
      * Set echantNumero
      *
      * @param integer $echantNumero
+     *
      * @return Echantillon
      */
     public function setEchantNumero($echantNumero)
@@ -243,6 +251,7 @@ class Echantillon
      * Set etatReception
      *
      * @param string $etatReception
+     *
      * @return Echantillon
      */
     public function setEtatReception($etatReception)
@@ -266,6 +275,7 @@ class Echantillon
      * Set idLot
      *
      * @param integer $idLot
+     *
      * @return Echantillon
      */
     public function setIdLot($idLot)
@@ -289,6 +299,7 @@ class Echantillon
      * Set idLignePla
      *
      * @param integer $idLignePla
+     *
      * @return Echantillon
      */
     public function setIdLignePla($idLignePla)
@@ -312,6 +323,7 @@ class Echantillon
      * Set dateCreate
      *
      * @param \DateTime $dateCreate
+     *
      * @return Echantillon
      */
     public function setDateCreate($dateCreate)
@@ -335,6 +347,7 @@ class Echantillon
      * Set datePrevueReception
      *
      * @param \DateTime $datePrevueReception
+     *
      * @return Echantillon
      */
     public function setDatePrevueReception($datePrevueReception)
@@ -358,6 +371,7 @@ class Echantillon
      * Set dateReelleReception
      *
      * @param \DateTime $dateReelleReception
+     *
      * @return Echantillon
      */
     public function setDateReelleReception($dateReelleReception)
@@ -381,6 +395,7 @@ class Echantillon
      * Set datePrevueBulletin
      *
      * @param \DateTime $datePrevueBulletin
+     *
      * @return Echantillon
      */
     public function setDatePrevueBulletin($datePrevueBulletin)
@@ -404,6 +419,7 @@ class Echantillon
      * Set dateReelleBulletin
      *
      * @param \DateTime $dateReelleBulletin
+     *
      * @return Echantillon
      */
     public function setDateReelleBulletin($dateReelleBulletin)
@@ -427,6 +443,7 @@ class Echantillon
      * Set etatValidationBulletin
      *
      * @param string $etatValidationBulletin
+     *
      * @return Echantillon
      */
     public function setEtatValidationBulletin($etatValidationBulletin)
@@ -450,6 +467,7 @@ class Echantillon
      * Set idClientProprietaireBulletin
      *
      * @param integer $idClientProprietaireBulletin
+     *
      * @return Echantillon
      */
     public function setIdClientProprietaireBulletin($idClientProprietaireBulletin)
@@ -473,6 +491,7 @@ class Echantillon
      * Set idLaboResponsable
      *
      * @param integer $idLaboResponsable
+     *
      * @return Echantillon
      */
     public function setIdLaboResponsable($idLaboResponsable)
@@ -496,6 +515,7 @@ class Echantillon
      * Set idFacture
      *
      * @param integer $idFacture
+     *
      * @return Echantillon
      */
     public function setIdFacture($idFacture)
@@ -519,6 +539,7 @@ class Echantillon
      * Set idSection
      *
      * @param integer $idSection
+     *
      * @return Echantillon
      */
     public function setIdSection($idSection)
@@ -542,6 +563,7 @@ class Echantillon
      * Set forfaitAppro
      *
      * @param float $forfaitAppro
+     *
      * @return Echantillon
      */
     public function setForfaitAppro($forfaitAppro)
@@ -574,6 +596,7 @@ class Echantillon
      * Add echantillon_attributs
      *
      * @param \Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs
+     *
      * @return Echantillon
      */
     public function addEchantillonAttribut(\Leha\CentralBundle\Entity\AttributEchantillon $echantillonAttributs)
@@ -603,14 +626,26 @@ class Echantillon
         return $this->echantillonAttributs;
     }
 
+    /**
+     * Reformate le nom d'un attribut
+     *
+     * @param $name
+     *
+     * @return string
+     */
     private function getNameAttribute($name)
     {
         $name = substr($name, 3);
         return strtolower(substr($name, 0, 1)).substr($name, 1);
     }
 
-    private $attributs;
-
+    /**
+     * Récupère la valeur d'un attribut
+     *
+     * @param $name
+     *
+     * @return string
+     */
     private function getValueAttribute($name)
     {
         $attributEchantillon = $this->getEchantillonAttributs()->filter(function ($item) use ($name) {
@@ -620,6 +655,14 @@ class Echantillon
         return (count($attributEchantillon) == 0) ? '' : $attributEchantillon->first()->getValue();
     }
 
+    /**
+     * Fonction magique, qui récupère les attributs d'un échantillon
+     *
+     * @param $name
+     * @param $arguments
+     *
+     * @return $this|string
+     */
     public function __call($name, $arguments)
     {
         if (strlen($name) > 3) {
@@ -644,6 +687,7 @@ class Echantillon
      * Set conclusionClient
      *
      * @param string $conclusionClient
+     *
      * @return Echantillon
      */
     public function setConclusionClient($conclusionClient)
@@ -667,6 +711,7 @@ class Echantillon
      * Set commentaireClient
      *
      * @param string $commentaireClient
+     *
      * @return Echantillon
      */
     public function setCommentaireClient($commentaireClient)

@@ -35,6 +35,7 @@ class AttributEchantillon
      * Set value
      *
      * @param string $value
+     *
      * @return AttributEchantillon
      */
     public function setValue($value)
@@ -58,6 +59,7 @@ class AttributEchantillon
      * Set echantillon
      *
      * @param \Leha\CentralBundle\Entity\Echantillon $echantillon
+     *
      * @return AttributEchantillon
      */
     public function setEchantillon(\Leha\CentralBundle\Entity\Echantillon $echantillon = null)
@@ -81,6 +83,7 @@ class AttributEchantillon
      * Set attribut
      *
      * @param \Leha\CentralBundle\Entity\Attribut $attribut
+     *
      * @return AttributEchantillon
      */
     public function setAttribut(\Leha\CentralBundle\Entity\Attribut $attribut = null)

@@ -1,0 +1,92 @@
+<style type="text/css">
+    .listeGauche, .listeDroite {
+        float:left;
+        border:1px solid #000000;
+        height:300px;
+        overflow-y: auto;
+        width:300px;
+        margin:5px;
+        padding:5px;
+    }
+
+    #listeGauche, #listeDroite {
+        height:200px;
+    }
+
+    #listeGauche > li, #listeDroite > li {
+        margin:5px;
+        padding:5px;
+        border:1px solid #999999;
+		list-style-type: none;
+        background-color: #FFFFFF;
+    }
+    #listeGauche > li:hover, #listeDroite > li:hover {
+        background-color: #d9edf7;
+    }
+
+    #listeGauche li.placeholder, #listeDroite li.placeholder {
+        border:1px dashed #2f96b4;
+        height:20px;
+        background-color: #d9edf7;
+    }
+</style>
+<script type="text/javascript">
+$.event.props.push('dataTransfer');
+$(document).ready(function() {
+    $('#listeGauche').on('dblclick', 'li', function(e) {
+        $(this).appendTo('#listeDroite');
+    });
+    $('#listeDroite').on('dblclick', 'li', function(e) {
+        $(this).appendTo('#listeGauche');
+    });
+
+	$( "#listeGauche, #listeDroite" ).sortable({
+        connectWith: '.connectedSortable',
+        placeholder: 'placeholder',
+        dropOnEmpty: true
+    }).disableSelection();
+
+    $('#formChoixAttributs').on('submit', function() {
+        var lst_element = '';
+        $('#listeDroite > li').each(function() {
+            lst_element += $(this).attr('element_id') + '|';
+        });
+        if (lst_element != '') {
+            lst_element = lst_element.substr(0, lst_element.length - 1);
+        }
+
+        $('#attributs_selectionnes').val(lst_element);
+
+        return true;
+    });
+});
+</script>
+<form id="formChoixAttributs" action="{{ path('leha_historique_choix_criteres', {id : requete.id, type : type}) }}" method="post">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3>Choix critères</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div class="listeGauche">
+                <ul id="listeGauche" class="connectedSortable">
+                    {% for critere in attributs_disponibles %}
+                        <li element_id="{{ critere.id }}">{{ critere.libelle }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="listeDroite">
+                <ul id="listeDroite" class="connectedSortable">
+                    {% for attribut_requete in attributs_requete %}
+                        <li element_id="{{ attribut_requete.attribut.id }}">{{ attribut_requete.attribut.libelle }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+    <input type="hidden" id="attributs_selectionnes" name="attributs_selectionnes" />
+</form>
