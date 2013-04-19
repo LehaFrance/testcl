@@ -1,3 +1,0 @@
-leha_client_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: LehaClientBundle:Default:index }
