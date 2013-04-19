@@ -1,0 +1,28 @@
+{% extends 'LehaCentralBundle::layout.html.twig' %}
+
+{% block content %}
+
+<div id="modalAddQuery" class="modal hide"></div>
+    <a href="#" id="linkAdd">add</a><br />
+
+    {%  for requete in requetes %}
+        <a href="{{ path('leha_historique_search', { 'id': requete.id}) }}">{{ requete.libelle }}</a><br />
+    {% else %}
+        Vous n'avez aucune requête de configuré
+    {% endfor %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#linkAdd').on('click', function() {
+                $.get('{{ path('leha_historique_add') }}', function(data) {
+                    $('#modalAddQuery').html(data);
+                    $('#modalAddQuery').modal();
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -40,6 +40,7 @@ class User extends BaseUSer
     protected $lastName;
 
     /**
+
      * @var
      * @ORM\Column(name="date_naissance", type="date")
      */
@@ -52,7 +53,7 @@ class User extends BaseUSer
     protected $country;
 
     /**
-     * @ORM\OneToMany(targetEntity="Leha\HistoriqueBundle\Entity\Requete", mappedBy="utilisateur")
+     * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\Requete", mappedBy="utilisateur")
      */
     protected $requetes;
 
@@ -118,10 +119,10 @@ class User extends BaseUSer
     /**
      * Add requetes
      *
-     * @param \Leha\HistoriqueBundle\Entity\Requete $requetes
+     * @param \Leha\CentralBundle\Entity\Requete $requetes
      * @return Utilisateur
      */
-    public function addRequete(\Leha\HistoriqueBundle\Entity\Requete $requetes)
+    public function addRequete(\Leha\CentralBundle\Entity\Requete $requetes)
     {
         $this->requetes[] = $requetes;
 
@@ -131,9 +132,9 @@ class User extends BaseUSer
     /**
      * Remove requetes
      *
-     * @param \Leha\HistoriqueBundle\Entity\Requete $requetes
+     * @param \Leha\CentralBundle\Entity\Requete $requetes
      */
-    public function removeRequete(\Leha\HistoriqueBundle\Entity\Requete $requetes)
+    public function removeRequete(\Leha\CentralBundle\Entity\Requete $requetes)
     {
         $this->requetes->removeElement($requetes);
     }

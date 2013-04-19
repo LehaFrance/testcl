@@ -2,16 +2,8 @@ leha_central:
     resource: "@LehaCentralBundle/Resources/config/routing.yml"
     prefix:   /
 
-leha_client:
-    resource: "@LehaClientBundle/Resources/config/routing.yml"
-    prefix:   /
-
 leha_dashboard:
     resource: "@LehaDashboardBundle/Resources/config/routing.yml"
-    prefix:   /
-
-leha_historique:
-    resource: "@LehaHistoriqueBundle/Resources/config/routing.yml"
     prefix:   /
 
 leha_user_security:

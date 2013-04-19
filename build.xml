@@ -2,7 +2,7 @@
 <project name="central_leha" default="build">
 
     <target name="build" depends="composer,phpunit,phpcs,pdepend" />
-    <target name="jenkins" depends="buildPrepare,composer,phpunit,phpcs,pdepend" />
+    <target name="jenkins" depends="buildPrepare,composer,phpunit,phpcpd,phpcs,pdepend" />
 
     <target name="composer">
         <exec executable="composer" failonerror="true">
@@ -39,12 +39,20 @@
 
      <target name="phpcs" description="Check syntax">
          <exec executable="phpcs" failonerror="false">
-                 <arg value="--report=checkstyle"/>
+             <arg value="--report=checkstyle"/>
              <arg value="--report-file=build/phpcs.xml" />
              <arg value="--standard=Symfony2" />
              <arg value="src" />
          </exec>
      </target>
+
+    <target name="phpcpd" description="Check duplicate code">
+        <exec executable="phpcpd" failonerror="false">
+            <arg value="--log-pmd" />
+            <arg value="build/pmd-cpd.xml" />
+            <arg value="src" />
+        </exec>
+    </target>
 
     <target name="pdepend" description="Analyse de la structure de classes">
         <exec executable="pdepend" failonerror="false">

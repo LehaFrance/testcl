@@ -3,7 +3,14 @@
 namespace Leha\CentralBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Leha\CentralBundle\Entity\Attribut;
 use Leha\CentralBundle\Specifications\Filters\Specification;
+use Leha\CentralBundle\Entity\AttributEchantillon;
+use Leha\CentralBundle\Model\HistorySearch;
+use Leha\CentralBundle\Specifications\Filters\AsArray;
+use Leha\CentralBundle\Specifications\Filters\FilterEchantillon;
+use Leha\CentralBundle\Specifications\Filters\FilterAttributEchantillon;
+use Leha\CentralBundle\Specifications\Filters\AndX;
 
 /**
  * EchantillonRepository
@@ -43,11 +50,61 @@ class EchantillonRepository extends EntityRepository
     private function joinAttributs($qb, $alias = 'e')
     {
         $qb->leftJoin($alias . '.echantillonAttributs', 'lea')
-            ->leftJoin('lea.attribut', 'laa')
+            ->leftJoin('lea.attribut', 'la')
             ->addSelect('la, lea');
 
         return $qb;
     }
+
+    public function getFilter()
+    {
+
+    }
+
+	public function search($data, $formAttributesRequete)
+	{
+        //$data = $form->getData();
+        $filters = array();
+
+        array_walk($formAttributesRequete, function($formAttributeRequete, $key) use($data, &$filters)
+        {
+            $attribute = $formAttributeRequete->getAttribut();
+            if (isset($data[$attribute->getName()])) {
+                $filters[$attribute->getScope()][] = array(
+                    'value' => $data[$attribute->getName()],
+                    'attribut' => $attribute
+                );
+            }
+        });
+
+        if (empty($filters)) {
+            return null;
+        }
+
+        $andX = new AndX();
+
+        foreach ($filters as $scope => $filtersScope) {
+            switch ($scope) {
+                case Attribut::SCOPE_ECHANTILLON :
+                    foreach ($filtersScope as $indice => $filter) {
+                        $attribut = $filter['attribut'];
+                        $andX->addChildren(new FilterEchantillon($attribut->getName(), $filter['value']));
+                    }
+                    break;
+                case Attribut::SCOPE_ATTRIBUT :
+                    foreach ($filtersScope as $indice => $filter) {
+                        $attributEchantillon = new AttributEchantillon();
+                        $attributEchantillon->setAttribut($filter['attribut']);
+                        $attributEchantillon->setValue($filter['value']);
+
+                        $andX->addChildren(new FilterAttributEchantillon($attributEchantillon, 'ea' . $indice));
+                    }
+                    break;
+            }
+        }
+
+        return $this->match(new AsArray($andX));
+	}
 
     public function match(Specification $specification)
     {
@@ -55,10 +112,12 @@ class EchantillonRepository extends EntityRepository
         $qb = $this->joinAttributs($qb);
 
         $expr = $specification->match($qb, 'e');
+        if (empty($expr)) {
+            $query = $qb->getQuery();
+        } else {
+            $query = $qb->where($expr)->getQuery();
+        }
 
-        $query = $qb->where($expr)->getQuery();
-
-        $specification->modifyQuery($query);
 
         return $query->getResult();
     }
