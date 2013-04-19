@@ -5,8 +5,7 @@
 namespace Leha\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections;
-use \Doctrine\Common\Collections as Collection;
+use Doctrine\Common\Collections as Collection;
 
 /**
  * Type

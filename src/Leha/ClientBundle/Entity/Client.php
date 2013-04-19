@@ -3,6 +3,7 @@
 namespace Leha\ClientBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Leha\UserBundle\Entity\User;
 
 /**
  * Client
@@ -36,6 +37,13 @@ class Client
      *  )
      */
     private $attributs;
+
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="Leha\UserBundle\Entity\UserClient", mappedBy="client", cascade={"remove","persist"})
+     *
+     */
+    private $users;
 
     /**
      * Constructor
@@ -76,5 +84,29 @@ class Client
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * @param  Leha\UserBundle\Entity\User $users
+     */
+    public function setUsers(User $users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * @return Leha\UserBundle\Entity\User
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @return string
+     */
+    public function  __toString()
+    {
+        return (isset ($this->nom))?$this->nom:"";
     }
 }

@@ -227,4 +227,8 @@ class User extends BaseUSer
         return $this->civility;
     }
 
+    public static function civilite()
+    {
+
+    }
 }

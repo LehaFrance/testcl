@@ -115,7 +115,7 @@ sonata_admin:
                 items:
                     - leha.admin.useradmin
                     - leha.admin.groupadmin
-                    - leha.admin.typeadmin
+                    - leha.admin.clientadmin
             sonata_user: ~
 
     # set to true to persist filter settings per admin module in the user's session

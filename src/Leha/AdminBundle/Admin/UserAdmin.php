@@ -1,12 +1,16 @@
 <?php
 namespace Leha\AdminBundle\Admin;
 
+use Leha\UserBundle\Entity\UserClient;
+use Leha\UserBundle\Entity\UserCotraitant;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Leha\ClientBundle\Entity;
 
 class UserAdmin extends Admin
 {
@@ -14,16 +18,16 @@ class UserAdmin extends Admin
      * Configuration de la form de saisi des utilisateurs
      * @param \Sonata\AdminBundle\Form\FormMapper $form
      */
+
     protected function configureFormFields(FormMapper $form)
     {
-
       $form
       ->with('Information')
-          ->add('type','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => false,'required' => true))
+        //  ->add('type','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => false,'required' => true))
           ->add('lastName')
           ->add('firstName')
           ->add('email', null, array('required' => true))
-          ->add('type')
+         // ->add('type')
           ->add('dateOfBirth','birthday',array('label' => 'Date of birth','required' => true))
           ->add('civility','choice',array('choices' => array("Homme","Femme")))
       ->end()
@@ -31,10 +35,28 @@ class UserAdmin extends Admin
           ->add('username', null, array('required' => true))
           ->add('enabled', null, array('required' => false))
           ->add('locked', null, array('required' => false))
-          ->add('groups','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => true, "required" => true))
+         // ->add('groups','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => true, "required" => true))
           ->add('country')
       ->end()
       ;
+        $subject = $this->getSubject();
+        if($subject instanceof userClient){
+            $form
+            ->with('Compte')
+                ->add('client','choice')
+                ->add('client','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => false,'required' => true, 'compound' => true))
+              //  ->add('structTree')
+            ->end();
+        }
+        elseif($subject instanceof UserCotraitant){
+            $form
+                ->with('Compte')
+                ->add('type','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => false,'required' => true, 'compound' => true))
+                //->add('Leha\ClientBundle\Entity\Client','sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => false,'required' => true))
+                ->add('labo','text')
+                ->end();
+        }
+
     }
 
     /**
@@ -75,6 +97,7 @@ class UserAdmin extends Admin
         ;
     }
 
+
     protected function configureShowField(ShowMapper $showMapper )
     {
         $showMapper
@@ -111,5 +134,12 @@ class UserAdmin extends Admin
         return $this->userManager;
     }
 
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        $errorElement
+            ->with('lastName')
+                ->assertMaxLength(array('limit' => 10))
+            ->end();
+    }
 
 }
