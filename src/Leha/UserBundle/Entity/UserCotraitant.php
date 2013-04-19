@@ -22,7 +22,6 @@ class UserCotraitant extends BaseUser
     protected $labo;
 
 
-
     /**
      * @return string
      */

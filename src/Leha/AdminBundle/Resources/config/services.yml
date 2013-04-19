@@ -28,3 +28,5 @@ services:
                 - ~
                 - Leha\UserBundle\Entity\Type
                 - 'SonataAdminBundle:CRUD'
+            calls:
+                - [ setSubClasses, {"userCotraitant": \Leha\UserBundle\Entity\UserCotraitan, "userClient": \Leha\UserBundle\Entity\userClient}]
