@@ -20,31 +20,12 @@ use Leha\CentralBundle\Specifications\Filters\AndX;
  */
 class EchantillonRepository extends EntityRepository
 {
-    public function getAll()
-    {
-        $query = $this->joinAttributs($this->createQueryBuilder('e'))
-            ->getQuery();
-
-        return $query->getResult();
-    }
-
-    public function getQueryBuilderFiltered($values)
-    {
-        $queryBuilder = $this->createQueryBuilder('e')->select('e');
-
-        foreach ($values as $property => $value) {
-            $queryBuilder->andWhere('e.' . $property . ' = :' . $property)
-                ->setParameter(':' . $property, $value);
-        }
-
-        $this->joinAttributs($queryBuilder);
-
-        return $queryBuilder;
-    }
-
     /**
+     * Ajoute la jointure externe vers les attributs
+     *
      * @param \Doctrine\ORM\QueryBuilder $qb
      * @param string $alias
+     *
      * @return mixed
      */
     private function joinAttributs($qb, $alias = 'e')
@@ -56,14 +37,16 @@ class EchantillonRepository extends EntityRepository
         return $qb;
     }
 
-    public function getFilter()
-    {
-
-    }
-
-	public function search($data, $formAttributesRequete)
+    /**
+     * Retourne une liste d'échantillon par rapport à des data postés et une collection d'AttributRequete
+     *
+     * @param $data
+     * @param $formAttributesRequete
+     *
+     * @return DoctrineCollection|null
+     */
+    public function search($data, $formAttributesRequete)
 	{
-        //$data = $form->getData();
         $filters = array();
 
         array_walk($formAttributesRequete, function($formAttributeRequete, $key) use($data, &$filters)
@@ -106,6 +89,13 @@ class EchantillonRepository extends EntityRepository
         return $this->match(new AsArray($andX));
 	}
 
+    /**
+     * Recherche une liste d'échantillon en fonction d'une spec donnée
+     *
+     * @param Specification $specification
+     *
+     * @return DoctrineCollection
+     */
     public function match(Specification $specification)
     {
         $qb = $this->createQueryBuilder('e');

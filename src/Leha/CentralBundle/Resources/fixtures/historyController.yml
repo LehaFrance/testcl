@@ -1,0 +1,8 @@
+Leha\UserBundle\Entity\User:
+    User1:
+        username: usertest
+        email: smaignan.web@gmail.com
+        enabled: 1
+        password: testpwd
+        firstName: Dupond
+        lastName: Charlie
