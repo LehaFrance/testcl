@@ -1,0 +1,44 @@
+Leha\CentralBundle\Entity\Requete:
+    Requete1:
+        libelle: Requete de test
+
+Leha\CentralBundle\Entity\AttributString:
+    Attribut0:
+        libelle:  Conditionnement
+        name: conditionnement
+        description: Conditionnement
+        scope:  attribut
+        referenceSolution: Conditionnement
+
+    Attribut1:
+        libelle: ITM8
+        name: itm8
+        description: ITM8
+        scope:  attribut
+        referenceSolution: ITM8
+
+    Attribut2:
+            libelle: Etat réception
+            name: etatReception
+            description: Etat réception
+            scope:  echantillon
+            referenceSolution: EtatReception
+
+Leha\CentralBundle\Entity\AttributRequete:
+    AttributRequete1:
+        Requete: @Requete1
+        Attribut: @Attribut1
+        ordre: 1
+        type: form
+
+    AttributRequete2:
+        Requete: @Requete1
+        Attribut: @Attribut2
+        ordre: 2
+        type: form
+
+    AttributRequete3:
+            Requete: @Requete1
+            Attribut: @Attribut0
+            ordre: 1
+            type: grid

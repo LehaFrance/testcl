@@ -1,15 +1,19 @@
 {% extends 'LehaCentralBundle::layout.html.twig' %}
 
 {% block content %}
-
+<div class="ok">ssss</div>
 <div id="modalAddQuery" class="modal hide"></div>
     <a href="#" id="linkAdd">add</a><br />
-
-    {%  for requete in requetes %}
-        <a href="{{ path('leha_historique_search', { 'id': requete.id}) }}">{{ requete.libelle }}</a><br />
+    {% if requetes %}
+        <div id="requetes">
+        {%  for requete in requetes %}
+            <a href="{{ path('leha_historique_search', { 'id': requete.id}) }}">{{ requete.libelle }}</a><br />
+        {% endfor %}
+        </div>
     {% else %}
         Vous n'avez aucune requête de configuré
-    {% endfor %}
+    {% endif %}
+
 
 {% endblock %}
 
