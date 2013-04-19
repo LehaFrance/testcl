@@ -13,28 +13,19 @@ class HistorySearchTypeTest extends TypeTestCase
 {
     public function testHistorySearchType()
     {
-        $attributs_requete = HelperHistory::getAttributsRequete();
-
-        $type = new HistorySearchType();
-        $form = $this->factory->create($type, null, array(
-            'attributs_requete' => $attributs_requete
+        $formAttributesRequete = HelperHistory::getAttributsRequete();
+        $form = $this->factory->create(new HistorySearchType(), null, array(
+            'form_attributes_requete' => $formAttributesRequete
         ));
 
         $data = array(
-            'attributes' => array(
-                'ATTR_8' => '12121'
-            )
-        );
-
-        $a = array(
             'etatReception' => 'Anomalie',
-            'marque' => null,
-            'itm8' => null
+            'itm8' => '8888'
         );
 
         $form->bind($data);
 
         $this->assertTrue($form->isSynchronized());
-        //$this->assertEquals($a, $form->getData());
+        $this->assertEquals($data, $form->getData());
     }
 }
