@@ -1,0 +1,156 @@
+Leha\CentralBundle\Entity\Echantillon:
+    Echantillon1:
+        prefixeNom: DEV
+        demandeNumero: 6
+        echantNumero: 35
+        etatReception: En attente
+        idLot: 1
+        idLignePla: 1
+        dateCreate: <datetime()>
+        datePrevueReception: <datetime()>
+        dateReelleReception: <datetime()>
+        datePrevueBulletin: <datetime()>
+        dateReelleBulletin: <datetime()>
+        etatValidationBulletin: Non Validé
+        idClientProprietaireBulletin: 0
+        idLaboResponsable: 0
+        idFacture: 0
+        idSection: 0
+        forfaitAppro: 0
+        conclusionClient: <sentence(6)>
+        commentaireClient: <sentence(10)>
+
+    Echantillon2:
+        prefixeNom: DEV
+        demandeNumero: 6
+        echantNumero: 36
+        etatReception: En attente
+        idLot: 1
+        idLignePla: 1
+        dateCreate: <datetime()>
+        datePrevueReception: <datetime()>
+        dateReelleReception: <datetime()>
+        datePrevueBulletin: <datetime()>
+        dateReelleBulletin: <datetime()>
+        etatValidationBulletin: Non Validé
+        idClientProprietaireBulletin: 0
+        idLaboResponsable: 0
+        idFacture: 0
+        idSection: 0
+        forfaitAppro: 0
+        conclusionClient: <sentence(6)>
+        commentaireClient: <sentence(10)>
+
+    Echantillon3:
+        prefixeNom: DEV
+        demandeNumero: 6
+        echantNumero: 37
+        etatReception: En attente
+        idLot: 1
+        idLignePla: 1
+        dateCreate: <datetime()>
+        datePrevueReception: <datetime()>
+        dateReelleReception: <datetime()>
+        datePrevueBulletin: <datetime()>
+        dateReelleBulletin: <datetime()>
+        etatValidationBulletin: Non Validé
+        idClientProprietaireBulletin: 0
+        idLaboResponsable: 0
+        idFacture: 0
+        idSection: 0
+        forfaitAppro: 0
+        conclusionClient: <sentence(6)>
+        commentaireClient: <sentence(10)>
+
+    Echantillon4:
+        prefixeNom: DEV
+        demandeNumero: 6
+        echantNumero: 38
+        etatReception: Anomalie
+        idLot: 1
+        idLignePla: 1
+        dateCreate: <datetime()>
+        datePrevueReception: <datetime()>
+        dateReelleReception: <datetime()>
+        datePrevueBulletin: <datetime()>
+        dateReelleBulletin: <datetime()>
+        etatValidationBulletin: Non Validé
+        idClientProprietaireBulletin: 0
+        idLaboResponsable: 0
+        idFacture: 0
+        idSection: 0
+        forfaitAppro: 0
+        conclusionClient: <sentence(6)>
+        commentaireClient: <sentence(10)>
+
+    Echantillon5:
+        prefixeNom: DEV
+        demandeNumero: 6
+        echantNumero: 39
+        etatReception: En attente
+        idLot: 1
+        idLignePla: 1
+        dateCreate: <datetime()>
+        datePrevueReception: <datetime()>
+        dateReelleReception: <datetime()>
+        datePrevueBulletin: <datetime()>
+        dateReelleBulletin: <datetime()>
+        etatValidationBulletin: Non Validé
+        idClientProprietaireBulletin: 0
+        idLaboResponsable: 0
+        idFacture: 0
+        idSection: 0
+        forfaitAppro: 0
+        conclusionClient: <sentence(6)>
+        commentaireClient: <sentence(16)>
+
+
+Leha\CentralBundle\Entity\AttributString:
+    Attribut0:
+        libelle:  Conditionnement
+        name: conditionnement
+        description: Conditionnement
+        scope:  attribut
+        referenceSolution: Conditionnement
+
+    Attribut1:
+        libelle: ITM8
+        name: itm8
+        description: ITM8
+        scope:  attribut
+        referenceSolution: ITM8
+
+    Attribut2:
+        libelle: Etat réception
+        name: etatReception
+        description: Etat réception
+        scope:  echantillon
+        referenceSolution: EtatReception
+
+Leha\CentralBundle\Entity\Requete:
+    Requete1:
+        libelle: Requete de test
+
+Leha\CentralBundle\Entity\AttributRequete:
+    AttributRequete1:
+        Requete: @Requete1
+        Attribut: @Attribut1
+        ordre: 1
+        type: form
+
+    AttributRequete2:
+        Requete: @Requete1
+        Attribut: @Attribut2
+        ordre: 2
+        type: form
+
+Leha\CentralBundle\Entity\AttributEchantillon:
+    AttributEchantillon1:
+        Echantillon: @Echantillon1
+        Attribut: @Attribut1
+        value : 1234
+
+    AttributEchantillon2:
+        Echantillon: @Echantillon2
+        Attribut: @Attribut1
+        value : 5678

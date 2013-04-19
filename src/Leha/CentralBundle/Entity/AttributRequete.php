@@ -37,15 +37,15 @@ class AttributRequete
      */
     private $type;
 
-	/**
+    /**
 	 * @ORM\Column(name="attribut_id", type="integer")
 	 */
-	protected $attribut_id;
+    protected $attributId;
 
-	/**
+    /**
 	 * @ORM\Column(name="requete_id", type="integer")
 	 */
-	protected $requete_id;
+    protected $requeteId;
 
     /**
      * @var integer
@@ -135,7 +135,7 @@ class AttributRequete
      */
     public function setAttributId($attributId)
     {
-        $this->attribut_id = $attributId;
+        $this->attributId = $attributId;
 
         return $this;
     }
@@ -147,7 +147,7 @@ class AttributRequete
      */
     public function getAttributId()
     {
-        return $this->attribut_id;
+        return $this->attributId;
     }
 
     /**
@@ -159,7 +159,7 @@ class AttributRequete
      */
     public function setRequeteId($requeteId)
     {
-        $this->requete_id = $requeteId;
+        $this->requeteId = $requeteId;
     
         return $this;
     }
@@ -171,7 +171,7 @@ class AttributRequete
      */
     public function getRequeteId()
     {
-        return $this->requete_id;
+        return $this->requeteId;
     }
 
     /**

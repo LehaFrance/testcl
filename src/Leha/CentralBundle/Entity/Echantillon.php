@@ -629,20 +629,21 @@ class Echantillon
     /**
      * Reformate le nom d'un attribut
      *
-     * @param $name
+     * @param string $name
      *
      * @return string
      */
     private function getNameAttribute($name)
     {
         $name = substr($name, 3);
+
         return strtolower(substr($name, 0, 1)).substr($name, 1);
     }
 
     /**
      * Récupère la valeur d'un attribut
      *
-     * @param $name
+     * @param string $name
      *
      * @return string
      */
@@ -658,8 +659,8 @@ class Echantillon
     /**
      * Fonction magique, qui récupère les attributs d'un échantillon
      *
-     * @param $name
-     * @param $arguments
+     * @param string $name
+     * @param array  $arguments
      *
      * @return $this|string
      */
@@ -668,17 +669,21 @@ class Echantillon
         if (strlen($name) > 3) {
             switch (substr($name, 0, 3)) {
                 case 'get':
+
                     return $this->getValueAttribute($this->getNameAttribute($name));
                     break;
                 case 'set':
                     $this->attributs[$this->getNameAttribute($name)] = $arguments[0];
+
                     return $this;
                     break;
                 default:
+
                     return $this->getValueAttribute($name);
                     break;
             }
         } else {
+
             return $this->getValueAttribute($name);
         }
     }

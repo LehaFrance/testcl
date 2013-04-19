@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Requete
  * @package Leha\CentralBundle\Entity
+ *
  * @ORM\Entity
  * @ORM\Table(name="t_requetes")
  */
@@ -37,7 +38,7 @@ class Requete
      * @ORM\OneToMany(targetEntity="Leha\CentralBundle\Entity\AttributRequete", mappedBy="requete", cascade={"remove"})
 	 * @ORM\OrderBy({"ordre" = "ASC"})
      */
-    protected $requete_attributs;
+    protected $requeteAttributs;
 
     /**
      * Get id
@@ -101,7 +102,7 @@ class Requete
      */
     public function __construct()
     {
-        $this->requete_attributs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->requeteAttributs = new \Doctrine\Common\Collections\ArrayCollection();
     }
    
     /**
@@ -113,7 +114,7 @@ class Requete
      */
     public function addAttributsRequete(\Leha\CentralBundle\Entity\AttributRequete $attributsRequete)
     {
-        $this->requete_attributs[] = $attributsRequete;
+        $this->requeteAttributs[] = $attributsRequete;
     
         return $this;
     }
@@ -125,7 +126,7 @@ class Requete
      */
     public function removeAttributsRequete(\Leha\CentralBundle\Entity\AttributRequete $attributsRequete)
     {
-        $this->requete_attributs->removeElement($attributsRequete);
+        $this->requeteAttributs->removeElement($attributsRequete);
     }
 
     /**
@@ -135,7 +136,7 @@ class Requete
      */
     public function getAttributsRequete()
     {
-        return $this->requete_attributs;
+        return $this->requeteAttributs;
     }
 
     /**
@@ -147,7 +148,7 @@ class Requete
      */
     public function addRequeteAttribut(\Leha\CentralBundle\Entity\AttributRequete $requeteAttributs)
     {
-        $this->requete_attributs[] = $requeteAttributs;
+        $this->requeteAttributs[] = $requeteAttributs;
     
         return $this;
     }
@@ -159,7 +160,7 @@ class Requete
      */
     public function removeRequeteAttribut(\Leha\CentralBundle\Entity\AttributRequete $requeteAttributs)
     {
-        $this->requete_attributs->removeElement($requeteAttributs);
+        $this->requeteAttributs->removeElement($requeteAttributs);
     }
 
     /**
@@ -169,6 +170,6 @@ class Requete
      */
     public function getRequeteAttributs()
     {
-        return $this->requete_attributs;
+        return $this->requeteAttributs;
     }
 }

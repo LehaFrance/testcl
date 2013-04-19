@@ -25,7 +25,7 @@ class AttributRequeteRepository extends EntityRepository
      */
     public function getByRequeteType(Requete $requete, $type)
     {
-        $attributsRequete = $this->getEntityManager()->createQuery('select ar, a from LehaCentralBundle:AttributRequete ar join ar.attribut a where ar.requete_id = :requete_id and ar.type = :type order by ar.ordre')
+        $attributsRequete = $this->getEntityManager()->createQuery('select ar, a from LehaCentralBundle:AttributRequete ar join ar.attribut a where ar.requeteId = :requete_id and ar.type = :type order by ar.ordre')
             ->setParameter('requete_id', $requete->getId())
             ->setParameter('type', $type)
             ->getResult();
@@ -68,7 +68,7 @@ class AttributRequeteRepository extends EntityRepository
      */
     public function getAttributsDisponibles(Requete $requete, $type)
     {
-        $attributsRequete = $this->getEntityManager()->createQuery("select a from LehaCentralBundle:Attribut a left join a.attributRequetes ar with ar.requete_id = :requete_id and ar.type = :type where ar.requete_id is null")
+        $attributsRequete = $this->getEntityManager()->createQuery("select a from LehaCentralBundle:Attribut a left join a.attributRequetes ar with ar.requeteId = :requete_id and ar.type = :type where ar.requeteId is null")
             ->setParameter('requete_id', $requete->getId())
             ->setParameter('type', $type)
             ->getResult();
