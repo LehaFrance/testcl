@@ -59,6 +59,7 @@ class Client
      * Set nom
      *
      * @param string $nom
+     *
      * @return Client
      */
     public function setNom($nom)

@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Requete
  * @package Leha\CentralBundle\Entity
- * @ORM\Entity(repositoryClass="Leha\CentralBundle\Repository\RequeteRepository")
+ * @ORM\Entity
  * @ORM\Table(name="t_requetes")
  */
 class Requete
@@ -53,6 +53,7 @@ class Requete
      * Set libelle
      *
      * @param string $libelle
+     *
      * @return Requete
      */
     public function setLibelle($libelle)
@@ -76,6 +77,7 @@ class Requete
      * Set utilisateur
      *
      * @param \Leha\UserBundle\Entity\User $utilisateur
+     *
      * @return Requete
      */
     public function setUtilisateur(\Leha\UserBundle\Entity\User $utilisateur = null)
@@ -106,6 +108,7 @@ class Requete
      * Add requete_attributs
      *
      * @param \Leha\CentralBundle\Entity\AttributRequete $attributsRequete
+     *
      * @return Requete
      */
     public function addAttributsRequete(\Leha\CentralBundle\Entity\AttributRequete $attributsRequete)
@@ -139,6 +142,7 @@ class Requete
      * Add requete_attributs
      *
      * @param \Leha\CentralBundle\Entity\AttributRequete $requeteAttributs
+     *
      * @return Requete
      */
     public function addRequeteAttribut(\Leha\CentralBundle\Entity\AttributRequete $requeteAttributs)

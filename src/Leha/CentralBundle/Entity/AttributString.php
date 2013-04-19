@@ -13,6 +13,11 @@ use Leha\CentralBundle\Model\AttributInterface;
  */
 class AttributString extends Attribut implements AttributInterface
 {
+    /**
+     * Retourne le type de champ
+     *
+     * @return string
+     */
     public function getType()
     {
         return 'text';

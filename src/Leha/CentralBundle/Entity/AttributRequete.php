@@ -58,6 +58,7 @@ class AttributRequete
      * Set ordre
      *
      * @param integer $ordre
+     *
      * @return AttributRequete
      */
     public function setOrdre($ordre)
@@ -81,6 +82,7 @@ class AttributRequete
      * Set attribut
      *
      * @param \Leha\CentralBundle\Entity\Attribut $attribut
+     *
      * @return AttributRequete
      */
     public function setAttribut(\Leha\CentralBundle\Entity\Attribut $attribut)
@@ -104,6 +106,7 @@ class AttributRequete
      * Set requete
      *
      * @param \Leha\CentralBundle\Entity\Requete $requete
+     *
      * @return AttributRequete
      */
     public function setRequete(\Leha\CentralBundle\Entity\Requete $requete)
@@ -127,6 +130,7 @@ class AttributRequete
      * Set attribut_id
      *
      * @param integer $attributId
+     *
      * @return AttributRequete
      */
     public function setAttributId($attributId)
@@ -150,6 +154,7 @@ class AttributRequete
      * Set requete_id
      *
      * @param integer $requeteId
+     *
      * @return AttributRequete
      */
     public function setRequeteId($requeteId)
@@ -173,6 +178,7 @@ class AttributRequete
      * Set type
      *
      * @param string $type
+     *
      * @return AttributRequete
      */
     public function setType($type)

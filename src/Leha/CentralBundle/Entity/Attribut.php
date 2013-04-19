@@ -5,7 +5,7 @@ namespace Leha\CentralBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Leha\CentralBundle\Repository\AttributRepository")
+ * @ORM\Entity
  * @ORM\Table(name="t_attributs")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
@@ -126,6 +126,7 @@ abstract class Attribut
      * Set description
      *
      * @param string $description
+     *
      * @return Attribut
      */
     public function setDescription($description)
@@ -149,6 +150,7 @@ abstract class Attribut
      * Set options
      *
      * @param array $options
+     *
      * @return Attribut
      */
     public function setOptions($options)
@@ -172,6 +174,7 @@ abstract class Attribut
      * Set scope
      *
      * @param string $scope
+     *
      * @return Attribut
      */
     public function setScope($scope)
@@ -195,6 +198,7 @@ abstract class Attribut
      * Set reference_solution
      *
      * @param string $referenceSolution
+     *
      * @return Attribut
      */
     public function setReferenceSolution($referenceSolution)
@@ -218,6 +222,7 @@ abstract class Attribut
      * Add attribut_requetes
      *
      * @param \Leha\CentralBundle\Entity\AttributRequete $attributRequetes
+     *
      * @return Attribut
      */
     public function addAttributRequete(\Leha\CentralBundle\Entity\AttributRequete $attributRequetes)
@@ -247,11 +252,11 @@ abstract class Attribut
         return $this->attributRequetes;
     }
 
-    public function getFieldId()
-    {
-        return 'ATTR_'.$this->getId();
-    }
-
+    /**
+     * Retourne la liste des options utlisées pour la création du champ dans le formulaire
+     *
+     * @return array
+     */
     public function getFieldOptions()
     {
         return array(
@@ -264,6 +269,7 @@ abstract class Attribut
      * Set name
      *
      * @param string $name
+     *
      * @return Attribut
      */
     public function setName($name)
