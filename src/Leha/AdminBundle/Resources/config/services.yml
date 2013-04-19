@@ -36,5 +36,5 @@ services:
                 - { name: sonata.admin, manager_type: orm, group: posts, label: "Client" }
             arguments:
                 - ~
-                - Leha\ClientBundle\Entity\Client
+                - Leha\CentralBundle\Entity\Client
                 - 'SonataAdminBundle:CRUD'

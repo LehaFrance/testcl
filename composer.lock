@@ -1,9 +1,5 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
-    ],
-    "hash": "b6958482026bf07157a8e33b85cb5e5e",
+    "hash": "93b9cbfa61c952938284273165c45338",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -56,9 +52,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -118,9 +114,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -184,9 +180,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -256,9 +252,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -606,7 +602,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -662,7 +658,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1146,7 +1142,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1313,7 +1309,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1517,12 +1513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/alice.git",
-                "reference": "f0274d66a42942fb2143e47f6da885b3bfea9803"
+                "reference": "aafb62a84e523f121a010fe92161a4b5cb49e91a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/alice/zipball/f0274d66a42942fb2143e47f6da885b3bfea9803",
-                "reference": "f0274d66a42942fb2143e47f6da885b3bfea9803",
+                "url": "https://api.github.com/repos/nelmio/alice/zipball/aafb62a84e523f121a010fe92161a4b5cb49e91a",
+                "reference": "aafb62a84e523f121a010fe92161a4b5cb49e91a",
                 "shasum": ""
             },
             "require": {
@@ -1563,37 +1559,49 @@
                 "orm",
                 "test"
             ],
-            "time": "2013-03-28 10:40:31"
+            "time": "2013-04-18 07:32:16"
         },
         {
             "name": "phake/phake",
-            "version": "v1.0.3",
+            "version": "v2.0.0-alpha1",
             "source": {
                 "type": "git",
-                "url": "git://github.com/mlively/Phake.git",
-                "reference": "v1.0.3"
+                "url": "https://github.com/mlively/Phake.git",
+                "reference": "v2.0.0-alpha1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/mlively/Phake/zipball/v1.0.3",
-                "reference": "v1.0.3",
+                "url": "https://api.github.com/repos/mlively/Phake/zipball/v2.0.0-alpha1",
+                "reference": "v2.0.0-alpha1",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0"
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "davedevelopment/hamcrest-php": "dev-master",
+                "doctrine/common": "2.3.*",
+                "ext-soap": "*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "davedevelopment/hamcrest-php": "Use Hamcrest matchers.",
+                "doctrine/common": "Allows mock annotations to use import statements for classes."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
             "autoload": {
-                "classmap": [
-                    "src"
-                ]
+                "psr-0": {
+                    "Phake": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "src"
-            ],
             "license": [
-                "BSD"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -1607,7 +1615,7 @@
                 "mock",
                 "testing"
             ],
-            "time": "2012-05-14 08:06:51"
+            "time": "2013-04-06 15:06:01"
         },
         {
             "name": "phpoption/phpoption",
@@ -1645,7 +1653,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2198,12 +2206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "9f7291d7ccb33ea80102a3764680706681ceaacd"
+                "reference": "f6dfcf0a45a1099dcae84561d8355768c0d76f2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/9f7291d7ccb33ea80102a3764680706681ceaacd",
-                "reference": "9f7291d7ccb33ea80102a3764680706681ceaacd",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/f6dfcf0a45a1099dcae84561d8355768c0d76f2a",
+                "reference": "f6dfcf0a45a1099dcae84561d8355768c0d76f2a",
                 "shasum": ""
             },
             "require": {
@@ -2264,7 +2272,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2013-04-08 15:51:28"
+            "time": "2013-04-11 21:40:47"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2712,16 +2720,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v4.3.0",
+            "version": "v4.3.1",
             "source": {
                 "type": "git",
-                "url": "git://github.com/swiftmailer/swiftmailer.git",
-                "reference": "v4.3.0"
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "v4.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/swiftmailer/swiftmailer/archive/v4.3.0.zip",
-                "reference": "v4.3.0",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/v4.3.1",
+                "reference": "v4.3.1",
                 "shasum": ""
             },
             "require": {
@@ -2757,7 +2765,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2013-01-08 15:50:34"
+            "time": "2013-04-11 10:22:09"
         },
         {
             "name": "symfony/assetic-bundle",

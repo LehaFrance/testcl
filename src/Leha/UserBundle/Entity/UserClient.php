@@ -27,7 +27,7 @@ class UserClient extends baseUser
     protected $id;
     /**
      * @var string
-     * @ORM\ManyToOne(targetEntity="Leha\ClientBundle\Entity\Client", inversedBy="users", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Client", inversedBy="users", cascade={"remove"})
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     protected  $client;

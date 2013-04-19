@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Validator\ErrorElement;
-use Leha\ClientBundle\Entity;
+use Leha\CentralBundle\Entity;
 
 class UserAdmin extends Admin
 {
