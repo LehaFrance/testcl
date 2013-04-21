@@ -5,6 +5,7 @@ namespace Leha\CentralBundle\Tests;
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM;
 use Nelmio\Alice\Loader\Yaml;
 use Nelmio\Alice\ORM\Doctrine;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;

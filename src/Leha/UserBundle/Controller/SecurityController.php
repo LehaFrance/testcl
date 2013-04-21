@@ -12,6 +12,7 @@ namespace Leha\UserBundle\Controller;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Security\Core\SecurityContext;
+use Leha\UserBundle\Entity\User;
 
 class SecurityController extends BaseController
 {
