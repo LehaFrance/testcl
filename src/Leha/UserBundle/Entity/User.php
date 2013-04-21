@@ -42,7 +42,7 @@ class User extends BaseUSer
     /**
 
      * @var
-     * @ORM\Column(name="date_naissance", type="date")
+     * @ORM\Column(name="date_naissance", type="date", nullable=true)
      */
     private $dateOfBirth;
 
