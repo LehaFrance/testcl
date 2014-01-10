@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class du formulaire de recherche dans l'historique
+ * Class du formulaire de recherche dans l'historiqueaa
  *
  * @package Leha\CentralBundle\Form\Type
  */
