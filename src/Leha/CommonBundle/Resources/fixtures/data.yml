@@ -1,0 +1,37 @@
+Leha\CentralBundle\Entity\Pays:
+    Pays1:
+        nom: France
+    Pays2:
+        nom: Belgique
+    Pays3:
+        nom: Portugal
+
+Leha\CentralBundle\Entity\Civilite:
+    Civilite1:
+        libelle: M
+    Civilite2:
+        libelle: Mme
+    Civilite3:
+        libelle: Mlle
+
+Leha\CentralBundle\Entity\AttributString:
+    Attribut0:
+        libelle:  Conditionnement
+        name: conditionnement
+        description: Conditionnement
+        scope:  attribut
+        referenceSolution: Conditionnement
+
+    Attribut1:
+        libelle: ITM8
+        name: itm8
+        description: ITM8
+        scope:  attribut
+        referenceSolution: ITM8
+
+    Attribut2:
+        libelle: Etat réception
+        name: etatReception
+        description: Etat réception
+        scope:  echantillon
+        referenceSolution: EtatReception

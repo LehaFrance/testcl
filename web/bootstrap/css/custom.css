@@ -1,0 +1,16 @@
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+	display:block;
+}
+
+.navbar .dropdown-menu {
+	margin-top:0px;
+}
+
+.icon_home {
+  display: inline-block;
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  background-image: url("../img/home.png");
+  color:red;
+}

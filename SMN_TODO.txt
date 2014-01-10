@@ -1,0 +1,4 @@
+Pour OY :
+Les champs Civilité et Pays sont des listes déroulantes.
+
+Les tables user sont mal foutus, les champs sont répétés dans toutes les tables, il faut mettre en place un héritage sur la BDD.

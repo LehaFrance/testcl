@@ -1,10 +1,10 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    #{translator:      { fallback: %locale% }
+    translator:      { fallback: fr_FR }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -48,6 +48,8 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path:     %database_path%
@@ -63,3 +65,58 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Leha\UserBundle\Entity\User
+    group:
+        group_class: Leha\UserBundle\Entity\Group
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        leha.admin.useradmin:
+        leha.admin.groupadmin:
+        leha.admin.typeadmin:
+        sonata.block.service.text:
+        sonata.block.service.rss:
+        sonata.block.service.action:
+
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
+        information:
+            DELETE: DELETE
+    title:      Central Leha
+    #title_logo: /bundles/sonataadmin/logo_title.png
+    templates:
+        # default global templates
+        layout:  ::base.html.twig
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+        dashboard: SonataAdminBundle:Core:dashboard.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+
+    dashboard:
+        blocks:
+            # display a dashboard block
+            - { position: left, type: sonata.admin.block.admin_list }
+
+        groups:
+            sonata_page:
+                label: Administation
+                items:
+                    - leha.admin.useradmin
+                    - leha.admin.groupadmin
+                    - leha.admin.clientadmin
+            sonata_user: ~
+
+    # set to true to persist filter settings per admin module in the user's session
+    persist_filters: true

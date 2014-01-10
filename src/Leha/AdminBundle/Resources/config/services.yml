@@ -1,0 +1,40 @@
+services:
+    leha.admin.useradmin:
+        class: Leha\AdminBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: posts, label: "User" }
+        arguments:
+            - ~
+            - Leha\UserBundle\Entity\User
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setUserManager, [@fos_user.user_manager]]
+            - [ setSubClasses, [{"userCotraitant": \Leha\UserBundle\Entity\UserCotraitant, "userClient": \Leha\UserBundle\Entity\UserClient}]]
+    leha.admin.groupadmin:
+        class: Leha\AdminBundle\Admin\GroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: posts, label: "Group" }
+        arguments:
+            - ~
+            - Leha\UserBundle\Entity\Group
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            -  [ setGroupManager, [@fos_user.group_manager]]
+
+    leha.admin.typeadmin:
+            class: Leha\AdminBundle\Admin\TypeAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: posts, label: "Type" }
+            arguments:
+                - ~
+                - Leha\UserBundle\Entity\Type
+                - 'SonataAdminBundle:CRUD'
+
+    leha.admin.clientadmin:
+            class: Leha\AdminBundle\Admin\ClientAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: posts, label: "Client" }
+            arguments:
+                - ~
+                - Leha\CentralBundle\Entity\Client
+                - 'SonataAdminBundle:CRUD'
