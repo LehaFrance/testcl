@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class AttributEchantillon
 {
     /**
+     * un petit commentaire
+     * 
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Leha\CentralBundle\Entity\Echantillon", inversedBy="echantillonAttributs")
      * @ORM\JoinColumn(name="echantillon_id", referencedColumnName="id")
